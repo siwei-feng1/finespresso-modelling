@@ -1,4 +1,4 @@
-# FineSpresso Modelling - Financial News Impact Prediction
+# Finespresso Modelling - Financial News Impact Prediction
 
 A machine learning system that predicts the impact of financial news on stock prices using natural language processing and machine learning techniques.
 
