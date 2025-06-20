@@ -252,6 +252,121 @@ You are tasked with improving the financial news impact prediction system. The c
 - [Financial NLP Papers](https://paperswithcode.com/task/financial-nlp)
 - [Transformers Library](https://huggingface.co/transformers/)
 
+## 🤝 Contributing
+
+### For Take-Home Challenge Participants
+
+If you're working on the take-home challenge, please follow this workflow:
+
+#### 1. Fork the Repository
+```bash
+# Fork this repository on GitHub
+# Then clone your fork locally
+git clone https://github.com/YOUR_USERNAME/finespresso-modelling.git
+cd finespresso-modelling
+```
+
+#### 2. Create a Feature Branch
+```bash
+# Create and switch to a new feature branch
+git checkout -b feature/your-improvement-name
+
+# Examples:
+git checkout -b feature/yfinance-integration
+git checkout -b feature/bert-embeddings
+git checkout -b feature/mlflow-tracking
+```
+
+#### 3. Implement Your Improvements
+- Follow the challenge tasks outlined above
+- Keep your commits atomic and well-described
+- Add tests for new functionality
+- Update documentation as needed
+
+#### 4. Commit Your Changes
+```bash
+# Add your changes
+git add .
+
+# Commit with descriptive messages
+git commit -m "feat: integrate Yahoo Finance API for market features"
+git commit -m "feat: implement BERT embeddings for text processing"
+git commit -m "feat: add MLflow experiment tracking"
+```
+
+#### 5. Push and Create Pull Request
+```bash
+# Push your feature branch
+git push origin feature/your-improvement-name
+
+# Create a Pull Request on GitHub
+# Include:
+# - Description of your improvements
+# - Performance metrics comparison
+# - Screenshots of results (if applicable)
+# - Any additional setup instructions
+```
+
+#### 6. Pull Request Template
+When creating your PR, please include:
+
+```markdown
+## 🎯 Challenge Task(s) Addressed
+- [ ] Data Quality Enhancement
+- [ ] Feature Engineering & Market Context
+- [ ] Model Architecture Improvements
+- [ ] Advanced Text Processing
+- [ ] LLM Integration
+- [ ] Experiment Tracking & MLOps
+
+## 📊 Performance Improvements
+- **Before**: [Baseline metrics]
+- **After**: [Your improved metrics]
+- **Improvement**: [Percentage/absolute improvement]
+
+## 🛠️ Technical Changes
+- [List of major changes made]
+- [New dependencies added]
+- [Files modified/added]
+
+## 📋 Testing
+- [ ] Unit tests added
+- [ ] Integration tests added
+- [ ] Performance benchmarks included
+
+## 📚 Documentation
+- [ ] README updated
+- [ ] Code comments added
+- [ ] Setup instructions included
+```
+
+### For General Contributors
+
+If you're contributing to the main project (not the take-home challenge):
+
+1. **Open an Issue**: Describe the bug or feature request
+2. **Create a Branch**: Use `fix/` or `feature/` prefix
+3. **Follow Code Style**: Use consistent formatting and naming
+4. **Add Tests**: Ensure new code is tested
+5. **Update Docs**: Keep documentation current
+6. **Submit PR**: Create a pull request with clear description
+
+### Code Style Guidelines
+
+- **Python**: Follow PEP 8 standards
+- **Documentation**: Use docstrings for functions and classes
+- **Commits**: Use conventional commit messages
+- **Tests**: Aim for >80% code coverage
+- **Type Hints**: Use type hints for function parameters and returns
+
+### Review Process
+
+1. **Automated Checks**: CI/CD pipeline runs tests and linting
+2. **Code Review**: At least one maintainer reviews the PR
+3. **Performance Review**: For model changes, performance impact is assessed
+4. **Documentation Review**: Ensure documentation is clear and complete
+5. **Merge**: Once approved, PR is merged to main branch
+
 ---
 
 **Good luck! We're excited to see your innovative approaches to improving financial news impact prediction! 🚀**
