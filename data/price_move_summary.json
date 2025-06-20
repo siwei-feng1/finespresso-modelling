@@ -1,0 +1,50 @@
+{
+  "total_records": 2207,
+  "date_range": {
+    "earliest": "2020-12-17 06:45:00+00:00",
+    "latest": "2024-10-31 15:30:00+00:00"
+  },
+  "publishers": {
+    "globenewswire_biotech": 1643,
+    "euronext": 297,
+    "omx": 144,
+    "baltics": 123
+  },
+  "actual_sides": {
+    "UP": 1401,
+    "DOWN": 806
+  },
+  "predicted_sides": {
+    "UP": 1291,
+    "DOWN": 839
+  },
+  "tickers": {
+    "SCLX": 27,
+    "ALERS.PA": 26,
+    "ALVO": 26,
+    "VALN": 26,
+    "BTAI": 23,
+    "MDG1.DE": 23,
+    "OCGN": 23,
+    "KBLB": 22,
+    "BNTX": 22,
+    "ORPHA.CO": 22,
+    "RENB": 22,
+    "NSPR": 22,
+    "IMMP": 22,
+    "MDWD": 21,
+    "MYNZ": 21,
+    "BNOX": 21,
+    "HUMA": 21,
+    "TLSA": 21,
+    "INMB": 21,
+    "CAPR": 21
+  },
+  "price_change_stats": {
+    "mean": 0.6930566503380132,
+    "median": 0.032723262619754626,
+    "std": 15.160736272765453,
+    "min": -98.99999998383603,
+    "max": 480.71063016450034
+  }
+}
