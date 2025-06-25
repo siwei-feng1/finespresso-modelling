@@ -4,12 +4,12 @@ import logging
 from typing import Dict, Optional
 import numpy as np
 
-def setup_logger(name: str) -> logging.Logger:
+def setup_logger():
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs')
+    logs_dir = os.path.join(base_dir, 'data', 'logs')
     os.makedirs(logs_dir, exist_ok=True)
-    logger = logging.getLogger(name)
+    logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     logger.handlers = []  # Clear any existing handlers
     file_handler = logging.FileHandler(os.path.join(logs_dir, 'validation.log'))
@@ -20,7 +20,7 @@ def setup_logger(name: str) -> logging.Logger:
     logger.addHandler(stream_handler)
     return logger
 
-logger = setup_logger(__name__)
+logger = setup_logger()
 
 class DataValidator:
     """Class to validate financial news impact prediction data for Step 1."""
@@ -63,8 +63,7 @@ class DataValidator:
 
         expected_columns = [
             'id', 'ticker', 'published_date', 'event', 'actual_side',
-            'price_change_percentage', 'daily_alpha', 'content', 'title',
-            'content_en', 'title_en'
+            'price_change_percentage', 'daily_alpha', 'content', 'title'
         ]
         missing_cols = [col for col in expected_columns if col not in self.df.columns]
         if missing_cols:
@@ -89,9 +88,7 @@ class DataValidator:
             'price_change_percentage': float,
             'daily_alpha': float,
             'content': str,
-            'title': str,
-            'content_en': str,
-            'title_en': str
+            'title': str
         }
         
         type_issues = []
@@ -107,7 +104,7 @@ class DataValidator:
                             self.metrics[f'invalid_dates_{col}'] = invalid_dates.sum()
                     else:
                         self.df[col] = self.df[col].astype(expected_type, errors='ignore')
-                        if col in ['content', 'title', 'content_en', 'title_en']:
+                        if col in ['content', 'title']:
                             self.df[col] = self.df[col].fillna('missing')
                         elif col in ['price_change_percentage', 'daily_alpha']:
                             invalid = self.df[col].isna()
@@ -134,23 +131,16 @@ class DataValidator:
             logger.info("All data types validated successfully")
 
     def validate_categorical_values(self) -> None:
-        """Validate categorical values for event and actual_side columns."""
+        """Validate categorical values for actual_side column, preserve event values."""
         if self.df is None:
             raise ValueError("Data not loaded")
         
         if 'event' in self.df.columns:
-            valid_events = [
-                'Partnerships', 'Earnings', 'Corporate Action', 'Product Launch',
-                'Regulatory', 'Annual General Meeting', 'Bond Fixing'
-            ]
-            invalid_events = self.df['event'][~self.df['event'].isin(valid_events) & self.df['event'].notna()].unique()
-            self.metrics['invalid_events'] = len(invalid_events)
-            if invalid_events.size > 0:
-                logger.warning(f"Found {len(invalid_events)} invalid event types: {invalid_events.tolist()}")
-                self.df.loc[~self.df['event'].isin(valid_events), 'event'] = 'Other'
-                logger.info(f"Replaced {len(invalid_events)} invalid events with 'Other'")
-            else:
-                logger.info("All event types are valid")
+            invalid_events = self.df['event'][self.df['event'].notna()].unique()
+            self.metrics['unique_events'] = len(invalid_events)
+            logger.info(f"Found {len(invalid_events)} unique event types: {invalid_events.tolist()}")
+            # Do not replace invalid events, keep as is
+            self.metrics['invalid_events'] = 0  # No invalidation performed
 
         if 'actual_side' in self.df.columns:
             valid_sides = ['UP', 'DOWN']
@@ -225,7 +215,7 @@ class DataValidator:
         if self.df is None:
             raise ValueError("Data not loaded")
         
-        text_cols = ['content', 'title', 'content_en', 'title_en']
+        text_cols = ['content', 'title']
         for col in text_cols:
             if col in self.df.columns:
                 empty_texts = self.df[self.df[col].isna() | (self.df[col].str.strip() == '')]
@@ -280,7 +270,7 @@ if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(base_dir, 'data')
     validator = DataValidator(
-        input_path=os.path.join(data_dir, 'clean', 'cleaned_price_moves_20250625.csv'),
+        input_path=os.path.join(data_dir, 'all_price_moves.csv'),
         output_path=os.path.join(data_dir, 'clean', 'clean_price_moves.csv'),
         metrics_path=os.path.join(data_dir, 'quality_metrics', 'validation_metrics.csv')
     )
