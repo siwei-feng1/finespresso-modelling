@@ -9,15 +9,16 @@ def setup_logger(name: str) -> logging.Logger:
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     logs_dir = os.path.join(base_dir, 'logs')
     os.makedirs(logs_dir, exist_ok=True)
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(message)s',
-        handlers=[
-            logging.FileHandler(os.path.join(logs_dir, 'validation.log')),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger(name)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    logger.handlers = []  # Clear any existing handlers
+    file_handler = logging.FileHandler(os.path.join(logs_dir, 'validation.log'))
+    file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(file_handler)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(stream_handler)
+    return logger
 
 logger = setup_logger(__name__)
 
@@ -46,15 +47,33 @@ class DataValidator:
         os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
         os.makedirs(os.path.dirname(self.metrics_path), exist_ok=True)
 
-    def load_data(self) -> None:
-        """Load data from CSV file."""
+    def check_input_structure(self) -> bool:
+        """Validate input data structure."""
+        if not os.path.exists(self.input_path):
+            logger.error(f"Input file {self.input_path} does not exist")
+            raise FileNotFoundError(f"{self.input_path} not found")
+        
         try:
-            self.df = pd.read_csv(self.input_path, parse_dates=['published_date'], low_memory=False)
+            self.df = pd.read_csv(self.input_path, low_memory=False)
             logger.info(f"Loaded {len(self.df)} records from {self.input_path}")
             self.metrics['initial_rows'] = len(self.df)
         except Exception as e:
             logger.error(f"Failed to load {self.input_path}: {str(e)}")
             raise ValueError(f"Failed to load {self.input_path}: {str(e)}")
+
+        expected_columns = [
+            'id', 'ticker', 'published_date', 'event', 'actual_side',
+            'price_change_percentage', 'daily_alpha', 'content', 'title',
+            'content_en', 'title_en'
+        ]
+        missing_cols = [col for col in expected_columns if col not in self.df.columns]
+        if missing_cols:
+            logger.warning(f"Missing columns: {missing_cols}")
+            self.metrics['missing_columns'] = len(missing_cols)
+        else:
+            logger.info("All expected columns present")
+            self.metrics['missing_columns'] = 0
+        return len(missing_cols) == 0
 
     def validate_data_types(self) -> None:
         """Validate and convert data types for expected columns."""
@@ -64,7 +83,7 @@ class DataValidator:
         expected_types = {
             'id': str,
             'ticker': str,
-            'published_date': 'datetime64[ns]',
+            'published_date': 'datetime64[ns, UTC]',
             'event': str,
             'actual_side': str,
             'price_change_percentage': float,
@@ -78,17 +97,32 @@ class DataValidator:
         type_issues = []
         for col, expected_type in expected_types.items():
             if col in self.df.columns:
-                actual_type = str(self.df[col].dtype)
-                if actual_type != str(expected_type):
-                    try:
-                        if expected_type == 'datetime64[ns]':
-                            self.df[col] = pd.to_datetime(self.df[col], errors='coerce')
-                        else:
-                            self.df[col] = self.df[col].astype(expected_type, errors='ignore')
-                        logger.info(f"Converted {col} to {expected_type}")
-                    except Exception as e:
-                        type_issues.append(f"{col}: expected {expected_type}, got {actual_type}, error: {str(e)}")
-                self.metrics[f'type_valid_{col}'] = actual_type == str(expected_type)
+                try:
+                    if expected_type == 'datetime64[ns, UTC]':
+                        self.df[col] = pd.to_datetime(self.df[col], errors='coerce', utc=True, format='mixed')
+                        invalid_dates = self.df[col].isna()
+                        if invalid_dates.sum() > 0:
+                            logger.warning(f"Found {invalid_dates.sum()} invalid dates in {col}")
+                            self.df.loc[invalid_dates, col] = pd.Timestamp('2000-01-01', tz='UTC')
+                            self.metrics[f'invalid_dates_{col}'] = invalid_dates.sum()
+                    else:
+                        self.df[col] = self.df[col].astype(expected_type, errors='ignore')
+                        if col in ['content', 'title', 'content_en', 'title_en']:
+                            self.df[col] = self.df[col].fillna('missing')
+                        elif col in ['price_change_percentage', 'daily_alpha']:
+                            invalid = self.df[col].isna()
+                            if invalid.sum() > 0:
+                                median = self.df[col].median()
+                                self.df.loc[invalid, col] = median
+                                logger.info(f"Imputed {invalid.sum()} missing {col} with median {median}")
+                                self.metrics[f'imputed_{col}'] = invalid.sum()
+                    actual_type = str(self.df[col].dtype)
+                    self.metrics[f'type_valid_{col}'] = actual_type.startswith(str(expected_type).split('[')[0])
+                    if not self.metrics[f'type_valid_{col}']:
+                        type_issues.append(f"{col}: expected {expected_type}, got {actual_type}")
+                except Exception as e:
+                    type_issues.append(f"{col}: failed conversion to {expected_type}, error: {str(e)}")
+                    self.metrics[f'type_valid_{col}'] = False
             else:
                 self.metrics[f'type_valid_{col}'] = False
                 type_issues.append(f"{col}: missing from dataset")
@@ -96,33 +130,36 @@ class DataValidator:
         self.metrics['type_issues'] = len(type_issues)
         if type_issues:
             logger.warning(f"Data type issues: {type_issues}")
+        else:
+            logger.info("All data types validated successfully")
 
     def validate_categorical_values(self) -> None:
         """Validate categorical values for event and actual_side columns."""
         if self.df is None:
             raise ValueError("Data not loaded")
         
-        # Validate event
         if 'event' in self.df.columns:
-            valid_events = ['Partnerships', 'Earnings', 'Corporate Action', 'Product Launch', 'Regulatory', 'Annual General Meeting', 'Bond Fixing']
-            invalid_events = self.df['event'][~self.df['event'].isin(valid_events)].unique()
+            valid_events = [
+                'Partnerships', 'Earnings', 'Corporate Action', 'Product Launch',
+                'Regulatory', 'Annual General Meeting', 'Bond Fixing'
+            ]
+            invalid_events = self.df['event'][~self.df['event'].isin(valid_events) & self.df['event'].notna()].unique()
             self.metrics['invalid_events'] = len(invalid_events)
             if invalid_events.size > 0:
                 logger.warning(f"Found {len(invalid_events)} invalid event types: {invalid_events.tolist()}")
-                # Remove rows with invalid events
-                self.df = self.df[self.df['event'].isin(valid_events)]
+                self.df.loc[~self.df['event'].isin(valid_events), 'event'] = 'Other'
+                logger.info(f"Replaced {len(invalid_events)} invalid events with 'Other'")
             else:
                 logger.info("All event types are valid")
 
-        # Validate actual_side
         if 'actual_side' in self.df.columns:
             valid_sides = ['UP', 'DOWN']
-            invalid_sides = self.df['actual_side'][~self.df['actual_side'].isin(valid_sides)].unique()
+            invalid_sides = self.df['actual_side'][~self.df['actual_side'].isin(valid_sides) & self.df['actual_side'].notna()].unique()
             self.metrics['invalid_actual_sides'] = len(invalid_sides)
             if invalid_sides.size > 0:
                 logger.warning(f"Found {len(invalid_sides)} invalid actual_side values: {invalid_sides.tolist()}")
-                # Remove rows with invalid actual_side
-                self.df = self.df[self.df['actual_side'].isin(valid_sides)]
+                self.df.loc[~self.df['actual_side'].isin(valid_sides), 'actual_side'] = 'UNKNOWN'
+                logger.info(f"Replaced {len(invalid_sides)} invalid actual_side values with 'UNKNOWN'")
             else:
                 logger.info("All actual_side values are valid")
 
@@ -133,35 +170,29 @@ class DataValidator:
         
         if 'price_change_percentage' in self.df.columns:
             invalid_prices = self.df[
-                (self.df['price_change_percentage'] < -100) | 
-                (self.df['price_change_percentage'] > 100) |
+                (self.df['price_change_percentage'].abs() > 100) |
                 (self.df['price_change_percentage'].isna())
             ]
             self.metrics['invalid_prices'] = len(invalid_prices)
             if len(invalid_prices) > 0:
                 logger.warning(f"Found {len(invalid_prices)} invalid price change percentages")
-                # Remove rows with extreme or missing prices
-                self.df = self.df[
-                    (self.df['price_change_percentage'] >= -100) & 
-                    (self.df['price_change_percentage'] <= 100) & 
-                    (self.df['price_change_percentage'].notna())
-                ]
+                median_price = self.df['price_change_percentage'].median()
+                self.df.loc[invalid_prices.index, 'price_change_percentage'] = median_price
+                logger.info(f"Imputed {len(invalid_prices)} invalid prices with median {median_price}")
             else:
                 logger.info("All price change percentages are within valid range")
 
         if 'daily_alpha' in self.df.columns:
             invalid_alphas = self.df[
                 (self.df['daily_alpha'].isna()) |
-                (self.df['daily_alpha'].abs() > abs(1000))  # Reasonable threshold
+                (self.df['daily_alpha'].abs() > 1000)
             ]
-            self.metrics['invalid_daily_alpha'] = len(self.invalid_alphas)
-            if len(self.invalid_alphas) > 0:
-                logger.warning(f"Found {len(self.invalid_alphas)} invalid daily alpha values")
-                # Remove rows with missing or extreme daily alpha
-                self.df = self.df[
-                    (self.df['daily_alpha'].notna()) &
-                    (self.df['daily_alpha'].abs() <= abs(1000))
-                ]
+            self.metrics['invalid_daily_alpha'] = len(invalid_alphas)
+            if len(invalid_alphas) > 0:
+                logger.warning(f"Found {len(invalid_alphas)} invalid daily alpha values")
+                median_alpha = self.df['daily_alpha'].median()
+                self.df.loc[invalid_alphas.index, 'daily_alpha'] = median_alpha
+                logger.info(f"Imputed {len(invalid_alphas)} invalid daily alphas with median {median_alpha}")
             else:
                 logger.info("All daily alpha values are valid")
 
@@ -183,11 +214,9 @@ class DataValidator:
             self.metrics['outliers_price'] = len(outliers)
             if len(outliers) > 0:
                 logger.warning(f"Found {len(outliers)} price change outliers")
-                # Remove outliers
-                self.df = self.df[
-                    (self.df['price_change_percentage'] >= lower_bound) & 
-                    (self.df['price_change_percentage'] <= upper_bound)
-                ]
+                median_price = self.df['price_change_percentage'].median()
+                self.df.loc[outliers.index, 'price_change_percentage'] = median_price
+                logger.info(f"Replaced {len(outliers)} outliers with median {median_price}")
             else:
                 logger.info("No significant price change outliers detected")
 
@@ -205,10 +234,10 @@ class DataValidator:
                 self.metrics[f'short_{col}'] = len(short_texts)
                 if len(empty_texts) > 0:
                     logger.warning(f"Found {len(empty_texts)} empty {col} values")
-                    # Remove rows with empty text
-                    self.df = self.df[~(self.df[col].isna() | (self.df[col].str.strip() == ''))]
+                    self.df.loc[empty_texts.index, col] = 'missing'
                 if len(short_texts) > 0:
                     logger.warning(f"Found {len(short_texts)} short {col} values (<10 chars)")
+                    self.df.loc[short_texts.index, col] = 'missing'
                 if len(empty_texts) == 0 and len(short_texts) == 0:
                     logger.info(f"All {col} values are valid")
 
@@ -216,12 +245,16 @@ class DataValidator:
         """Save the cleaned dataset to CSV."""
         if self.df is None:
             raise ValueError("Data not loaded")
+        if self.df.empty:
+            logger.error("No valid data remains after validation")
+            raise ValueError("Output DataFrame is empty")
         try:
             self.df.to_csv(self.output_path, index=False)
-            logger.info(f"Saved cleaned data to {self.output_path}")
+            logger.info(f"Saved cleaned data to {self.output_path} with {len(self.df)} rows")
             self.metrics['final_rows'] = len(self.df)
         except Exception as e:
             logger.error(f"Failed to save cleaned data to {self.output_path}: {str(e)}")
+            raise
 
     def save_metrics(self) -> None:
         """Save validation metrics to CSV."""
@@ -231,7 +264,8 @@ class DataValidator:
     def validate(self) -> pd.DataFrame:
         """Run the full validation pipeline."""
         logger.info("Starting data validation for Step 1")
-        self.load_data()
+        if not self.check_input_structure():
+            logger.warning("Input structure issues detected, proceeding with available columns")
         self.validate_data_types()
         self.validate_categorical_values()
         self.validate_price_ranges()
@@ -246,7 +280,7 @@ if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(base_dir, 'data')
     validator = DataValidator(
-        input_path=os.path.join(data_dir, 'all_price_moves.csv'),
+        input_path=os.path.join(data_dir, 'clean', 'cleaned_price_moves_20250625.csv'),
         output_path=os.path.join(data_dir, 'clean', 'clean_price_moves.csv'),
         metrics_path=os.path.join(data_dir, 'quality_metrics', 'validation_metrics.csv')
     )
