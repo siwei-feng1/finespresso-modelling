@@ -2,7 +2,6 @@ import pandas as pd
 import os
 import logging
 from typing import Dict, List, Tuple
-Tuple
 import json
 from datetime import datetime
 import hashlib
@@ -12,15 +11,16 @@ def setup_logger(name: str) -> logging.Logger:
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     logs_dir = os.path.join(base_dir, 'logs')
     os.makedirs(logs_dir, exist_ok=True)
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(message)s',
-        handlers=[
-            logging.FileHandler(os.path.join(logs_dir, 'versioning.log')),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger(name)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    logger.handlers = []  # Clear any existing handlers
+    file_handler = logging.FileHandler(os.path.join(logs_dir, 'versioning.log'))
+    file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(file_handler)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(stream_handler)
+    return logger
 
 logger = setup_logger(__name__)
 
@@ -69,7 +69,7 @@ class DataVersioning:
         major, minor, patch = map(int, latest_version[1:].split('.'))
         return f'v{major}.{minor}.{patch + 1}'
 
-    def save_version(self, df: pd.DataFrame, version: str) -> None:
+    def save_version(self, df: pd.DataFrame, version: str) -> str:
         """Save DataFrame to versioned directory."""
         version_dir = os.path.join(self.versions_dir, version)
         os.makedirs(version_dir, exist_ok=True)
@@ -144,7 +144,7 @@ class DataVersioning:
 if __name__ == '__main__':
     versioning = DataVersioning(
         input_path='data/all_price_moves.csv',
-        processed_path='data/processed/processed_price_moves.csv'
+        processed_path='data/clean/clean_price_moves.csv'
     )
     version, versioned_path, lineage_path = versioning.version_and_track(
         processing_steps=['load_data'],

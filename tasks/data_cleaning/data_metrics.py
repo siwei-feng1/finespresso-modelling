@@ -11,15 +11,16 @@ def setup_logger(name: str) -> logging.Logger:
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     logs_dir = os.path.join(base_dir, 'logs')
     os.makedirs(logs_dir, exist_ok=True)
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(message)s',
-        handlers=[
-            logging.FileHandler(os.path.join(logs_dir, 'metrics.log')),
-            logging.StreamHandler()
-        ]
-    )
-    return logging.getLogger(name)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    logger.handlers = []  # Clear any existing handlers
+    file_handler = logging.FileHandler(os.path.join(logs_dir, 'metrics.log'))
+    file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(file_handler)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(stream_handler)
+    return logger
 
 logger = setup_logger(__name__)
 
@@ -118,5 +119,5 @@ class DataMetricsMonitor:
         return self.metrics
 
 if __name__ == '__main__':
-    monitor = DataMetricsMonitor(input_path='data/clean/cleaned_price_moves.csv')
+    monitor = DataMetricsMonitor(input_path='data/clean/clean_price_moves.csv')
     metrics = monitor.monitor()
