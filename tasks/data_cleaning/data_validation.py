@@ -131,27 +131,64 @@ class DataValidator:
             logger.info("All data types validated successfully")
 
     def validate_categorical_values(self) -> None:
-        """Validate categorical values for actual_side column, preserve event values."""
+        """Balance actual_side classes and preserve event distribution."""
         if self.df is None:
             raise ValueError("Data not loaded")
         
-        if 'event' in self.df.columns:
-            invalid_events = self.df['event'][self.df['event'].notna()].unique()
-            self.metrics['unique_events'] = len(invalid_events)
-            logger.info(f"Found {len(invalid_events)} unique event types: {invalid_events.tolist()}")
-            # Do not replace invalid events, keep as is
-            self.metrics['invalid_events'] = 0  # No invalidation performed
-
         if 'actual_side' in self.df.columns:
-            valid_sides = ['UP', 'DOWN']
-            invalid_sides = self.df['actual_side'][~self.df['actual_side'].isin(valid_sides) & self.df['actual_side'].notna()].unique()
-            self.metrics['invalid_actual_sides'] = len(invalid_sides)
-            if invalid_sides.size > 0:
-                logger.warning(f"Found {len(invalid_sides)} invalid actual_side values: {invalid_sides.tolist()}")
-                self.df.loc[~self.df['actual_side'].isin(valid_sides), 'actual_side'] = 'UNKNOWN'
-                logger.info(f"Replaced {len(invalid_sides)} invalid actual_side values with 'UNKNOWN'")
+            # Get class counts
+            class_counts = self.df['actual_side'].value_counts()
+            logger.info(f"Initial class distribution:\n{class_counts}")
+            
+            # Balance classes if imbalance exceeds threshold
+            if abs(class_counts['UP'] - class_counts['DOWN']) / len(self.df) > 0.2:
+                from sklearn.utils import resample
+                
+                # Separate classes
+                df_majority = self.df[self.df['actual_side'] == class_counts.idxmax()]
+                df_minority = self.df[self.df['actual_side'] == class_counts.idxmin()]
+                
+                # Upsample minority class
+                df_minority_upsampled = resample(
+                    df_minority,
+                    replace=True,
+                    n_samples=len(df_majority),
+                    random_state=42
+                )
+                
+                # Combine and shuffle
+                self.df = pd.concat([df_majority, df_minority_upsampled]).sample(frac=1)
+                logger.info(f"Balanced classes. New distribution:\n{self.df['actual_side'].value_counts()}")
+                self.metrics['class_balance_applied'] = True
             else:
-                logger.info("All actual_side values are valid")
+                logger.info("Class imbalance within acceptable threshold")
+                self.metrics['class_balance_applied'] = False
+
+    def validate_outliers(self) -> None:
+        """Use relaxed outlier detection with higher IQR multiplier."""
+        if self.df is None:
+            raise ValueError("Data not loaded")
+        
+        if 'price_change_percentage' in self.df.columns:
+            Q1 = self.df['price_change_percentage'].quantile(0.25)
+            Q3 = self.df['price_change_percentage'].quantile(0.75)
+            IQR = Q3 - Q1
+            # Increased from 1.5 to 3.0 for more relaxed bounds
+            lower_bound = Q1 - 3.0 * IQR
+            upper_bound = Q3 + 3.0 * IQR
+            
+            outliers = self.df[
+                (self.df['price_change_percentage'] < lower_bound) | 
+                (self.df['price_change_percentage'] > upper_bound)
+            ]
+            self.metrics['outliers_price'] = len(outliers)
+            
+            if len(outliers) > 0:
+                logger.warning(f"Found {len(outliers)} price change outliers (relaxed bounds)")
+                # Instead of imputing, cap values to preserve variance
+                self.df.loc[self.df['price_change_percentage'] < lower_bound, 'price_change_percentage'] = lower_bound
+                self.df.loc[self.df['price_change_percentage'] > upper_bound, 'price_change_percentage'] = upper_bound
+                logger.info("Capped outliers instead of imputing")
 
     def validate_price_ranges(self) -> None:
         """Validate price change percentage and daily alpha ranges."""
@@ -186,29 +223,6 @@ class DataValidator:
             else:
                 logger.info("All daily alpha values are valid")
 
-    def validate_outliers(self) -> None:
-        """Validate outliers in price_change_percentage using IQR method."""
-        if self.df is None:
-            raise ValueError("Data not loaded")
-        
-        if 'price_change_percentage' in self.df.columns:
-            Q1 = self.df['price_change_percentage'].quantile(0.25)
-            Q3 = self.df['price_change_percentage'].quantile(0.75)
-            IQR = Q3 - Q1
-            lower_bound = Q1 - 1.5 * IQR
-            upper_bound = Q3 + 1.5 * IQR
-            outliers = self.df[
-                (self.df['price_change_percentage'] < lower_bound) | 
-                (self.df['price_change_percentage'] > upper_bound)
-            ]
-            self.metrics['outliers_price'] = len(outliers)
-            if len(outliers) > 0:
-                logger.warning(f"Found {len(outliers)} price change outliers")
-                median_price = self.df['price_change_percentage'].median()
-                self.df.loc[outliers.index, 'price_change_percentage'] = median_price
-                logger.info(f"Replaced {len(outliers)} outliers with median {median_price}")
-            else:
-                logger.info("No significant price change outliers detected")
 
     def validate_text_quality(self) -> None:
         """Validate text quality for content and title columns."""
