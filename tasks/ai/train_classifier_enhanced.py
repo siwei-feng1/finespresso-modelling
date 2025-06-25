@@ -20,20 +20,24 @@ from utils.db.model_db_util import save_results
 from utils.logging.log_util import get_logger
 from utils.ai.language_util import spacy_model_mapping
 
-# Configure logger
-logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data', 'logs')
-os.makedirs(logs_dir, exist_ok=True)
-log_file = os.path.join(logs_dir, 'train_classifier_enhanced.log')
+def setup_logger(name: str) -> logging.Logger:
+    """Configure logging for the module."""
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    logs_dir = os.path.join(base_dir, 'logs')
+    os.makedirs(logs_dir, exist_ok=True)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    logger.handlers = []  # Clear any existing handlers
+    file_handler = logging.FileHandler(os.path.join(logs_dir, 'classification.log'))
+    file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(file_handler)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
+    logger.addHandler(stream_handler)
+    return logger
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(log_file, mode='a'),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger(__name__)
+
+logger = setup_logger(__name__)
 
 # Keep only the English model
 nlp = spacy.load("en_core_web_sm")

@@ -1,0 +1,2 @@
+initial_rows,missing_columns,type_valid_id,type_valid_ticker,type_valid_published_date,type_valid_event,type_valid_actual_side,type_valid_price_change_percentage,type_valid_daily_alpha,type_valid_content,type_valid_title,type_issues,unique_events,invalid_events,invalid_actual_sides,invalid_prices,invalid_daily_alpha,outliers_price,empty_content,short_content,empty_title,short_title,final_rows
+2207,0,False,False,True,False,False,False,False,False,False,8,58,0,0,1,0,350,0,18,0,2,2207
