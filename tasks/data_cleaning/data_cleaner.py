@@ -126,21 +126,18 @@ class DataCleaner:
         return outlier_flags
 
     def handle_outliers(self) -> None:
-        """Handle outliers by winsorizing with event-specific limits."""
+        """Handle outliers with relaxed winsorizing limits."""
         if self.df is None:
             raise ValueError("Data not loaded")
         
         numerical_cols = self.df.select_dtypes(include=['float64']).columns
-        self.detect_outliers_iqr(numerical_cols)
         
+        # More relaxed limits (5% instead of 1%)
         for col in numerical_cols:
-            for event in self.df['event'].unique():
-                mask = self.df['event'] == event
-                if mask.sum() < 10:
-                    continue
-                self.df.loc[mask, col] = winsorize(self.df.loc[mask, col], limits=[0.01, 0.01])
-                logger.info(f"Winsorized {col} at 1st and 99th percentiles for event {event}")
-                self.metrics[f'winsorized_{col}_{event}'] = True
+            if col in ['price_change_percentage', 'daily_alpha']:
+                self.df[col] = winsorize(self.df[col], limits=[0.05, 0.05])  # Changed from 0.01
+                logger.info(f"Relaxed winsorizing (5%) applied to {col}")
+                self.metrics[f'winsorized_{col}'] = '5%'
 
     def clean_datetime(self) -> None:
         """Clean and standardize datetime columns with flexible parsing."""
