@@ -8,7 +8,8 @@ from datetime import datetime
 
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
-    logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs')
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    logs_dir = os.path.join(base_dir, 'logs')
     os.makedirs(logs_dir, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
