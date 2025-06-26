@@ -45,14 +45,15 @@ def validate_categorical_columns(df: pd.DataFrame, categorical_cols: List[str]) 
 def select_features(df: pd.DataFrame, params: Dict) -> Tuple[pd.DataFrame, List[str]]:
     """
     Perform feature selection using correlation and random forest importance.
+    Retains the 'event' column in the output DataFrame.
     
     Parameters:
     - df: DataFrame containing features and target
     - params: Dictionary with 'method', 'correlation_threshold', 'importance_threshold'
     
     Returns:
-    - df_selected: DataFrame with selected features
-    - selected_features: List of selected feature names
+    - df_selected: DataFrame with selected features and 'event' column
+    - selected_features: List of selected feature names (excluding 'event')
     """
     method = params.get('method', 'correlation_and_rf')
     correlation_threshold = params.get('correlation_threshold', 0.8)
@@ -63,12 +64,17 @@ def select_features(df: pd.DataFrame, params: Dict) -> Tuple[pd.DataFrame, List[
         'sector_performance', 'day_of_week', 'hour', 'combined_sentiment', 'prev_news_sentiment',
         'volatility', 'sector_relative_volatility', 'days_since_event'
     ]
-    
-    categorical_cols = ['event', 'exchange', 'sector', 'industry', 'market_cap_category']
+    categorical_cols = ['exchange', 'sector', 'industry', 'market_cap_category']  # Exclude 'event'
+    required_cols = ['event', 'content', 'title', 'actual_side', 'price_change_percentage']
     
     # Validate columns
     available_num_cols = [col for col in numerical_cols if col in df.columns]
     available_cat_cols = validate_categorical_columns(df, categorical_cols)
+    missing_required = [col for col in required_cols if col not in df.columns]
+    
+    if missing_required:
+        logger.error(f"Missing required columns: {missing_required}")
+        raise ValueError(f"Missing required columns: {missing_required}")
     
     if not available_num_cols and not available_cat_cols:
         logger.error("No valid features available for selection")
@@ -79,7 +85,7 @@ def select_features(df: pd.DataFrame, params: Dict) -> Tuple[pd.DataFrame, List[
     
     # Handle missing values
     df[available_num_cols] = df[available_num_cols].fillna(df[available_num_cols].median())
-    df[available_cat_cols] = df[available_cat_cols].fillna('Unknown')
+    df[available_cat_cols + ['event']] = df[available_cat_cols + ['event']].fillna('Unknown')
     
     # Preprocessing pipeline
     preprocessor = ColumnTransformer(
@@ -138,19 +144,15 @@ def select_features(df: pd.DataFrame, params: Dict) -> Tuple[pd.DataFrame, List[
         except Exception as e:
             logger.warning(f"RF importance-based selection failed: {str(e)}. Skipping RF filter.")
     
-    # Update DataFrame
-    df_selected = df.copy()
-    # Keep only original columns and valid selected features
-    final_features = [col for col in df.columns if col not in numerical_cols + categorical_cols] + \
-                     [f for f in selected_features if f in feature_names]
-    # Filter out any features not in DataFrame columns
-    final_features = [f for f in final_features if f in df_selected.columns]
+    # Update DataFrame, keeping required columns
+    final_features = [col for col in df.columns if col in required_cols or col in selected_features]
+    final_features = [f for f in final_features if f in df.columns]
     
     if not final_features:
         logger.error("No valid features selected")
         raise ValueError("No valid features selected")
     
-    df_selected = df_selected[final_features]
+    df_selected = df[final_features]
     logger.info(f"Final selected features: {final_features}")
     
     return df_selected, final_features
