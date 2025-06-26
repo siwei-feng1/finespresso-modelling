@@ -1,0 +1,21 @@
+{
+  "version": "v1.0.2",
+  "timestamp": "2025-06-25T13:51:10.262406",
+  "input_path": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\all_price_moves.csv",
+  "input_hash": "d58f0c490d26a168b7b70d097d4ce9dfc88fac4cb3fb3fb03994fe8f2ed03e61",
+  "output_path": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\clean\\clean_price_moves.csv",
+  "output_hash": "c2b1760389122d30a6d0b60a8f0a4aa7707f0a48f3e8173a5df782cdb9774b21",
+  "processing_steps": [
+    "analyze_data_quality",
+    "clean_data",
+    "validate_data",
+    "monitor_metrics"
+  ],
+  "parameters": {
+    "input_path": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\all_price_moves.csv",
+    "output_path": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\clean\\clean_price_moves.csv",
+    "metrics_dir": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\quality_metrics",
+    "versions_dir": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\versions",
+    "lineage_dir": "C:\\Users\\HP\\Desktop\\Upwork_project\\finespresso-modelling\\data\\lineage"
+  }
+}
