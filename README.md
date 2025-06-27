@@ -21,6 +21,8 @@ Below is an example of a large (about 100%) overnight price move as a result of 
 **Figure - Finespresso Prediction**
 ![Vaxart Prediction](img/vaxart-prediction.png)
 
+Source: [Finespresso Demo](https://research.finespresso.org)
+
 ## 📊 Current Performance
 
 ### Classification Models
