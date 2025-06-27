@@ -1,0 +1,30 @@
+start_date: '2025/05/28'
+end_date: '2025/06/27'
+initial_capital: 10000
+position_size: 10
+# Take profit and stop loss in percent
+# (as in UI: 1.00 and 0.50)
+take_profit: 1.0
+stop_loss: 0.5
+# Publisher and events as in UI
+data_source: db
+publisher: globenewswire_biotech
+events:
+  - changes_in_companys_own_shares
+  - business_contracts
+  - patents
+  - shares_issue
+  - corporate_action
+  - licensing_agreements
+  - major_shareholder_announcements
+  - financial_results
+  - financing_agreements
+  - clinical_study
+  - dividend_reports_and_estimates
+  - management_changes
+  - partnerships
+  - earnings_releases_and_operating_result
+  - regulatory_filings
+  - product_services_announcement
+data_dir: data
+output_dir: reports 
