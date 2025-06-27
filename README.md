@@ -367,3 +367,7 @@ If you're contributing to the main project (not the take-home challenge):
 4. **Documentation Review**: Ensure documentation is clear and complete
 5. **Merge**: Once approved, PR is merged to main branch
 
+---
+
+**Good luck! We're excited to see your innovative approaches to improving financial news impact prediction! 🚀**
+
