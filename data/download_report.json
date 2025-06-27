@@ -1,5 +1,5 @@
 {
-  "download_timestamp": "2025-06-20T10:38:24.812483",
+  "download_timestamp": "2025-06-27T20:33:59.990489",
   "data_directory": "/home/julian/dev/hobby/finespresso-modelling/data",
   "files_created": [
     {
@@ -9,8 +9,8 @@
     },
     {
       "filename": "all_news.csv",
-      "size_bytes": 91072602,
-      "size_mb": 86.85
+      "size_bytes": 94237241,
+      "size_mb": 89.87
     },
     {
       "filename": "instrument_summary.json",
@@ -23,13 +23,18 @@
       "size_mb": 1.13
     },
     {
+      "filename": "download_report.json",
+      "size_bytes": 873,
+      "size_mb": 0.0
+    },
+    {
       "filename": "all_price_moves.csv",
       "size_bytes": 2453332,
       "size_mb": 2.34
     },
     {
       "filename": "news_summary.json",
-      "size_bytes": 14414,
+      "size_bytes": 14546,
       "size_mb": 0.01
     },
     {
