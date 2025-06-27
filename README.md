@@ -10,6 +10,17 @@ This system analyzes financial news articles and predicts:
 
 The models are trained on real financial news data with corresponding price movements, covering various event types like earnings releases, clinical studies, mergers & acquisitions, and more.
 
+
+## 🖼️ Case Study
+
+Below is an example of a large (about 100%) overnight price move as a result of a press release and our system prediction:
+
+**Figure - Overnight News Announcement for Vaxart (NASDAQ:VXRT)**
+![Vaxart Example](img/vaxart-example.png)
+
+**Figure - Finespresso Prediction**
+![Vaxart Prediction](img/vaxart-prediction.png)
+
 ## 📊 Current Performance
 
 ### Classification Models
@@ -266,13 +277,6 @@ Max Drawdown:        0.0%
 
 See [`tasks/backtesting/README.md`](tasks/backtesting/README.md) for more details and sample output.
 
-## 🖼️ Sample Backtest Visualizations
-
-Below are example images from the backtesting pipeline:
-
-![Vaxart Example](img/vaxart-example.png)
-
-![Vaxart Prediction](img/vaxart-prediction.png)
 
 ## 🛠️ Recommended Code Editors
 
