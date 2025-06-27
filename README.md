@@ -206,6 +206,17 @@ You are tasked with improving the financial news impact prediction system. The c
 
 **Expected Impact**: Better model management and reproducibility
 
+#### 7. 🧪 Backtesting & Evaluation (Bonus Challenge)
+**Current State**: Backtesting pipeline for event-driven trading is available
+
+**Your Tasks**:
+- [ ] Run and analyze backtests using the provided pipeline
+- [ ] Compare before/after model improvements on backtest results
+- [ ] Add new evaluation metrics or visualizations
+- [ ] Document and automate backtest workflows
+
+**Reference**: See [`tasks/backtesting/README.md`](tasks/backtesting/README.md) for usage and output examples.
+
 ### 🎯 Success Metrics
 
 **Primary Goals**:
@@ -227,30 +238,51 @@ You are tasked with improving the financial news impact prediction system. The c
 4. **Documentation**: Updated README with your improvements
 5. **Code Quality**: Clean, well-documented, and tested code
 
-### 🛠️ Technical Requirements
+## 📊 Before/After Backtesting Results
 
-- Python 3.8+
-- Familiarity with ML libraries (scikit-learn, pandas, numpy)
-- Experience with text processing (spaCy, transformers)
-- Knowledge of financial markets (bonus)
-- Experience with MLOps tools (bonus)
+You should compare your model improvements using the backtesting pipeline. Example output:
 
-### 🚀 Getting Started
+**Before:**
+```
+Total Return:        0.3%
+Annualized Return:   4.0%
+Total PnL:           $31
+Total Trades:        100
+Win Rate:            30.0%
+Average Trade PnL:   $0
+Max Drawdown:        0.0%
+```
 
-1. **Fork the repository** and set up your development environment
-2. **Run the baseline models** to understand current performance
-3. **Choose your focus areas** from the challenge tasks
-4. **Implement improvements** incrementally
-5. **Document your approach** and results
-6. **Submit your enhanced solution**
+**After:**
+```
+Total Return:        1.0%
+Annualized Return:   12.3%
+Total PnL:           $98
+Total Trades:        198
+Win Rate:            36.9%
+Average Trade PnL:   $0
+Max Drawdown:        0.0%
+```
 
-### 📚 Resources
+See [`tasks/backtesting/README.md`](tasks/backtesting/README.md) for more details and sample output.
 
-- [scikit-learn Documentation](https://scikit-learn.org/)
-- [Yahoo Finance API](https://pypi.org/project/yfinance/)
-- [MLflow Documentation](https://mlflow.org/)
-- [Financial NLP Papers](https://paperswithcode.com/task/financial-nlp)
-- [Transformers Library](https://huggingface.co/transformers/)
+## 🖼️ Sample Backtest Visualizations
+
+Below are example images from the backtesting pipeline:
+
+![Vaxart Example](img/vaxart-example.png)
+
+![Vaxart Prediction](img/vaxart-prediction.png)
+
+## 🛠️ Recommended Code Editors
+
+For the best developer experience, we recommend using one of the following code editors with this repository:
+
+- [Cursor](https://www.cursor.so/) — AI-powered code editor with deep repo integration
+- [Windsurf](https://windsurf.com/) — Modern code editor with AI and repo tools
+- [Claude Code](https://claude.ai/) — Claude's code workspace for collaborative AI coding
+
+These editors support advanced navigation, AI code completion, and are well-suited for large Python projects like this one.
 
 ## 🤝 Contributing
 
@@ -262,7 +294,7 @@ If you're working on the take-home challenge, please follow this workflow:
 ```bash
 # Fork this repository on GitHub
 # Then clone your fork locally
-git clone https://github.com/YOUR_USERNAME/finespresso-modelling.git
+git clone https://github.com/predictivelabs/finespresso-modelling.git
 cd finespresso-modelling
 ```
 
