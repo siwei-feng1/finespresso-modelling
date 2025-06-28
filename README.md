@@ -286,7 +286,7 @@ For the best developer experience, we recommend using one of the following code 
 
 - [Cursor](https://www.cursor.so/) — AI-powered code editor with deep repo integration
 - [Windsurf](https://windsurf.com/) — Modern code editor with AI and repo tools
-- [Claude Code](https://claude.ai/) — Claude's code workspace for collaborative AI coding
+- [Claude Code](https://www.anthropic.com/claude-code) — Claude's code workspace for collaborative AI coding
 
 These editors support advanced navigation, AI code completion, and are well-suited for large Python projects like this one.
 
