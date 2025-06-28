@@ -59,8 +59,13 @@ Set `data_source: csv` in your config, or use `--data-source csv` on the CLI. Ma
 
 ## 3. Output
 
-- Results are saved to `reports/backtest_<timestamp>.csv`.
-- The output file contains all trade details and can be used for further analysis.
+- **All backtest results are saved to the `reports/backtest/` directory.**
+- Each run generates two files:
+  - `backtest_trades_<timestamp>.csv`: Detailed trade history for the run.
+  - `backtest_summary_<timestamp>.csv`: Key summary metrics for the run.
+- The `<timestamp>` format is `YYYYMMDD_HHMMSS` (e.g., `20250628_075740`).
+- Both files include `runid` and `rundate` columns for tracking.
+- You can compare and analyze multiple runs by reviewing these files in the `reports/backtest/` directory.
 
 ## 4. Notes
 
@@ -74,7 +79,7 @@ Set `data_source: csv` in your config, or use `--data-source csv` on the CLI. Ma
 python tasks/backtesting/backtester.py --publisher globenewswire_biotech --data-source db
 ```
 
-This will run a backtest for the specified publisher using the database as the news source.
+This will run a backtest for the specified publisher using the database as the news source. The results will be saved in the `reports/backtest/` directory as described above.
 
 ## 6. Sample Backtest Results Output
 
@@ -92,7 +97,8 @@ Win Rate:            36.9%
 Average Trade PnL:   $0
 Max Drawdown:        0.0%
 ============================================================
-Trade history saved to: data/backtest_20250627_222145.csv
+Trade history saved to: reports/backtest/backtest_trades_20250628_075740.csv
+Summary saved to: reports/backtest/backtest_summary_20250628_075740.csv
 ```
 
-This summary is also saved as a CSV file in your output directory for further analysis.
+Both files are saved in the `reports/backtest/` directory for each run, making it easy to track and compare results.

@@ -16,6 +16,7 @@ from pathlib import Path
 from utils.backtesting.backtest_util import run_backtest
 from utils.logging.log_util import get_logger
 import yaml
+import uuid
 
 logger = get_logger(__name__)
 
@@ -210,8 +211,8 @@ Examples:
     parser.add_argument(
         "--output-dir",
         type=str,
-        default="data",
-        help="Directory to save results (default: data)"
+        default="reports",
+        help="Directory to save results (default: reports)"
     )
     
     # Utility options
@@ -359,12 +360,37 @@ Examples:
         return 1
     trades_df, metrics = results
     print_metrics(metrics)
-    # Save results to reports/backtest_<timestamp>.csv
+    # Add run_id and rundate columns to trades_df
+    run_id = str(uuid.uuid4())[:8]
+    rundate = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    trades_df['runid'] = run_id
+    trades_df['rundate'] = rundate
+    # Save trades report
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = Path(output_dir) / f"backtest_{timestamp}.csv"
-    output_path.parent.mkdir(exist_ok=True)
-    trades_df.to_csv(output_path, index=False)
-    print(f"Trade history saved to: {output_path}")
+    trades_path = Path(output_dir) / "backtest" / f"backtest_trades_{timestamp}.csv"
+    trades_path.parent.mkdir(exist_ok=True)
+    trades_df.to_csv(trades_path, index=False)
+    print(f"Trade history saved to: {trades_path}")
+
+    # Save summary report
+    summary_cols = [
+        'runid', 'rundate',
+        'total_return', 'annualized_return', 'total_pnl', 'total_trades', 'win_rate', 'max_drawdown'
+    ]
+    summary_row = {
+        'runid': run_id,
+        'rundate': rundate,
+        'total_return': metrics.get('total_return'),
+        'annualized_return': metrics.get('annualized_return'),
+        'total_pnl': metrics.get('total_pnl'),
+        'total_trades': metrics.get('total_trades'),
+        'win_rate': metrics.get('win_rate'),
+        'max_drawdown': metrics.get('max_drawdown', 0)
+    }
+    summary_df = pd.DataFrame([summary_row], columns=summary_cols)
+    summary_path = Path(output_dir) / "backtest" / f"backtest_summary_{timestamp}.csv"
+    summary_df.to_csv(summary_path, index=False)
+    print(f"Summary saved to: {summary_path}")
     return 0
 
 if __name__ == "__main__":
