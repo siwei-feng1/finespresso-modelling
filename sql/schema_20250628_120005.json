@@ -1,0 +1,864 @@
+{
+  "fe_logs": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('fe_logs_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "message",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "timestamp",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "fe_logs_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  },
+  "eq_model_results_binary": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('eq_model_results_binary_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "run_id",
+        "type": "UUID",
+        "nullable": false,
+        "default": "gen_random_uuid()",
+        "primary_key": false
+      },
+      {
+        "name": "timestamp",
+        "type": "TIMESTAMP",
+        "nullable": false,
+        "default": "CURRENT_TIMESTAMP",
+        "primary_key": false
+      },
+      {
+        "name": "event",
+        "type": "VARCHAR(255)",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "accuracy",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "precision",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "recall",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "f1_score",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "auc_roc",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "test_sample",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "training_sample",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "total_sample",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "up_accuracy",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "down_accuracy",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "total_up",
+        "type": "INTEGER",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "total_down",
+        "type": "INTEGER",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "correct_up",
+        "type": "INTEGER",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "correct_down",
+        "type": "INTEGER",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "up_predictions_pct",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "down_predictions_pct",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "eq_model_results_binary_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  },
+  "eq_model_results_regression": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('eq_model_results_regression_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "run_id",
+        "type": "UUID",
+        "nullable": false,
+        "default": "gen_random_uuid()",
+        "primary_key": false
+      },
+      {
+        "name": "timestamp",
+        "type": "TIMESTAMP",
+        "nullable": false,
+        "default": "CURRENT_TIMESTAMP",
+        "primary_key": false
+      },
+      {
+        "name": "event",
+        "type": "VARCHAR(255)",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "mse",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "r2",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "mae",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "rmse",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "test_sample",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "training_sample",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "total_sample",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "eq_model_results_regression_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  },
+  "instrument": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "BIGINT",
+        "nullable": false,
+        "default": "nextval('instrument_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "issuer",
+        "type": "VARCHAR(255)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "ticker",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "yf_ticker",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "isin",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "asset_class",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "exchange",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "exchange_code",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "country",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "url",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "sector",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "market_cap_class",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "float_ratio",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "instrument_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  },
+  "news": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('news_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "title",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "link",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "company",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "published_date",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "content",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "reason",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "industry",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "publisher_topic",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "event",
+        "type": "VARCHAR(255)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "publisher",
+        "type": "VARCHAR(255)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "downloaded_at",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": "CURRENT_TIMESTAMP",
+        "primary_key": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(255)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "instrument_id",
+        "type": "BIGINT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "yf_ticker",
+        "type": "VARCHAR(255)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "ticker",
+        "type": "VARCHAR(16)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "published_date_gmt",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "timezone",
+        "type": "VARCHAR(50)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "publisher_summary",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "ticker_url",
+        "type": "VARCHAR(500)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "predicted_side",
+        "type": "VARCHAR(10)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "predicted_move",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "langauge",
+        "type": "VARCHAR(10)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "language",
+        "type": "VARCHAR(50)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "content_en",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "title_en",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "news_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  },
+  "price_moves": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('price_moves_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "news_id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "ticker",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "published_date",
+        "type": "TIMESTAMP",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "begin_price",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "end_price",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "index_begin_price",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "index_end_price",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "volume",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "market",
+        "type": "VARCHAR",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "price_change",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "price_change_percentage",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "index_price_change",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "index_price_change_percentage",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "daily_alpha",
+        "type": "DOUBLE PRECISION",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "actual_side",
+        "type": "VARCHAR(10)",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "predicted_side",
+        "type": "VARCHAR(10)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "predicted_move",
+        "type": "DOUBLE PRECISION",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "downloaded_at",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "price_source",
+        "type": "VARCHAR(20)",
+        "nullable": false,
+        "default": "'yfinance'::character varying",
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "price_moves_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  },
+  "signups": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('signups_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "email",
+        "type": "VARCHAR(255)",
+        "nullable": false,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "captured_at",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": "CURRENT_TIMESTAMP",
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "signups_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": [
+      {
+        "name": "signups_email_key",
+        "unique": true,
+        "column_names": [
+          "email"
+        ],
+        "duplicates_constraint": "signups_email_key",
+        "include_columns": [],
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      }
+    ]
+  },
+  "conversations": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "INTEGER",
+        "nullable": false,
+        "default": "nextval('conversations_id_seq'::regclass)",
+        "primary_key": false
+      },
+      {
+        "name": "user_id",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "session_id",
+        "type": "VARCHAR(100)",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "timestamp",
+        "type": "TIMESTAMP",
+        "nullable": true,
+        "default": "CURRENT_TIMESTAMP",
+        "primary_key": false
+      },
+      {
+        "name": "user_prompt",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      },
+      {
+        "name": "answer",
+        "type": "TEXT",
+        "nullable": true,
+        "default": null,
+        "primary_key": false
+      }
+    ],
+    "foreign_keys": [],
+    "primary_keys": {
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "conversations_pkey",
+      "comment": null,
+      "dialect_options": {
+        "postgresql_include": []
+      }
+    },
+    "indexes": []
+  }
+}

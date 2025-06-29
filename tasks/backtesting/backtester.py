@@ -388,9 +388,13 @@ Examples:
         'max_drawdown': metrics.get('max_drawdown', 0)
     }
     summary_df = pd.DataFrame([summary_row], columns=summary_cols)
-    summary_path = Path(output_dir) / "backtest" / f"backtest_summary_{timestamp}.csv"
-    summary_df.to_csv(summary_path, index=False)
-    print(f"Summary saved to: {summary_path}")
+    summary_path = Path(output_dir) / "backtest" / "backtest_summary.csv"
+    
+    # Check if summary file exists to determine if we need to write headers
+    write_header = not summary_path.exists()
+    
+    summary_df.to_csv(summary_path, index=False, mode='a', header=write_header)
+    print(f"Summary appended to: {summary_path}")
     return 0
 
 if __name__ == "__main__":

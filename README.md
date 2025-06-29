@@ -1,6 +1,6 @@
 # Finespresso Modelling - Financial News Impact Prediction
 
-A machine learning system that predicts the impact of financial news on stock prices using natural language processing and machine learning techniques.
+A machine learning platform that predicts the impact of financial news / press releases on stock prices using natural language processing and machine learning techniques. It also includes basic backtesting utilities to execute trades based on the signal and measure the financial performance of the strategy.
 
 ## 🎯 Project Overview
 
@@ -23,7 +23,7 @@ Below is an example of a large (about 100%) overnight price move as a result of 
 
 Source: [Finespresso Demo](https://research.finespresso.org)
 
-## 📊 Current Performance
+## 📊 Current Model Performance
 
 ### Classification Models
 - **Average Accuracy**: ~62% across all events
@@ -39,7 +39,14 @@ Source: [Finespresso Demo](https://research.finespresso.org)
   - Business Contracts: R² = 0.044
   - Voting Rights: R² = 0.022
 
-## 🏗️ System Architecture
+## 📊 Current Backtesting Performance
+
+**Figure - Sample Backtest Results**
+![Sample Backtest Results](img/sample-backtest-results.png)
+
+Source: [Finespresso Backtester](https://research.finespresso.org/Backtester)
+
+## 🏗️ Modelling Platform Architecture
 
 ### Data Pipeline
 ```
@@ -55,11 +62,12 @@ Database → CSV Export → Model Training → Results & Models
 ### File Organization
 ```
 finespresso-modelling/
-├── data/                    # Raw data CSV files
+├── data/                    # Raw input data CSV files - news, instruments and price moves
 ├── models/                  # Trained model files (.joblib)
-├── reports/                 # Training results and metrics
+├── playground/             # Data download utilities
+├── reports/                 # Model performance and backtesting results
 ├── tasks/ai/               # Training and prediction scripts
-└── tests/                  # Data download utilities
+└── tests/                  # Unit tests
 ```
 
 ## 🚀 Quick Start
@@ -79,7 +87,7 @@ echo "DATABASE_URL='your_database_url'" > .env
 
 ### 2. Download Data
 ```bash
-python tests/download_data.py
+python playground/download_data.py
 ```
 
 ### 3. Train Models
@@ -126,7 +134,7 @@ You are tasked with improving the financial news impact prediction system. The c
 **Current State**: Basic text preprocessing with potential data quality issues
 
 **Your Tasks**:
-- [ ] Analyze data quality issues in `data/all_price_moves.csv`
+- [ ] Analyze data quality issues in `data/all_price_moves.csv`. In particular, you will notice we have about 57k news articles but only about 2700 corresponding price moves. The price moves and news are connected via instruments so the goal would be to link the data sets better and download additional moves.
 - [ ] Implement data cleaning for outliers and anomalies
 - [ ] Add data validation checks for price movements
 - [ ] Create data quality metrics and monitoring
@@ -203,7 +211,7 @@ You are tasked with improving the financial news impact prediction system. The c
 
 **Expected Impact**: 15-25% improvement in model accuracy
 
-#### 6. 📊 Experiment Tracking & MLOps (Bonus Challenge)
+#### 6. 📊 Experiment Tracking with MLFlow & MLOps (Bonus Challenge)
 **Current State**: No experiment tracking
 
 **Your Tasks**:
@@ -228,13 +236,13 @@ You are tasked with improving the financial news impact prediction system. The c
 - [ ] Add new evaluation metrics or visualizations
 - [ ] Document and automate backtest workflows
 
-**Reference**: See [`tasks/backtesting/README.md`](tasks/backtesting/README.md) for usage and output examples.
+**Reference**: See [`tasks/backtesting/README.md`](tasks/backtesting/README.md) for usage and output examples and [Finespresso Backtester](https://research.finespresso.org/Backtester) for a live demo.
 
 ### 🎯 Success Metrics
 
 **Primary Goals**:
 - Achieve >70% accuracy for classification models
-- Achieve positive R² scores for regression models
+- Achieve higher R² scores and other similar metrics for regression models
 - Reduce prediction variance across different events
 
 **Secondary Goals**:
