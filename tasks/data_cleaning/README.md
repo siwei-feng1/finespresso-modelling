@@ -13,7 +13,9 @@ The data cleaning module is designed to handle financial news data with event-sp
 
 **Key Features**:
 - Event-specific outlier detection with different thresholds for different event types
-- Missing value imputation using event-specific medians
+- Missing value imputation using event-specific medians for numerical columns
+- KNN imputation for numerical columns with high missing rates (>90%)
+- Mode imputation for categorical columns with high missing rates
 - Text cleaning with financial-specific noise removal
 - Datetime standardization with flexible parsing
 - Relaxed winsorizing (5% instead of 1%) to preserve variance
@@ -23,8 +25,8 @@ The data cleaning module is designed to handle financial news data with event-sp
 
 **Key Methods**:
 - `load_data()`: Load CSV data with error handling
-- `drop_high_missing_columns()`: Remove columns with >90% missing values
-- `impute_missing_values()`: Event-specific imputation for numerical columns
+- `impute_high_missing_columns()`: Impute columns with >90% missing values using KNN for numerical and mode for categorical
+- `impute_missing_values()`: Event-specific imputation for remaining numerical columns
 - `detect_outliers_iqr()`: Event-specific outlier detection
 - `handle_outliers()`: Winsorizing with relaxed limits
 - `clean_datetime()`: Standardize datetime columns
