@@ -92,9 +92,9 @@ def compare_regression_results(prev_file, curr_file):
         return None
 
 def main():
-    prev_classifier_file = os.path.join(reports_dir, 'model_results_binary_after_features_eng.csv')
+    prev_classifier_file = os.path.join(reports_dir, 'model_results_binary.csv')
     curr_classifier_file = os.path.join(reports_dir, 'model_results_binary_after_features_eng_update.csv')
-    prev_regression_file = os.path.join(reports_dir, 'model_results_regression_after_features_eng.csv')
+    prev_regression_file = os.path.join(reports_dir, 'model_results_regression.csv')
     curr_regression_file = os.path.join(reports_dir, 'model_results_regression_after_features_eng_update.csv')
     logger.info("Comparing classification results")
     compare_classification_results(prev_classifier_file, curr_classifier_file)
