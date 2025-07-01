@@ -24,7 +24,6 @@ def setup_logger(name: str) -> logging.Logger:
     logger.addHandler(stream_handler)
     return logger
 
-
 logger = setup_logger(__name__)
 
 class DataCleaner:
@@ -42,8 +41,8 @@ class DataCleaner:
         self.df: Optional[pd.DataFrame] = None
         self.metrics: Dict = {}
         self.event_thresholds = {
-            'Partnerships': 1.5,  # Less strict for partnerships
-            'Earnings': 2.0,     # Stricter for earnings
+            'Partnerships': 1.5,
+            'Earnings': 2.0,
             'Corporate Action': 1.8,
             'default': 1.5
         }
@@ -59,22 +58,38 @@ class DataCleaner:
             logger.error(f"Failed to load {self.input_path}: {str(e)}")
             raise ValueError(f"Failed to load {self.input_path}: {str(e)}")
 
-    def drop_high_missing_columns(self, threshold: float = 0.9) -> None:
-        """Drop columns with missing values above threshold."""
+    def impute_high_missing_columns(self, threshold: float = 0.9) -> None:
+        """Impute columns with missing values above threshold using KNN and mode."""
         if self.df is None:
             raise ValueError("Data not loaded")
+        
         missing_rates = self.df.isna().mean()
-        columns_to_drop = missing_rates[missing_rates > threshold].index.tolist()
-        if columns_to_drop:
-            self.df = self.df.drop(columns=columns_to_drop)
-            logger.info(f"Dropped columns with >{threshold*100}% missing: {columns_to_drop}")
-            self.metrics['dropped_columns'] = columns_to_drop
-        else:
-            logger.info("No columns dropped due to high missing values")
-            self.metrics['dropped_columns'] = []
+        high_missing_cols = missing_rates[missing_rates > threshold].index.tolist()
+        
+        if high_missing_cols:
+            numerical_cols = self.df[high_missing_cols].select_dtypes(include=['float64', 'int64']).columns
+            categorical_cols = self.df[high_missing_cols].select_dtypes(include=['object']).columns
+            
+            # KNN imputation for numerical columns
+            if numerical_cols.any():
+                imputer = KNNImputer(n_neighbors=5, weights='uniform')
+                self.df[numerical_cols] = pd.DataFrame(
+                    imputer.fit_transform(self.df[numerical_cols]),
+                    columns=numerical_cols,
+                    index=self.df.index
+                )
+                logger.info(f"KNN imputed numerical columns: {numerical_cols}")
+                self.metrics['knn_imputed_columns'] = list(numerical_cols)
+            
+            # Mode imputation for categorical columns
+            for col in categorical_cols:
+                mode_value = self.df[col].mode()[0] if not self.df[col].mode().empty else 'missing'
+                self.df[col] = self.df[col].fillna(mode_value)
+                logger.info(f"Imputed {col} with mode {mode_value}")
+                self.metrics[f'imputed_{col}'] = mode_value
 
     def impute_missing_values(self) -> None:
-        """Impute missing values using event-specific medians for numerical and mode for categorical."""
+        """Impute remaining missing values using event-specific medians for numerical and mode for categorical."""
         if self.df is None:
             raise ValueError("Data not loaded")
         
@@ -132,10 +147,9 @@ class DataCleaner:
         
         numerical_cols = self.df.select_dtypes(include=['float64']).columns
         
-        # More relaxed limits (5% instead of 1%)
         for col in numerical_cols:
             if col in ['price_change_percentage', 'daily_alpha']:
-                self.df[col] = winsorize(self.df[col], limits=[0.05, 0.05])  # Changed from 0.01
+                self.df[col] = winsorize(self.df[col], limits=[0.05, 0.05])
                 logger.info(f"Relaxed winsorizing (5%) applied to {col}")
                 self.metrics[f'winsorized_{col}'] = '5%'
 
@@ -169,13 +183,10 @@ class DataCleaner:
         text_cols = ['content', 'title', 'reason']
         for col in text_cols:
             if col in self.df.columns:
-                # Remove financial-specific noise (e.g., tickers, percentages)
                 self.df[col] = self.df[col].apply(
                     lambda x: re.sub(r'\$[A-Za-z]+|\d+%|[^\w\s]', ' ', str(x)) if pd.notnull(x) else 'missing'
                 )
-                # Normalize text
                 self.df[col] = self.df[col].str.strip().str.lower().str.replace(r'\s+', ' ', regex=True)
-                # Handle short or empty texts
                 empty_mask = (self.df[col] == '') | (self.df[col].isna())
                 if empty_mask.any():
                     self.df.loc[empty_mask, col] = 'missing'
@@ -205,7 +216,7 @@ class DataCleaner:
         """Run the full cleaning pipeline."""
         logger.info("Starting data cleaning pipeline")
         self.load_data()
-        self.drop_high_missing_columns()
+        self.impute_high_missing_columns()
         self.impute_missing_values()
         self.clean_datetime()
         self.handle_outliers()
