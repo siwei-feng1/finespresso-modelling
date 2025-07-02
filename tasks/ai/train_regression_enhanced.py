@@ -76,7 +76,7 @@ def load_data_from_csv() -> pd.DataFrame:
         pd.DataFrame: Loaded DataFrame or empty DataFrame if loading fails.
     """
     logger.info("Loading data from enriched CSV file...")
-    enriched_file = os.path.join(base_dir, 'data', 'feature_engineering', 'selected_features_data.csv')
+    enriched_file = os.path.join(base_dir, 'data', 'feature_engineering', 'final_enriched_data.csv')
     
     try:
         if os.path.exists(enriched_file):
@@ -355,16 +355,16 @@ def process_results(results: list[dict], df: pd.DataFrame):
         results_df = results_df.replace({np.nan: None})
         
         # Save to CSV
-        results_csv = os.path.join(reports_dir, 'model_results_regression_after_features_eng.csv')
+        results_csv = os.path.join(reports_dir, 'model_results_regression_after_features_eng_update.csv')
         results_df.to_csv(results_csv, index=False)
         logger.info(f'Successfully wrote results to {results_csv}')
         
         # Save to database
-        success = save_regression_results(results_df)
-        if success:
-            logger.info('Successfully wrote results to database')
-        else:
-            logger.error('Failed to write results to database')
+        #success = save_regression_results(results_df)
+        #if success:
+        #    logger.info('Successfully wrote results to database')
+        #else:
+        #    logger.error('Failed to write results to database')
         
         logger.info(f'Average R2 score: {results_df["r2"].mean():.4f}')
         

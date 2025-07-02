@@ -53,6 +53,30 @@ Source: [Finespresso Backtester](https://research.finespresso.org/Backtester)
 Database → CSV Export → Model Training → Results & Models
 ```
 
+### Price Move Calculation
+
+The system calculates price movements based on the publication time of news articles relative to market hours (9:30 AM - 4:00 PM ET). The calculation rules are:
+
+1. **Market Hours (9:30 AM ≤ published_date < 4:00 PM)**:
+   ```
+   price_move = price(t, close) - price(t, open)
+   ```
+   *Measures the intraday price movement from market open to close on the same trading day*
+
+2. **Pre-Market (published_date < 9:30 AM)**:
+   ```
+   price_move = price(t, open) - price(t-1, close)
+   ```
+   *Measures the overnight gap from previous day's close to current day's open*
+
+3. **After Hours (published_date > 4:00 PM)**:
+   ```
+   price_move = price(t, close) - price(t+1, open)
+   ```
+   *Measures the overnight gap from current day's close to next day's open*
+
+**Note**: All times are in Eastern Time (ET) and price movements are calculated as percentage changes relative to the base price.
+
 ### Model Types
 - **Random Forest Classifier**: For UP/DOWN prediction
 - **Random Forest Regressor**: For price percentage prediction
