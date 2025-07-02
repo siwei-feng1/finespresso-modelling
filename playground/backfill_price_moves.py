@@ -45,9 +45,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DatabaseBackfillProcessor:
-    def __init__(self):
+    def __init__(self, batch_size: int = 100):
         self.openai_client = client
         self.index_symbol = 'SPY'  # S&P 500 ETF as market index
+        self.batch_size = batch_size
         self.stats = {
             'total_news': 0,
             'with_ticker': 0,
@@ -71,7 +72,7 @@ class DatabaseBackfillProcessor:
                 text += f" News: {news_text[:500]}"  # Limit text length
             
             response = self.openai_client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o-mini",
                 messages=[
                     {
                         "role": "system",
@@ -190,123 +191,157 @@ class DatabaseBackfillProcessor:
             logger.error(f"Error getting price data for {ticker}: {e}")
             return None
     
-    def process_news_with_ticker(self, news_df: pd.DataFrame) -> Tuple[pd.DataFrame, List[Dict]]:
-        """Process news items that already have tickers and calculate price moves."""
-        logger.info(f"Processing {len(news_df)} news items with existing tickers...")
+    def process_news_with_ticker(self, news_df: pd.DataFrame, batch_size: int = 100) -> Tuple[pd.DataFrame, List[Dict]]:
+        """Process news items that already have tickers and calculate price moves in batches."""
+        logger.info(f"Processing {len(news_df)} news items with existing tickers in batches of {batch_size}...")
         
         price_moves_data = []
         processed_count = 0
+        total_batches = (len(news_df) + batch_size - 1) // batch_size
         
-        for idx, row in news_df.iterrows():
-            try:
-                ticker = row['yf_ticker'] or row['ticker']
-                if not ticker:
-                    continue
+        for batch_num in range(total_batches):
+            start_idx = batch_num * batch_size
+            end_idx = min((batch_num + 1) * batch_size, len(news_df))
+            batch_df = news_df.iloc[start_idx:end_idx]
+            
+            logger.info(f"Processing batch {batch_num + 1}/{total_batches} (items {start_idx + 1}-{end_idx})")
+            
+            batch_price_moves = []
+            batch_processed = 0
+            
+            for idx, row in batch_df.iterrows():
+                try:
+                    ticker = row['yf_ticker'] or row['ticker']
+                    if not ticker:
+                        continue
+                        
+                    published_date = row['published_date']
+                    if pd.isna(published_date):
+                        continue
                     
-                published_date = row['published_date']
-                if pd.isna(published_date):
-                    continue
-                
-                # Get price data
-                price_data = self.get_price_data(ticker, published_date)
-                if price_data:
-                    # Combine news data with price data
-                    combined_data = {
-                        'news_id': row['id'],
-                        'title': row.get('title', ''),
-                        'description': row.get('content', ''),
-                        'link': row.get('link', ''),
-                        'company': row.get('company', ''),
-                        'ticker': ticker,
-                        'published_date': published_date,
-                        'publisher': row.get('publisher', ''),
-                        'language': row.get('language', ''),
-                        **price_data
-                    }
-                    price_moves_data.append(combined_data)
-                    processed_count += 1
+                    # Get price data
+                    price_data = self.get_price_data(ticker, published_date)
+                    if price_data:
+                        # Combine news data with price data
+                        combined_data = {
+                            'news_id': row['id'],
+                            'title': row.get('title', ''),
+                            'description': row.get('content', ''),
+                            'link': row.get('link', ''),
+                            'company': row.get('company', ''),
+                            'ticker': ticker,
+                            'published_date': published_date,
+                            'publisher': row.get('publisher', ''),
+                            'language': row.get('language', ''),
+                            **price_data
+                        }
+                        batch_price_moves.append(combined_data)
+                        batch_processed += 1
+                        
+                        # Store to database
+                        price_move_obj = PriceMove(
+                            news_id=row['id'],
+                            ticker=ticker,
+                            published_date=published_date,
+                            begin_price=price_data['begin_price'],
+                            end_price=price_data['end_price'],
+                            index_begin_price=price_data['index_begin_price'],
+                            index_end_price=price_data['index_end_price'],
+                            volume=price_data['volume'],
+                            market=price_data['market'],
+                            price_change=price_data['price_change'],
+                            price_change_percentage=price_data['price_change_percentage'],
+                            index_price_change=price_data['index_price_change'],
+                            index_price_change_percentage=price_data['index_price_change_percentage'],
+                            daily_alpha=price_data['daily_alpha'],
+                            actual_side=price_data['actual_side'],
+                            predicted_side=row.get('predicted_side'),
+                            predicted_move=row.get('predicted_move'),
+                            price_source='yfinance'
+                        )
+                        
+                        if store_price_move(price_move_obj):
+                            self.stats['price_moves_stored_db'] += 1
+                        else:
+                            logger.warning(f"Failed to store price move for news_id {row['id']}")
                     
-                    # Store to database
-                    price_move_obj = PriceMove(
-                        news_id=row['id'],
-                        ticker=ticker,
-                        published_date=published_date,
-                        begin_price=price_data['begin_price'],
-                        end_price=price_data['end_price'],
-                        index_begin_price=price_data['index_begin_price'],
-                        index_end_price=price_data['index_end_price'],
-                        volume=price_data['volume'],
-                        market=price_data['market'],
-                        price_change=price_data['price_change'],
-                        price_change_percentage=price_data['price_change_percentage'],
-                        index_price_change=price_data['index_price_change'],
-                        index_price_change_percentage=price_data['index_price_change_percentage'],
-                        daily_alpha=price_data['daily_alpha'],
-                        actual_side=price_data['actual_side'],
-                        predicted_side=row.get('predicted_side'),
-                        predicted_move=row.get('predicted_move'),
-                        price_source='yfinance'
-                    )
+                    # Add small delay to avoid rate limiting
+                    time_module.sleep(0.1)
                     
-                    if store_price_move(price_move_obj):
-                        self.stats['price_moves_stored_db'] += 1
-                    else:
-                        logger.warning(f"Failed to store price move for news_id {row['id']}")
-                
-                # Add small delay to avoid rate limiting
-                time_module.sleep(0.1)
-                
-            except Exception as e:
-                logger.error(f"Error processing news item {row.get('id', 'unknown')}: {e}")
-                self.stats['errors'] += 1
+                except Exception as e:
+                    logger.error(f"Error processing news item {row.get('id', 'unknown')}: {e}")
+                    self.stats['errors'] += 1
+            
+            # Add batch results to overall results
+            price_moves_data.extend(batch_price_moves)
+            processed_count += batch_processed
+            
+            logger.info(f"Batch {batch_num + 1}/{total_batches} completed: {batch_processed} price moves processed")
         
         self.stats['price_moves_calculated'] = processed_count
-        logger.info(f"Successfully processed {processed_count} price moves for news with tickers")
+        logger.info(f"Successfully processed {processed_count} price moves for news with tickers across {total_batches} batches")
         
         return pd.DataFrame(price_moves_data), price_moves_data
     
-    def process_news_without_ticker(self, news_df: pd.DataFrame) -> List[Dict]:
-        """Process news items without tickers and extract tickers using OpenAI."""
-        logger.info(f"Processing {len(news_df)} news items without tickers...")
+    def process_news_without_ticker(self, news_df: pd.DataFrame, batch_size: int = 100) -> List[Dict]:
+        """Process news items without tickers and extract tickers using OpenAI in batches."""
+        logger.info(f"Processing {len(news_df)} news items without tickers in batches of {batch_size}...")
         
         extracted_tickers = []
         extracted_count = 0
+        total_batches = (len(news_df) + batch_size - 1) // batch_size
         
-        for idx, row in news_df.iterrows():
-            try:
-                company_name = row.get('company', '')
-                if not company_name:
-                    continue
-                
-                # Extract ticker using OpenAI
-                news_text = f"{row.get('title', '')} {row.get('content', '')}"
-                ticker = self.extract_ticker_from_company(company_name, news_text)
-                
-                if ticker:
-                    extracted_tickers.append({
-                        'news_id': row['id'],
-                        'ticker': ticker,
-                        'yf_ticker': ticker,
-                        'instrument_id': None,
-                        'ticker_url': f"https://finance.yahoo.com/quote/{ticker}"
-                    })
-                    extracted_count += 1
-                    logger.info(f"Extracted ticker {ticker} for company {company_name}")
-                
-                # Add delay to avoid rate limiting
-                time_module.sleep(0.2)
-                
-            except Exception as e:
-                logger.error(f"Error extracting ticker for news item {row.get('id', 'unknown')}: {e}")
-                self.stats['errors'] += 1
+        for batch_num in range(total_batches):
+            start_idx = batch_num * batch_size
+            end_idx = min((batch_num + 1) * batch_size, len(news_df))
+            batch_df = news_df.iloc[start_idx:end_idx]
+            
+            logger.info(f"Processing batch {batch_num + 1}/{total_batches} (items {start_idx + 1}-{end_idx})")
+            
+            batch_extracted_tickers = []
+            batch_extracted = 0
+            
+            for idx, row in batch_df.iterrows():
+                try:
+                    company_name = row.get('company', '')
+                    if not company_name:
+                        continue
+                    
+                    # Extract ticker using OpenAI
+                    news_text = f"{row.get('title', '')} {row.get('content', '')}"
+                    ticker = self.extract_ticker_from_company(company_name, news_text)
+                    
+                    if ticker:
+                        batch_extracted_tickers.append({
+                            'news_id': row['id'],
+                            'ticker': ticker,
+                            'yf_ticker': ticker,
+                            'instrument_id': None,
+                            'ticker_url': f"https://finance.yahoo.com/quote/{ticker}"
+                        })
+                        batch_extracted += 1
+                        logger.info(f"Extracted ticker {ticker} for company {company_name}")
+                    
+                    # Add delay to avoid rate limiting
+                    time_module.sleep(0.2)
+                    
+                except Exception as e:
+                    logger.error(f"Error extracting ticker for news item {row.get('id', 'unknown')}: {e}")
+                    self.stats['errors'] += 1
+            
+            # Update database with batch extracted tickers
+            if batch_extracted_tickers:
+                update_news_tickers(batch_extracted_tickers)
+                logger.info(f"Updated database with {len(batch_extracted_tickers)} extracted tickers from batch {batch_num + 1}")
+            
+            # Add batch results to overall results
+            extracted_tickers.extend(batch_extracted_tickers)
+            extracted_count += batch_extracted
+            
+            logger.info(f"Batch {batch_num + 1}/{total_batches} completed: {batch_extracted} tickers extracted")
         
         self.stats['ticker_extracted'] = extracted_count
-        logger.info(f"Successfully extracted {extracted_count} tickers")
-        
-        # Update database with extracted tickers
-        if extracted_tickers:
-            update_news_tickers(extracted_tickers)
-            logger.info(f"Updated database with {len(extracted_tickers)} extracted tickers")
+        logger.info(f"Successfully extracted {extracted_count} tickers across {total_batches} batches")
         
         return extracted_tickers
     
@@ -371,11 +406,11 @@ class DatabaseBackfillProcessor:
         # Process news with tickers
         price_moves_df = pd.DataFrame()
         if not news_with_ticker.empty:
-            price_moves_df, _ = self.process_news_with_ticker(news_with_ticker)
+            price_moves_df, _ = self.process_news_with_ticker(news_with_ticker, batch_size=self.batch_size)
         
         # Process news without tickers
         if not news_without_ticker.empty:
-            extracted_tickers = self.process_news_without_ticker(news_without_ticker)
+            extracted_tickers = self.process_news_without_ticker(news_without_ticker, batch_size=self.batch_size)
             
             # If we extracted tickers, try to calculate price moves for them
             if extracted_tickers:
@@ -391,7 +426,7 @@ class DatabaseBackfillProcessor:
                 
                 # Calculate price moves for newly extracted tickers
                 if not news_with_new_tickers.empty:
-                    new_price_moves_df, _ = self.process_news_with_ticker(news_with_new_tickers)
+                    new_price_moves_df, _ = self.process_news_with_ticker(news_with_new_tickers, batch_size=self.batch_size)
                     if not new_price_moves_df.empty:
                         price_moves_df = pd.concat([price_moves_df, new_price_moves_df], ignore_index=True)
         
@@ -408,7 +443,9 @@ class DatabaseBackfillProcessor:
 
 def main():
     """Main function to run the backfill process."""
-    processor = DatabaseBackfillProcessor()
+    # You can change the batch size here
+    batch_size = 100
+    processor = DatabaseBackfillProcessor(batch_size=batch_size)
     
     try:
         # Run the backfill process
