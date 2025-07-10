@@ -1,4 +1,8 @@
-# Database Backfill Script
+# Playground Scripts
+
+This directory contains various scripts for data processing and analysis.
+
+## Database Backfill Script
 
 This script processes existing news from the database, extracts ticker symbols, and calculates price moves based on publication time relative to market hours.
 
@@ -198,6 +202,89 @@ Logs are written to:
 
 1. **Database connection errors**: Check your `DATABASE_URL` and database permissions
 2. **No price data available**: Some tickers may be delisted or have no data from yfinance
+
+---
+
+## Polygon Price Moves Script
+
+This script calculates price moves using the Polygon API for news items from the database, with proper market timing calculations based on publication time.
+
+### Features
+
+1. **Polygon API Integration**: Uses Polygon API for high-quality price data
+2. **Market Timing Logic**: Calculates price moves based on publication time:
+   - **Market Hours (9:30 AM ≤ published_date < 4:00 PM)**: `price_move = price(t, close) - price(t, open)`
+   - **Pre-Market (published_date < 9:30 AM)**: `price_move = price(t, open) - price(t-1, close)`
+   - **After Hours (published_date > 4:00 PM)**: `price_move = price(t, close) - price(t+1, open)`
+3. **Database Integration**: Reads news from database and stores price moves with run IDs
+4. **Flexible Date Ranges**: Supports custom start and end months
+5. **Publisher Filtering**: Can filter by specific publishers (default: globenewswire_biotech)
+6. **SPY Index**: Uses SPY for market index calculations and alpha computation
+
+### Usage
+
+#### Basic Usage (Single Month)
+```bash
+python playground/polygon_price_moves.py
+```
+This will process June 2025 data for globenewswire_biotech publisher.
+
+#### Custom Date Range
+```bash
+python playground/polygon_price_moves.py --start-month 2025-06 --end-month 2025-08
+```
+
+#### Custom Publisher
+```bash
+python playground/polygon_price_moves.py --start-month 2025-06 --end-month 2025-07 --publisher other_publisher
+```
+
+### Command Line Arguments
+
+| Argument | Type | Default | Description |
+|----------|------|---------|-------------|
+| `--start-month` | str | `2025-06` | Start month in YYYY-MM format |
+| `--end-month` | str | `2025-06` | End month in YYYY-MM format |
+| `--publisher` | str | `globenewswire_biotech` | Publisher to filter news |
+
+### Examples
+
+```bash
+# Process single month (June 2025)
+python playground/polygon_price_moves.py
+
+# Process multiple months (June to August 2025)
+python playground/polygon_price_moves.py --start-month 2025-06 --end-month 2025-08
+
+# Process different publisher
+python playground/polygon_price_moves.py --start-month 2025-05 --end-month 2025-07 --publisher reuters
+
+# Process specific month range
+python playground/polygon_price_moves.py --start-month 2024-12 --end-month 2025-02
+```
+
+### Output
+
+The script generates:
+1. **Database Storage**: Price moves stored in `price_moves` table with run ID
+2. **CSV Export**: Timestamped CSV file in `data/` directory
+3. **Console Summary**: Statistics and sample results
+
+### Environment Variables
+
+Required environment variables:
+```
+POLYGON_API_KEY=your_polygon_api_key_here
+DATABASE_URL=your_database_connection_string
+```
+
+### Dependencies
+
+- `polygon-api-client`: Polygon API integration
+- `pandas`: Data manipulation
+- `requests`: HTTP requests
+- `sqlalchemy`: Database operations
+- `python-dotenv`: Environment variable management
 3. **OpenAI API errors**: Check your API key and rate limits
 4. **Memory issues**: Reduce batch size for large datasets
 5. **Missing tickers**: News without company names cannot have tickers extracted

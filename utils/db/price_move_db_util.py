@@ -39,10 +39,11 @@ class PriceMove(Base):
     predicted_move = Column(Float)
     downloaded_at = Column(DateTime, nullable=True)
     price_source = Column(String(20), nullable=False, default='yfinance')
+    runid = Column(Integer, nullable=True)  # BIGINT equivalent in SQLAlchemy
 
     def __init__(self, news_id, ticker, published_date, begin_price, end_price, index_begin_price, index_end_price,
                  volume, market, price_change, price_change_percentage, index_price_change, index_price_change_percentage,
-                 daily_alpha, actual_side, predicted_side=None, predicted_move=None, price_source='yfinance'):
+                 daily_alpha, actual_side, predicted_side=None, predicted_move=None, price_source='yfinance', runid=None):
         self.news_id = news_id
         self.ticker = ticker
         self.published_date = published_date
@@ -61,6 +62,7 @@ class PriceMove(Base):
         self.predicted_side = predicted_side
         self.predicted_move = predicted_move
         self.price_source = price_source
+        self.runid = runid
 
 def store_price_move(price_move: PriceMove) -> bool:
     """Store a price move in the database"""
@@ -84,7 +86,8 @@ def store_price_move(price_move: PriceMove) -> bool:
                 index_price_change_percentage=price_move['index_price_change_percentage'],
                 daily_alpha=price_move['daily_alpha'],
                 actual_side=price_move['actual_side'],
-                price_source='yfinance'  # Default to yfinance for Series objects
+                price_source='yfinance',  # Default to yfinance for Series objects
+                runid=price_move.get('runid')  # Get runid from Series if available
             )
 
         # Check if a price move already exists for this news_id and price_source
@@ -131,9 +134,12 @@ def store_price_move(price_move: PriceMove) -> bool:
     finally:
         db_pool.return_session(session)
 
-def get_price_moves():
+def get_price_moves(runid=None):
     """
     Get all price moves joined with news data
+    
+    Args:
+        runid: Optional runid to filter by specific run
     """
     session = db_pool.get_session()
     try:
@@ -143,10 +149,16 @@ def get_price_moves():
             News.event, News.predicted_side, News.predicted_move, News.publisher,
             News.published_date, News.ticker, News.company, News.reason, News.link,
             News.ticker_url, PriceMove.actual_side, PriceMove.price_change_percentage, 
-            PriceMove.daily_alpha
+            PriceMove.daily_alpha, PriceMove.runid
         ).select_from(
             join(News, PriceMove, News.id == PriceMove.news_id)
-        ).order_by(News.published_date.desc())
+        )
+        
+        # Add runid filter if specified
+        if runid is not None:
+            query = query.where(PriceMove.runid == runid)
+        
+        query = query.order_by(News.published_date.desc())
         
         # Execute query and get results
         result = session.execute(query)
@@ -157,7 +169,7 @@ def get_price_moves():
             'id', 'content', 'title', 'content_en', 'title_en', 'event',
             'predicted_side', 'predicted_move', 'publisher', 'published_date',
             'ticker', 'company', 'reason', 'link', 'ticker_url', 'actual_side',
-            'price_change_percentage', 'daily_alpha'
+            'price_change_percentage', 'daily_alpha', 'runid'
         ])
         
         logging.info(f"Retrieved {len(df)} price moves with news data")
@@ -175,6 +187,38 @@ def get_news_price_moves():
     """
     return get_price_moves()
 
+def get_price_moves_by_runid(runid):
+    """
+    Get price moves for a specific runid
+    
+    Args:
+        runid: The runid to filter by
+        
+    Returns:
+        DataFrame with price moves for the specified runid
+    """
+    return get_price_moves(runid=runid)
+
+def get_available_runids():
+    """
+    Get list of available runids in the database
+    
+    Returns:
+        List of runids
+    """
+    session = db_pool.get_session()
+    try:
+        query = select(PriceMove.runid).distinct().where(PriceMove.runid.isnot(None)).order_by(PriceMove.runid)
+        result = session.execute(query)
+        runids = [row[0] for row in result.fetchall()]
+        logger.info(f"Found {len(runids)} available runids: {runids}")
+        return runids
+    except Exception as e:
+        logger.error(f"Error retrieving runids: {str(e)}")
+        return []
+    finally:
+        db_pool.return_session(session)
+
 # Create tables
 Base.metadata.create_all(db_pool.engine)
 
@@ -183,7 +227,7 @@ def add_market_column():
         connection.execute(text("ALTER TABLE price_moves ADD COLUMN market VARCHAR(255) NOT NULL DEFAULT 'market_open';"))
         connection.commit()
 
-def get_price_moves_date_range(start_date, end_date, publisher=None):
+def get_price_moves_date_range(start_date, end_date, publisher=None, runid=None):
     session = db_pool.get_session()
     try:
         # Convert dates to UTC datetime if they aren't already
@@ -216,17 +260,24 @@ def get_price_moves_date_range(start_date, end_date, publisher=None):
             News.event, News.predicted_side, News.predicted_move, News.publisher,
             News.published_date, News.ticker, News.company, News.reason, News.link,
             News.ticker_url, PriceMove.actual_side, PriceMove.price_change_percentage, 
-            PriceMove.daily_alpha
+            PriceMove.daily_alpha, PriceMove.runid
         ).select_from(
             join(News, PriceMove, News.id == PriceMove.news_id)
         ).where(
             News.published_date.between(start_date, end_date)
-        ).order_by(News.published_date.desc())
+        )
         
         # Add publisher filter if specified
         if publisher:
             query = query.where(News.publisher == publisher)
             st.write(f"Filtering for publisher: {publisher}")
+        
+        # Add runid filter if specified
+        if runid is not None:
+            query = query.where(PriceMove.runid == runid)
+            st.write(f"Filtering for runid: {runid}")
+        
+        query = query.order_by(News.published_date.desc())
         
         # Print the main query with actual values
         compiled = query.compile(
@@ -262,7 +313,7 @@ def get_price_moves_date_range(start_date, end_date, publisher=None):
             'id', 'content', 'title', 'content_en', 'title_en', 'event',
             'predicted_side', 'predicted_move', 'publisher', 'published_date',
             'ticker', 'company', 'reason', 'link', 'ticker_url', 'actual_side',
-            'price_change_percentage', 'daily_alpha'
+            'price_change_percentage', 'daily_alpha', 'runid'
         ])
         
         return df
@@ -295,3 +346,31 @@ def add_price_source_column():
             logger.info("Added price_source column to price_moves table")
         else:
             logger.info("price_source column already exists in price_moves table")
+
+def add_runid_column():
+    """Add runid column to price_moves table if it doesn't exist"""
+    with db_pool.engine.connect() as connection:
+        # Check if column exists
+        result = connection.execute(text("""
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = 'price_moves' 
+            AND column_name = 'runid'
+        """))
+        
+        if not result.fetchone():
+            # Add column if it doesn't exist
+            connection.execute(text("""
+                ALTER TABLE price_moves 
+                ADD COLUMN runid BIGINT NULL
+            """))
+            
+            # Add index for better query performance
+            connection.execute(text("""
+                CREATE INDEX idx_price_moves_runid ON price_moves(runid)
+            """))
+            
+            connection.commit()
+            logger.info("Added runid column and index to price_moves table")
+        else:
+            logger.info("runid column already exists in price_moves table")
