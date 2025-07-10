@@ -53,6 +53,16 @@ Source: [Finespresso Backtester](https://research.finespresso.org/Backtester)
 Database → CSV Export → Model Training → Results & Models
 ```
 
+### Data Sources
+
+The system utilizes price data from multiple major exchanges:
+- **Nasdaq Nordic (OMX)**: Nordic and Baltic region stocks
+- **Nasdaq Baltics**: Baltic region securities
+- **Nasdaq US**: US-listed securities
+- **Euronext**: European securities across multiple markets
+
+This multi-exchange approach provides comprehensive coverage of global financial markets and enables the system to analyze news impact across different geographical regions and market structures.
+
 ### Price Move Calculation
 
 The system calculates price movements based on the publication time of news articles relative to market hours (9:30 AM - 4:00 PM ET). The calculation rules are:
