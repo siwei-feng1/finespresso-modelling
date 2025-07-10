@@ -1,0 +1,2 @@
+news_id,ticker,published_date,begin_price,end_price,index_begin_price,index_end_price,volume,market,price_change,price_change_percentage,index_price_change,index_price_change_percentage,daily_alpha,actual_side,runid
+15439,ANVS,2020-12-17 06:45:00,5.95,5.95,370.17,371.94,158936,pre_market,0.0,0.0,1.7699999999999818,0.4781586838479568,-0.4781586838479568,UP,1752170811
