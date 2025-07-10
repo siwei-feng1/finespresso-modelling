@@ -27,7 +27,7 @@ class PriceMove(Base):
     end_price = Column(Float, nullable=False)
     index_begin_price = Column(Float, nullable=False)
     index_end_price = Column(Float, nullable=False)
-    volume = Column(Integer)
+    volume = Column(Integer, nullable=True)
     market = Column(String, nullable=False)
     price_change = Column(Float, nullable=False)
     price_change_percentage = Column(Float, nullable=False)
@@ -374,3 +374,21 @@ def add_runid_column():
             logger.info("Added runid column and index to price_moves table")
         else:
             logger.info("runid column already exists in price_moves table")
+
+def remove_volume_not_null_constraint():
+    """Remove NOT NULL constraint from volume column in price_moves table"""
+    with db_pool.engine.connect() as connection:
+        try:
+            # Remove NOT NULL constraint from volume column
+            connection.execute(text("""
+                ALTER TABLE price_moves 
+                ALTER COLUMN volume DROP NOT NULL
+            """))
+            
+            connection.commit()
+            logger.info("Successfully removed NOT NULL constraint from volume column in price_moves table")
+            
+        except Exception as e:
+            logger.error(f"Error removing volume NOT NULL constraint: {e}")
+            connection.rollback()
+            raise
