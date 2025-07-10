@@ -1,0 +1,2 @@
+news_id,ticker,published_date,begin_price,end_price,index_begin_price,index_end_price,volume,market,price_change,price_change_percentage,index_price_change,index_price_change_percentage,daily_alpha,actual_side,runid
+15438,ANVS,2021-02-16 06:45:00,21.68,25.0,392.64,393.96,333016,pre_market,3.3200000000000003,15.313653136531366,1.3199999999999932,0.3361858190709029,14.977467317460464,UP,1752170852
