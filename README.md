@@ -2,6 +2,24 @@
 
 A machine learning platform that predicts the impact of financial news / press releases on stock prices using natural language processing and machine learning techniques. It also includes basic backtesting utilities to execute trades based on the signal and measure the financial performance of the strategy.
 
+## 🏦 Background - Event Driven Hedge Fund Trading Strategies
+
+Event-driven hedge fund strategies that focus on press releases or news as events typically fall under the broader category of special situations or soft catalyst strategies. These strategies exploit pricing inefficiencies triggered by public announcements or news that signal potential corporate changes or market-moving developments.
+
+### Press Releases and News as Events in Event-Driven Strategies
+
+**Nature of the Strategy:**
+- **Definition**: These strategies involve trading based on corporate or market developments announced via press releases, news reports, or rumors. These events are often "soft catalysts," meaning they may not have immediate, definitive outcomes like mergers but can still create short-term price movements or mispricings.
+
+**Examples of Events:**
+- **Earnings Announcements**: Press releases about quarterly earnings results can lead to stock price volatility, especially if results deviate from expectations.
+- **Management Changes**: News of a new CEO, CFO, or board reshuffle can signal strategic shifts, impacting stock prices.
+- **Product Launches or Recalls**: Announcements about new products, regulatory approvals, or recalls can drive price changes.
+- **Litigation Outcomes**: News of legal settlements or lawsuits can affect a company's valuation.
+- **Regulatory or Policy Shifts**: Industry-wide news, such as changes in regulations or government policies, can impact entire sectors.
+
+**Approach**: Funds analyze the content of press releases or news, assess market reactions, and position themselves to capitalize on overreactions or underreactions. They may go long or short depending on the anticipated impact.
+
 ## 🎯 Project Overview
 
 This system analyzes financial news articles and predicts:
