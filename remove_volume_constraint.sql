@@ -1,1 +1,0 @@
-ALTER TABLE price_moves ALTER COLUMN volume DROP NOT NULL;

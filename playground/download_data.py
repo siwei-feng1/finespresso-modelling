@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.db.news_db_util import get_news_df, get_news_latest_df
 from utils.db.instrument_db_util import get_all_instruments
-from utils.db.price_move_db_util import get_price_moves, get_price_moves_date_range
+from utils.db.price_move_db_util import get_price_moves, get_price_moves_date_range, get_raw_price_moves
 from utils.db_pool import DatabasePool
 
 # Set up logging
@@ -130,32 +130,34 @@ def download_price_move_data(data_dir):
     logger.info("Starting price move data download...")
     
     try:
-        # Get all price move data
-        logger.info("Downloading all price move data...")
-        price_move_df = get_price_moves()
+        # Get all raw price move data
+        logger.info("Downloading all raw price move data...")
+        raw_price_move_df = get_raw_price_moves()
         
-        if not price_move_df.empty:
-            # Save all price move data
-            price_move_file = os.path.join(data_dir, 'all_price_moves.csv')
-            price_move_df.to_csv(price_move_file, index=False)
-            logger.info(f"Saved {len(price_move_df)} price move records to {price_move_file}")
+        if not raw_price_move_df.empty:
+            # Save raw price move data
+            raw_price_move_file = os.path.join(data_dir, 'all_price_moves.csv')
+            raw_price_move_df.to_csv(raw_price_move_file, index=False)
+            logger.info(f"Saved {len(raw_price_move_df)} raw price move records to {raw_price_move_file}")
             
-            # Create summary statistics
+            # Create summary statistics for raw price moves
             price_move_summary = {
-                'total_records': len(price_move_df),
+                'total_records': len(raw_price_move_df),
                 'date_range': {
-                    'earliest': price_move_df['published_date'].min() if 'published_date' in price_move_df.columns else 'N/A',
-                    'latest': price_move_df['published_date'].max() if 'published_date' in price_move_df.columns else 'N/A'
+                    'earliest': raw_price_move_df['published_date'].min() if 'published_date' in raw_price_move_df.columns else 'N/A',
+                    'latest': raw_price_move_df['published_date'].max() if 'published_date' in raw_price_move_df.columns else 'N/A'
                 },
-                'publishers': price_move_df['publisher'].value_counts().to_dict() if 'publisher' in price_move_df.columns else {},
-                'actual_sides': price_move_df['actual_side'].value_counts().to_dict() if 'actual_side' in price_move_df.columns else {},
-                'predicted_sides': price_move_df['predicted_side'].value_counts().to_dict() if 'predicted_side' in price_move_df.columns else {},
-                'tickers': price_move_df['ticker'].value_counts().head(20).to_dict() if 'ticker' in price_move_df.columns else {}
+                'actual_sides': raw_price_move_df['actual_side'].value_counts().to_dict() if 'actual_side' in raw_price_move_df.columns else {},
+                'predicted_sides': raw_price_move_df['predicted_side'].value_counts().to_dict() if 'predicted_side' in raw_price_move_df.columns else {},
+                'tickers': raw_price_move_df['ticker'].value_counts().head(20).to_dict() if 'ticker' in raw_price_move_df.columns else {},
+                'markets': raw_price_move_df['market'].value_counts().to_dict() if 'market' in raw_price_move_df.columns else {},
+                'price_sources': raw_price_move_df['price_source'].value_counts().to_dict() if 'price_source' in raw_price_move_df.columns else {},
+                'runids': raw_price_move_df['runid'].value_counts().to_dict() if 'runid' in raw_price_move_df.columns else {}
             }
             
             # Calculate some basic statistics for price changes
-            if 'price_change_percentage' in price_move_df.columns:
-                price_changes = price_move_df['price_change_percentage'].dropna()
+            if 'price_change_percentage' in raw_price_move_df.columns:
+                price_changes = raw_price_move_df['price_change_percentage'].dropna()
                 if len(price_changes) > 0:
                     price_move_summary['price_change_stats'] = {
                         'mean': float(price_changes.mean()),
@@ -173,7 +175,7 @@ def download_price_move_data(data_dir):
             logger.info(f"Saved price move summary to {summary_file}")
             
         else:
-            logger.warning("No price move data found in the database")
+            logger.warning("No raw price move data found in the database")
             
     except Exception as e:
         logger.error(f"Error downloading price move data: {str(e)}")
