@@ -66,9 +66,9 @@ Source: [Finespresso Backtester](https://research.finespresso.org/Backtester)
 
 ## 🏗️ Modelling Platform Architecture
 
-### Data Pipeline
+### Pipeline
 ```
-Database → CSV Export → Model Training → Results & Models
+Database → CSV Export → Model Training → Results & Models → Backtesting → Paper Trading → Live Trading 
 ```
 
 ### Data Sources
