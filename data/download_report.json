@@ -1,16 +1,21 @@
 {
-  "download_timestamp": "2025-06-27T20:33:59.990489",
-  "data_directory": "/home/julian/dev/hobby/finespresso-modelling/data",
+  "download_timestamp": "2025-07-11T06:32:14.498852",
+  "data_directory": "/home/julian/dev/fe/finespresso-modelling-beta/data",
   "files_created": [
     {
       "filename": "price_move_summary.json",
-      "size_bytes": 909,
+      "size_bytes": 2270,
+      "size_mb": 0.0
+    },
+    {
+      "filename": "biotech_tickers.csv",
+      "size_bytes": 631,
       "size_mb": 0.0
     },
     {
       "filename": "all_news.csv",
-      "size_bytes": 94237241,
-      "size_mb": 89.87
+      "size_bytes": 99727053,
+      "size_mb": 95.11
     },
     {
       "filename": "instrument_summary.json",
@@ -24,18 +29,28 @@
     },
     {
       "filename": "download_report.json",
-      "size_bytes": 873,
+      "size_bytes": 974,
       "size_mb": 0.0
     },
     {
       "filename": "all_price_moves.csv",
-      "size_bytes": 2453332,
-      "size_mb": 2.34
+      "size_bytes": 2538265,
+      "size_mb": 2.42
+    },
+    {
+      "filename": "recent_price_moves_30days.csv",
+      "size_bytes": 2269632,
+      "size_mb": 2.16
     },
     {
       "filename": "news_summary.json",
-      "size_bytes": 14546,
+      "size_bytes": 14713,
       "size_mb": 0.01
+    },
+    {
+      "filename": "price_moves_20250701_173257.csv",
+      "size_bytes": 4410,
+      "size_mb": 0.0
     },
     {
       "filename": "all_instruments.csv",

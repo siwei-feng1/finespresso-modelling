@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import requests
 import logging
-from datetime import datetime, time, timedelta
+from datetime import datetime, time, timedelta, timezone
 import numpy as np
 from typing import List, Dict, Optional
 import pytz
@@ -107,7 +107,7 @@ class PolygonPriceMoveCalculator:
             if data.get('status') == 'OK' and data.get('results'):
                 return data
             else:
-                logger.warning(f"No data returned for {ticker}: {data.get('status')}")
+                logger.warning(f"No data returned for {ticker}: {data.get('status')}, full response: {data}")
                 return None
                 
         except requests.exceptions.RequestException as e:
@@ -315,7 +315,6 @@ class PolygonPriceMoveCalculator:
                 actual_side=actual_side,
                 predicted_side=row.get('predicted_side'),
                 predicted_move=float(row.get('predicted_move')) if row.get('predicted_move') is not None else None,
-                downloaded_at=datetime.now(datetime.UTC),  # Add current timestamp in UTC
                 price_source='polygon',
                 runid=int(run_id)  # Convert to regular int
             )
@@ -369,7 +368,7 @@ class PolygonPriceMoveCalculator:
         )
         
         if news_df.empty:
-            logger.warning(f"No news found for {publisher} in {year}-{month:02d}")
+            logger.warning(f"No news found for {publisher} in {start_month}")
             return pd.DataFrame()
         
         logger.info(f"Found {len(news_df)} news items for processing")

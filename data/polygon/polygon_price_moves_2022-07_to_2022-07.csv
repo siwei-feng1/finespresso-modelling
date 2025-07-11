@@ -1,0 +1,3 @@
+news_id,ticker,published_date,begin_price,end_price,index_begin_price,index_end_price,volume,market,price_change,price_change_percentage,index_price_change,index_price_change_percentage,daily_alpha,actual_side,runid
+15413,VBLT,2022-07-19 16:01:00,71.4,71.75,386.08,392.27,76757,regular_market,0.3499999999999943,0.4901960784313646,6.189999999999998,1.6032946539577284,-1.1130985755263638,UP,1752171034
+16622,NEXI,2022-07-14 16:09:00,38.5,36.75,373.61,377.91,85038,regular_market,-1.75,-4.545454545454546,4.300000000000011,1.1509327908781914,-5.696387336332737,DOWN,1752171034

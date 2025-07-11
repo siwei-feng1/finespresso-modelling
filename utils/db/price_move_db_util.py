@@ -27,7 +27,7 @@ class PriceMove(Base):
     end_price = Column(Float, nullable=False)
     index_begin_price = Column(Float, nullable=False)
     index_end_price = Column(Float, nullable=False)
-    volume = Column(Integer)
+    volume = Column(Integer, nullable=True)
     market = Column(String, nullable=False)
     price_change = Column(Float, nullable=False)
     price_change_percentage = Column(Float, nullable=False)
@@ -374,3 +374,60 @@ def add_runid_column():
             logger.info("Added runid column and index to price_moves table")
         else:
             logger.info("runid column already exists in price_moves table")
+
+def remove_volume_not_null_constraint():
+    """Remove NOT NULL constraint from volume column in price_moves table"""
+    with db_pool.engine.connect() as connection:
+        try:
+            # Remove NOT NULL constraint from volume column
+            connection.execute(text("""
+                ALTER TABLE price_moves 
+                ALTER COLUMN volume DROP NOT NULL
+            """))
+            
+            connection.commit()
+            logger.info("Successfully removed NOT NULL constraint from volume column in price_moves table")
+            
+        except Exception as e:
+            logger.error(f"Error removing volume NOT NULL constraint: {e}")
+            connection.rollback()
+            raise
+
+def get_raw_price_moves(runid=None):
+    """
+    Get raw price moves data from the price_moves table without joining with news data
+    
+    Args:
+        runid: Optional runid to filter by specific run
+        
+    Returns:
+        DataFrame with raw price moves data
+    """
+    session = db_pool.get_session()
+    try:
+        # Base query for raw price moves
+        query = select(PriceMove).order_by(PriceMove.published_date.desc())
+        
+        # Add runid filter if specified
+        if runid is not None:
+            query = query.where(PriceMove.runid == runid)
+        
+        # Execute query and get results
+        result = session.execute(query)
+        rows = result.fetchall()
+        
+        # Create DataFrame with all PriceMove columns
+        df = pd.DataFrame([row[0].__dict__ for row in rows])
+        
+        # Remove SQLAlchemy internal attribute
+        if '_sa_instance_state' in df.columns:
+            df = df.drop('_sa_instance_state', axis=1)
+        
+        logging.info(f"Retrieved {len(df)} raw price moves")
+        return df
+    except Exception as e:
+        logging.error(f"Error retrieving raw price moves: {str(e)}")
+        logging.exception("Full traceback:")
+        return pd.DataFrame()
+    finally:
+        db_pool.return_session(session)

@@ -1,0 +1,2 @@
+news_id,ticker,published_date,begin_price,end_price,index_begin_price,index_end_price,volume,market,price_change,price_change_percentage,index_price_change,index_price_change_percentage,daily_alpha,actual_side,runid
+16617,NEXI,2023-01-18 16:01:00,10.1475,9.125,399.01,391.49,7770,regular_market,-1.0225000000000009,-10.076373491007645,-7.519999999999982,-1.8846645447482473,-8.191708946259398,DOWN,1752171273
