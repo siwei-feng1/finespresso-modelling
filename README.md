@@ -99,7 +99,7 @@ The system calculates price movements based on the publication time of news arti
 
 3. **After Hours (published_date > 4:00 PM)**:
    ```
-   price_move = price(t, close) - price(t+1, open)
+   price_move = price(t+1, open) - price(t, close) 
    ```
    *Measures the overnight gap from current day's close to next day's open*
 
