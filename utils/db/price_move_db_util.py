@@ -392,3 +392,42 @@ def remove_volume_not_null_constraint():
             logger.error(f"Error removing volume NOT NULL constraint: {e}")
             connection.rollback()
             raise
+
+def get_raw_price_moves(runid=None):
+    """
+    Get raw price moves data from the price_moves table without joining with news data
+    
+    Args:
+        runid: Optional runid to filter by specific run
+        
+    Returns:
+        DataFrame with raw price moves data
+    """
+    session = db_pool.get_session()
+    try:
+        # Base query for raw price moves
+        query = select(PriceMove).order_by(PriceMove.published_date.desc())
+        
+        # Add runid filter if specified
+        if runid is not None:
+            query = query.where(PriceMove.runid == runid)
+        
+        # Execute query and get results
+        result = session.execute(query)
+        rows = result.fetchall()
+        
+        # Create DataFrame with all PriceMove columns
+        df = pd.DataFrame([row[0].__dict__ for row in rows])
+        
+        # Remove SQLAlchemy internal attribute
+        if '_sa_instance_state' in df.columns:
+            df = df.drop('_sa_instance_state', axis=1)
+        
+        logging.info(f"Retrieved {len(df)} raw price moves")
+        return df
+    except Exception as e:
+        logging.error(f"Error retrieving raw price moves: {str(e)}")
+        logging.exception("Full traceback:")
+        return pd.DataFrame()
+    finally:
+        db_pool.return_session(session)
