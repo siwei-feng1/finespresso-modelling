@@ -1,0 +1,1832 @@
+base_url: https://www.globenewswire.com/rss/list
+extracted_at: '2025-07-12T13:37:37.120612'
+feeds:
+- extracted_at: '2025-07-12T13:37:37.104123'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/orgclass/1/feedTitle/GlobeNewswire
+        - News about Public Companies
+  title: Public Companies
+- extracted_at: '2025-07-12T13:37:37.104190'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/12-Dividend Reports and
+        Estimates/feedTitle/GlobeNewswire - Dividend Reports and Estimates
+  title: Dividend Reports and Estimates
+- extracted_at: '2025-07-12T13:37:37.104247'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/13-Earnings Releases
+        and Operating Results/feedTitle/GlobeNewswire - Earnings Releases and Operating
+        Results
+  title: Earnings Releases and Operating Results
+- extracted_at: '2025-07-12T13:37:37.104302'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/27-Mergers and Acquisitions/feedTitle/GlobeNewswire
+        - Mergers and Acquisitions
+  title: Mergers and Acquisitions
+- extracted_at: '2025-07-12T13:37:37.104354'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/1-Advisory/feedTitle/GlobeNewswire
+        - Advisory
+  title: Advisory
+- extracted_at: '2025-07-12T13:37:37.104404'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/3-Analyst Recommendations/feedTitle/GlobeNewswire
+        - Analyst Recommendations
+  title: Analyst Recommendations
+- extracted_at: '2025-07-12T13:37:37.104514'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/2-Annual Meetings 26
+        Shareholder Rights/feedTitle/GlobeNewswire - Annual Meetings and Shareholder
+        Rights
+  title: Annual Meetings & Shareholder Rights
+- extracted_at: '2025-07-12T13:37:37.104567'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/65-Annual Report/feedTitle/GlobeNewswire
+        - Annual Report
+  title: Annual Report
+- extracted_at: '2025-07-12T13:37:37.104619'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/4-Arts 26 Entertainment/feedTitle/GlobeNewswire
+        - Arts and Entertainment
+  title: Arts & Entertainment
+- extracted_at: '2025-07-12T13:37:37.104669'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/5-Bankruptcy/feedTitle/GlobeNewswire
+        - Bankruptcy
+  title: Bankruptcy
+- extracted_at: '2025-07-12T13:37:37.104723'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/6-Bond Market News/feedTitle/GlobeNewswire
+        - Bond Market News
+  title: Bond Market News
+- extracted_at: '2025-07-12T13:37:37.104778'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/74-Bonds Market Information/feedTitle/GlobeNewswire
+        - Bonds Market Information
+  title: Bonds Market Information
+- extracted_at: '2025-07-12T13:37:37.104828'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/7-Business Contracts/feedTitle/GlobeNewswire
+        - Business Contracts
+  title: Business Contracts
+- extracted_at: '2025-07-12T13:37:37.104877'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/8-Calendar Of Events/feedTitle/GlobeNewswire
+        - Calendar Of Events
+  title: Calendar Of Events
+- extracted_at: '2025-07-12T13:37:37.104925'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/58-Changes In Company
+        27s Own Shares/feedTitle/GlobeNewswire - Changes In Company s Own Shares
+  title: Changes In Company's Own Shares
+- extracted_at: '2025-07-12T13:37:37.104974'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/57-Changes In Share Capital
+        And Votes/feedTitle/GlobeNewswire - Changes In Share Capital And Votes
+  title: Changes In Share Capital And Votes
+- extracted_at: '2025-07-12T13:37:37.105022'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/71-Changes To Observation
+        Segment/feedTitle/GlobeNewswire - Changes To Observation Segment
+  title: Changes To Observation Segment
+- extracted_at: '2025-07-12T13:37:37.105072'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/84-Class Action/feedTitle/GlobeNewswire
+        - Class Action
+  title: Class Action
+- extracted_at: '2025-07-12T13:37:37.105125'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/90-Clinical Study/feedTitle/GlobeNewswire
+        - Clinical Study
+  title: Clinical Study
+- extracted_at: '2025-07-12T13:37:37.105173'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/9-Company Announcement/feedTitle/GlobeNewswire
+        - Company Announcement
+  title: Company Announcement
+- extracted_at: '2025-07-12T13:37:37.105222'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/10-Company Regulatory
+        Filings/feedTitle/GlobeNewswire - Company Regulatory Filings
+  title: Company Regulatory Filings
+- extracted_at: '2025-07-12T13:37:37.105273'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/89-Conference Calls 2f
+        Webcasts/feedTitle/GlobeNewswire - Conference Calls, Webcasts
+  title: Conference Calls/ Webcasts
+- extracted_at: '2025-07-12T13:37:37.105322'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/88-Contests 2fAwards/feedTitle/GlobeNewswire
+        - Contests, Awards
+  title: Contests/Awards
+- extracted_at: '2025-07-12T13:37:37.105371'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/61-Corporate Action/feedTitle/GlobeNewswire
+        - Corporate Action
+  title: Corporate Action
+- extracted_at: '2025-07-12T13:37:37.105419'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/75-Derivative Market
+        Information/feedTitle/GlobeNewswire - Derivative Market Information
+  title: Derivative Market Information
+- extracted_at: '2025-07-12T13:37:37.105467'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/11-Directors And Officers/feedTitle/GlobeNewswire
+        - Directors And Officers
+  title: Directors And Officers
+- extracted_at: '2025-07-12T13:37:37.105516'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/12-Dividend Reports And
+        Estimates/feedTitle/GlobeNewswire - Dividend Reports And Estimates
+  title: Dividend Reports And Estimates
+- extracted_at: '2025-07-12T13:37:37.105565'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/13-Earnings Releases
+        And Operating Results/feedTitle/GlobeNewswire - Earnings Releases And Operating
+        Results
+  title: Earnings Releases And Operating Results
+- extracted_at: '2025-07-12T13:37:37.105616'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/14-Economic Research
+        And Reports/feedTitle/GlobeNewswire - Economic Research And Reports
+  title: Economic Research And Reports
+- extracted_at: '2025-07-12T13:37:37.105665'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/91-Environmental 2c Social
+        2c And Governance Criteria/feedTitle/GlobeNewswire - Environmental, Social,
+        And Governance Criteria
+  title: Environmental, Social, And Governance Criteria
+- extracted_at: '2025-07-12T13:37:37.105713'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/76-Equity Market Information/feedTitle/GlobeNewswire
+        - Equity Market Information
+  title: Equity Market Information
+- extracted_at: '2025-07-12T13:37:37.105760'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/85-European Regulatory
+        News/feedTitle/GlobeNewswire - European Regulatory News
+  title: European Regulatory News
+- extracted_at: '2025-07-12T13:37:37.105817'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/70-Exchange Announcement/feedTitle/GlobeNewswire
+        - Exchange Announcement
+  title: Exchange Announcement
+- extracted_at: '2025-07-12T13:37:37.105865'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/77-Exchange Members/feedTitle/GlobeNewswire
+        - Exchange Members
+  title: Exchange Members
+- extracted_at: '2025-07-12T13:37:37.105913'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/78-Exchange News/feedTitle/GlobeNewswire
+        - Exchange News
+  title: Exchange News
+- extracted_at: '2025-07-12T13:37:37.105961'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/15-Fashion/feedTitle/GlobeNewswire
+        - Fashion
+  title: Fashion
+- extracted_at: '2025-07-12T13:37:37.106010'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/16-Feature Article/feedTitle/GlobeNewswire
+        - Feature Article
+  title: Feature Article
+- extracted_at: '2025-07-12T13:37:37.106058'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/17-Financing Agreements/feedTitle/GlobeNewswire
+        - Financing Agreements
+  title: Financing Agreements
+- extracted_at: '2025-07-12T13:37:37.106106'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/69-First North Announcement/feedTitle/GlobeNewswire
+        - First North Announcement
+  title: First North Announcement
+- extracted_at: '2025-07-12T13:37:37.106153'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/79-First North Information/feedTitle/GlobeNewswire
+        - First North Information
+  title: First North Information
+- extracted_at: '2025-07-12T13:37:37.106201'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/18-Food/feedTitle/GlobeNewswire
+        - Food
+  title: Food
+- extracted_at: '2025-07-12T13:37:37.106250'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/19-Government News/feedTitle/GlobeNewswire
+        - Government News
+  title: Government News
+- extracted_at: '2025-07-12T13:37:37.106301'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/20-Health/feedTitle/GlobeNewswire
+        - Health
+  title: Health
+- extracted_at: '2025-07-12T13:37:37.106350'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/21-Initial Public Offerings/feedTitle/GlobeNewswire
+        - Initial Public Offerings
+  title: Initial Public Offerings
+- extracted_at: '2025-07-12T13:37:37.106398'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/22-Insider 27s Buy 2fSell/feedTitle/GlobeNewswire
+        - Insider s Buy, Sell
+  title: Insider's Buy/Sell
+- extracted_at: '2025-07-12T13:37:37.106449'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/66-Interim Information/feedTitle/GlobeNewswire
+        - Interim Information
+  title: Interim Information
+- extracted_at: '2025-07-12T13:37:37.106502'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/80-Investment Fund Information/feedTitle/GlobeNewswire
+        - Investment Fund Information
+  title: Investment Fund Information
+- extracted_at: '2025-07-12T13:37:37.106550'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/83-Investment Opinion/feedTitle/GlobeNewswire
+        - Investment Opinion
+  title: Investment Opinion
+- extracted_at: '2025-07-12T13:37:37.106598'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/23-Joint Venture/feedTitle/GlobeNewswire
+        - Joint Venture
+  title: Joint Venture
+- extracted_at: '2025-07-12T13:37:37.106645'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/24-Law 26 Legal Issues/feedTitle/GlobeNewswire
+        - Law and Legal Issues
+  title: Law & Legal Issues
+- extracted_at: '2025-07-12T13:37:37.106692'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/25-Licensing Agreements/feedTitle/GlobeNewswire
+        - Licensing Agreements
+  title: Licensing Agreements
+- extracted_at: '2025-07-12T13:37:37.106740'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/26-Lifestyle/feedTitle/GlobeNewswire
+        - Lifestyle
+  title: Lifestyle
+- extracted_at: '2025-07-12T13:37:37.106793'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/59-Major Shareholder
+        Announcements/feedTitle/GlobeNewswire - Major Shareholder Announcements
+  title: Major Shareholder Announcements
+- extracted_at: '2025-07-12T13:37:37.106846'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/86-Management Changes/feedTitle/GlobeNewswire
+        - Management Changes
+  title: Management Changes
+- extracted_at: '2025-07-12T13:37:37.106894'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/67-Management Statements/feedTitle/GlobeNewswire
+        - Management Statements
+  title: Management Statements
+- extracted_at: '2025-07-12T13:37:37.106943'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/81-Market Research Reports/feedTitle/GlobeNewswire
+        - Market Research Reports
+  title: Market Research Reports
+- extracted_at: '2025-07-12T13:37:37.106992'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/27-Mergers And Acquisitions/feedTitle/GlobeNewswire
+        - Mergers And Acquisitions
+  title: Mergers And Acquisitions
+- extracted_at: '2025-07-12T13:37:37.107045'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/64-Mutual Fund Information/feedTitle/GlobeNewswire
+        - Mutual Fund Information
+  title: Mutual Fund Information
+- extracted_at: '2025-07-12T13:37:37.107095'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/62-Net Asset Value/feedTitle/GlobeNewswire
+        - Net Asset Value
+  title: Net Asset Value
+- extracted_at: '2025-07-12T13:37:37.107142'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/28-Other News/feedTitle/GlobeNewswire
+        - Other News
+  title: Other News
+- extracted_at: '2025-07-12T13:37:37.107190'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/29-Partnerships/feedTitle/GlobeNewswire
+        - Partnerships
+  title: Partnerships
+- extracted_at: '2025-07-12T13:37:37.107238'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/30-Patents/feedTitle/GlobeNewswire
+        - Patents
+  title: Patents
+- extracted_at: '2025-07-12T13:37:37.107286'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/87-Philanthropy/feedTitle/GlobeNewswire
+        - Philanthropy
+  title: Philanthropy
+- extracted_at: '2025-07-12T13:37:37.107337'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/34-Politics/feedTitle/GlobeNewswire
+        - Politics
+  title: Politics
+- extracted_at: '2025-07-12T13:37:37.107387'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/31-Pre Release Comments/feedTitle/GlobeNewswire
+        - Pre Release Comments
+  title: Pre-Release Comments
+- extracted_at: '2025-07-12T13:37:37.107435'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/72-Press Releases/feedTitle/GlobeNewswire
+        - Press Releases
+  title: Press Releases
+- extracted_at: '2025-07-12T13:37:37.107483'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/32-Product 2f Services
+        Announcement/feedTitle/GlobeNewswire - Product , Services Announcement
+  title: Product / Services Announcement
+- extracted_at: '2025-07-12T13:37:37.107531'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/63-Prospectus 2fAnnouncement
+        Of Prospectus/feedTitle/GlobeNewswire - Prospectus, Announcement Of Prospectus
+  title: Prospectus/Announcement Of Prospectus
+- extracted_at: '2025-07-12T13:37:37.107578'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/33-Proxy Statements And
+        Analysis/feedTitle/GlobeNewswire - Proxy Statements And Analysis
+  title: Proxy Statements And Analysis
+- extracted_at: '2025-07-12T13:37:37.107627'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/73-Regulatory Information/feedTitle/GlobeNewswire
+        - Regulatory Information
+  title: Regulatory Information
+- extracted_at: '2025-07-12T13:37:37.107675'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/35-Religion/feedTitle/GlobeNewswire
+        - Religion
+  title: Religion
+- extracted_at: '2025-07-12T13:37:37.107722'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/36-Research Analysis
+        And Reports/feedTitle/GlobeNewswire - Research Analysis And Reports
+  title: Research Analysis And Reports
+- extracted_at: '2025-07-12T13:37:37.107774'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/37-Restructuring 2f Recapitalization/feedTitle/GlobeNewswire
+        - Restructuring , Recapitalization
+  title: Restructuring / Recapitalization
+- extracted_at: '2025-07-12T13:37:37.107823'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/38-Sports/feedTitle/GlobeNewswire
+        - Sports
+  title: Sports
+- extracted_at: '2025-07-12T13:37:37.107874'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/39-Stock Market News/feedTitle/GlobeNewswire
+        - Stock Market News
+  title: Stock Market News
+- extracted_at: '2025-07-12T13:37:37.107923'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/40-Tax Issues 2fAccounting/feedTitle/GlobeNewswire
+        - Tax Issues, Accounting
+  title: Tax Issues/Accounting
+- extracted_at: '2025-07-12T13:37:37.107971'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/43-Technical Analysis/feedTitle/GlobeNewswire
+        - Technical Analysis
+  title: Technical Analysis
+- extracted_at: '2025-07-12T13:37:37.108022'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/41-Trade Show/feedTitle/GlobeNewswire
+        - Trade Show
+  title: Trade Show
+- extracted_at: '2025-07-12T13:37:37.108071'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/68-Trading Information/feedTitle/GlobeNewswire
+        - Trading Information
+  title: Trading Information
+- extracted_at: '2025-07-12T13:37:37.108120'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/42-Travel/feedTitle/GlobeNewswire
+        - Travel
+  title: Travel
+- extracted_at: '2025-07-12T13:37:37.108169'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/subjectcode/82-Warrants And Certificates/feedTitle/GlobeNewswire
+        - Warrants And Certificates
+  title: Warrants And Certificates
+- extracted_at: '2025-07-12T13:37:37.108223'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1000-Basic Materials/feedTitle/GlobeNewswire
+        - Industry News on Basic Materials
+  title: Basic Materials
+- extracted_at: '2025-07-12T13:37:37.108270'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1753-Aluminum/feedTitle/GlobeNewswire
+        - Industry News on Aluminum
+  title: Aluminum
+- extracted_at: '2025-07-12T13:37:37.108319'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55201010-Chemicals and Synthetic
+        Fibers/feedTitle/GlobeNewswire - Industry News on Chemicals and Synthetic
+        Fibers
+  title: Chemicals and Synthetic Fibers
+- extracted_at: '2025-07-12T13:37:37.108367'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55201000-Chemicals 3a Diversified/feedTitle/GlobeNewswire
+        - Industry News on Chemicals Diversified
+  title: 'Chemicals: Diversified'
+- extracted_at: '2025-07-12T13:37:37.108418'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1353-Commodity Chemicals/feedTitle/GlobeNewswire
+        - Industry News on Commodity Chemicals
+  title: Commodity Chemicals
+- extracted_at: '2025-07-12T13:37:37.108468'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55102040-Copper/feedTitle/GlobeNewswire
+        - Industry News on Copper
+  title: Copper
+- extracted_at: '2025-07-12T13:37:37.108516'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1773-Diamonds 26 Gemstones/feedTitle/GlobeNewswire
+        - Industry News on Diamonds and Gemstones
+  title: Diamonds & Gemstones
+- extracted_at: '2025-07-12T13:37:37.108566'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55101000-Diversified Materials/feedTitle/GlobeNewswire
+        - Industry News on Diversified Materials
+  title: Diversified Materials
+- extracted_at: '2025-07-12T13:37:37.108615'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55201015-Fertilizers/feedTitle/GlobeNewswire
+        - Industry News on Fertilizers
+  title: Fertilizers
+- extracted_at: '2025-07-12T13:37:37.108664'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1733-Forestry/feedTitle/GlobeNewswire
+        - Industry News on Forestry
+  title: Forestry
+- extracted_at: '2025-07-12T13:37:37.108711'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1775-General Mining/feedTitle/GlobeNewswire
+        - Industry News on General Mining
+  title: General Mining
+- extracted_at: '2025-07-12T13:37:37.108760'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1777-Gold Mining/feedTitle/GlobeNewswire
+        - Industry News on Gold Mining
+  title: Gold Mining
+- extracted_at: '2025-07-12T13:37:37.108815'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1757-Iron 26 Steel/feedTitle/GlobeNewswire
+        - Industry News on Iron and Steel
+  title: Iron & Steel
+- extracted_at: '2025-07-12T13:37:37.108861'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55102015-Metal Fabricating/feedTitle/GlobeNewswire
+        - Industry News on Metal Fabricating
+  title: Metal Fabricating
+- extracted_at: '2025-07-12T13:37:37.108912'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1755-Nonferrous Metals/feedTitle/GlobeNewswire
+        - Industry News on Nonferrous Metals
+  title: Nonferrous Metals
+- extracted_at: '2025-07-12T13:37:37.108961'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1737-Paper/feedTitle/GlobeNewswire
+        - Industry News on Paper
+  title: Paper
+- extracted_at: '2025-07-12T13:37:37.109010'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1779-Platinum 26 Precious
+        Metals/feedTitle/GlobeNewswire - Industry News on Platinum and Precious Metals
+  title: Platinum & Precious Metals
+- extracted_at: '2025-07-12T13:37:37.109062'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1357-Specialty Chemicals/feedTitle/GlobeNewswire
+        - Industry News on Specialty Chemicals
+  title: Specialty Chemicals
+- extracted_at: '2025-07-12T13:37:37.109113'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/55101020-Textile Products/feedTitle/GlobeNewswire
+        - Industry News on Textile Products
+  title: Textile Products
+- extracted_at: '2025-07-12T13:37:37.109162'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3000-Consumer Goods/feedTitle/GlobeNewswire
+        - Industry News on Consumer Goods
+  title: Consumer Goods
+- extracted_at: '2025-07-12T13:37:37.109209'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3355-Auto Parts/feedTitle/GlobeNewswire
+        - Industry News on Auto Parts
+  title: Auto Parts
+- extracted_at: '2025-07-12T13:37:37.109259'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/40101010-Auto Services/feedTitle/GlobeNewswire
+        - Industry News on Auto Services
+  title: Auto Services
+- extracted_at: '2025-07-12T13:37:37.109308'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3353-Automobiles/feedTitle/GlobeNewswire
+        - Industry News on Automobiles
+  title: Automobiles
+- extracted_at: '2025-07-12T13:37:37.109358'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3533-Brewers/feedTitle/GlobeNewswire
+        - Industry News on Brewers
+  title: Brewers
+- extracted_at: '2025-07-12T13:37:37.109407'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3763-Clothing 26 Accessories/feedTitle/GlobeNewswire
+        - Industry News on Clothing and Accessories
+  title: Clothing & Accessories
+- extracted_at: '2025-07-12T13:37:37.109458'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3743-Consumer Electronics/feedTitle/GlobeNewswire
+        - Industry News on Consumer Electronics
+  title: Consumer Electronics
+- extracted_at: '2025-07-12T13:37:37.109506'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3535-Distillers 26 Vintners/feedTitle/GlobeNewswire
+        - Industry News on Distillers and Vintners
+  title: Distillers & Vintners
+- extracted_at: '2025-07-12T13:37:37.109553'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3722-Durable Household Products/feedTitle/GlobeNewswire
+        - Industry News on Durable Household Products
+  title: Durable Household Products
+- extracted_at: '2025-07-12T13:37:37.109602'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3573-Farming 26 Fishing/feedTitle/GlobeNewswire
+        - Industry News on Farming and Fishing
+  title: Farming & Fishing
+- extracted_at: '2025-07-12T13:37:37.109650'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3577-Food Products/feedTitle/GlobeNewswire
+        - Industry News on Food Products
+  title: Food Products
+- extracted_at: '2025-07-12T13:37:37.109702'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3765-Footwear/feedTitle/GlobeNewswire
+        - Industry News on Footwear
+  title: Footwear
+- extracted_at: '2025-07-12T13:37:37.109750'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3726-Furnishings/feedTitle/GlobeNewswire
+        - Industry News on Furnishings
+  title: Furnishings
+- extracted_at: '2025-07-12T13:37:37.109807'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3728-Home Construction/feedTitle/GlobeNewswire
+        - Industry News on Home Construction
+  title: Home Construction
+- extracted_at: '2025-07-12T13:37:37.109857'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3724-Nondurable Household
+        Products/feedTitle/GlobeNewswire - Industry News on Nondurable Household Products
+  title: Nondurable Household Products
+- extracted_at: '2025-07-12T13:37:37.109909'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3767-Personal Products/feedTitle/GlobeNewswire
+        - Industry News on Personal Products
+  title: Personal Products
+- extracted_at: '2025-07-12T13:37:37.109959'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3745-Recreational Products/feedTitle/GlobeNewswire
+        - Industry News on Recreational Products
+  title: Recreational Products
+- extracted_at: '2025-07-12T13:37:37.110010'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3537-Soft Drinks/feedTitle/GlobeNewswire
+        - Industry News on Soft Drinks
+  title: Soft Drinks
+- extracted_at: '2025-07-12T13:37:37.110059'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3357-Tires/feedTitle/GlobeNewswire
+        - Industry News on Tires
+  title: Tires
+- extracted_at: '2025-07-12T13:37:37.110107'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3785-Tobacco/feedTitle/GlobeNewswire
+        - Industry News on Tobacco
+  title: Tobacco
+- extracted_at: '2025-07-12T13:37:37.110155'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/3747-Toys/feedTitle/GlobeNewswire
+        - Industry News on Toys
+  title: Toys
+- extracted_at: '2025-07-12T13:37:37.110205'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5000-Consumer Services/feedTitle/GlobeNewswire
+        - Industry News on Consumer Services
+  title: Consumer Services
+- extracted_at: '2025-07-12T13:37:37.110255'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5751-Airlines/feedTitle/GlobeNewswire
+        - Industry News on Airlines
+  title: Airlines
+- extracted_at: '2025-07-12T13:37:37.110306'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5371-Apparel Retailers/feedTitle/GlobeNewswire
+        - Industry News on Apparel Retailers
+  title: Apparel Retailers
+- extracted_at: '2025-07-12T13:37:37.110355'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5553-Broadcasting 26 Entertainment/feedTitle/GlobeNewswire
+        - Industry News on Broadcasting and Entertainment
+  title: Broadcasting & Entertainment
+- extracted_at: '2025-07-12T13:37:37.110403'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5373-Broadline Retailers/feedTitle/GlobeNewswire
+        - Industry News on Broadline Retailers
+  title: Broadline Retailers
+- extracted_at: '2025-07-12T13:37:37.110451'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5333-Drug Retailers/feedTitle/GlobeNewswire
+        - Industry News on Drug Retailers
+  title: Drug Retailers
+- extracted_at: '2025-07-12T13:37:37.110502'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5337-Food Retailers 26 Wholesalers/feedTitle/GlobeNewswire
+        - Industry News on Food Retailers and Wholesalers
+  title: Food Retailers & Wholesalers
+- extracted_at: '2025-07-12T13:37:37.110550'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5752-Gambling/feedTitle/GlobeNewswire
+        - Industry News on Gambling
+  title: Gambling
+- extracted_at: '2025-07-12T13:37:37.110599'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5375-Home Improvement Retailers/feedTitle/GlobeNewswire
+        - Industry News on Home Improvement Retailers
+  title: Home Improvement Retailers
+- extracted_at: '2025-07-12T13:37:37.110648'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5753-Hotels/feedTitle/GlobeNewswire
+        - Industry News on Hotels
+  title: Hotels
+- extracted_at: '2025-07-12T13:37:37.110697'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5555-Media Agencies/feedTitle/GlobeNewswire
+        - Industry News on Media Agencies
+  title: Media Agencies
+- extracted_at: '2025-07-12T13:37:37.110750'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5557-Publishing/feedTitle/GlobeNewswire
+        - Industry News on Publishing
+  title: Publishing
+- extracted_at: '2025-07-12T13:37:37.110805'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5755-Recreational Services/feedTitle/GlobeNewswire
+        - Industry News on Recreational Services
+  title: Recreational Services
+- extracted_at: '2025-07-12T13:37:37.110854'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5757-Restaurants 26 Bars/feedTitle/GlobeNewswire
+        - Industry News on Restaurants and Bars
+  title: Restaurants & Bars
+- extracted_at: '2025-07-12T13:37:37.110902'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5377-Specialized Consumer
+        Services/feedTitle/GlobeNewswire - Industry News on Specialized Consumer Services
+  title: Specialized Consumer Services
+- extracted_at: '2025-07-12T13:37:37.110951'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5379-Specialty Retailers/feedTitle/GlobeNewswire
+        - Industry News on Specialty Retailers
+  title: Specialty Retailers
+- extracted_at: '2025-07-12T13:37:37.110999'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/5759-Travel 26 Tourism/feedTitle/GlobeNewswire
+        - Industry News on Travel and Tourism
+  title: Travel & Tourism
+- extracted_at: '2025-07-12T13:37:37.111052'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1-Energy/feedTitle/GlobeNewswire
+        - Industry News on Energy
+  title: Energy
+- extracted_at: '2025-07-12T13:37:37.111102'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/587-Alternative Fuels/feedTitle/GlobeNewswire
+        - Industry News on Alternative Fuels
+  title: Alternative Fuels
+- extracted_at: '2025-07-12T13:37:37.111151'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/1771-Coal/feedTitle/GlobeNewswire
+        - Industry News on Coal
+  title: Coal
+- extracted_at: '2025-07-12T13:37:37.111200'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/533-Exploration 26 Production/feedTitle/GlobeNewswire
+        - Industry News on Exploration and Production
+  title: Exploration & Production
+- extracted_at: '2025-07-12T13:37:37.111248'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/537-Integrated Oil 26 Gas/feedTitle/GlobeNewswire
+        - Industry News on Integrated Oil and Gas
+  title: Integrated Oil & Gas
+- extracted_at: '2025-07-12T13:37:37.111304'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/573-Oil Equipment 26 Services/feedTitle/GlobeNewswire
+        - Industry News on Oil Equipment and Services
+  title: Oil Equipment & Services
+- extracted_at: '2025-07-12T13:37:37.111354'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/577-Pipelines/feedTitle/GlobeNewswire
+        - Industry News on Pipelines
+  title: Pipelines
+- extracted_at: '2025-07-12T13:37:37.111402'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/583-Renewable Energy Equipment/feedTitle/GlobeNewswire
+        - Industry News on Renewable Energy Equipment
+  title: Renewable Energy Equipment
+- extracted_at: '2025-07-12T13:37:37.111451'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8000-Financials/feedTitle/GlobeNewswire
+        - Industry News on Financials
+  title: Financials
+- extracted_at: '2025-07-12T13:37:37.111499'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8771-Asset Managers 26 Custodians/feedTitle/GlobeNewswire
+        - Industry News on Asset Managers and Custodians
+  title: Asset Managers & Custodians
+- extracted_at: '2025-07-12T13:37:37.111551'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8355-Banks/feedTitle/GlobeNewswire
+        - Industry News on Banks
+  title: Banks
+- extracted_at: '2025-07-12T13:37:37.111601'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/30204000-Closed End Investments/feedTitle/GlobeNewswire
+        - Industry News on Closed End Investments
+  title: Closed End Investments
+- extracted_at: '2025-07-12T13:37:37.111653'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8773-Consumer Finance/feedTitle/GlobeNewswire
+        - Industry News on Consumer Finance
+  title: Consumer Finance
+- extracted_at: '2025-07-12T13:37:37.111702'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/30202000-Diversified Financial
+        Services/feedTitle/GlobeNewswire - Industry News on Diversified Financial
+        Services
+  title: Diversified Financial Services
+- extracted_at: '2025-07-12T13:37:37.111752'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8985-Equity Investment Instruments/feedTitle/GlobeNewswire
+        - Industry News on Equity Investment Instruments
+  title: Equity Investment Instruments
+- extracted_at: '2025-07-12T13:37:37.111804'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/30201030-Financial Data
+        Providers/feedTitle/GlobeNewswire - Industry News on Financial Data Providers
+  title: Financial Data Providers
+- extracted_at: '2025-07-12T13:37:37.111853'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8532-Full Line Insurance/feedTitle/GlobeNewswire
+        - Industry News on Full Line Insurance
+  title: Full Line Insurance
+- extracted_at: '2025-07-12T13:37:37.111901'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8534-Insurance Brokers/feedTitle/GlobeNewswire
+        - Industry News on Insurance Brokers
+  title: Insurance Brokers
+- extracted_at: '2025-07-12T13:37:37.111949'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8777-Investment Services/feedTitle/GlobeNewswire
+        - Industry News on Investment Services
+  title: Investment Services
+- extracted_at: '2025-07-12T13:37:37.111997'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8575-Life Insurance/feedTitle/GlobeNewswire
+        - Industry News on Life Insurance
+  title: Life Insurance
+- extracted_at: '2025-07-12T13:37:37.112044'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8779-Mortgage Finance/feedTitle/GlobeNewswire
+        - Industry News on Mortgage Finance
+  title: Mortgage Finance
+- extracted_at: '2025-07-12T13:37:37.112095'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8995-Nonequity Investment
+        Instruments/feedTitle/GlobeNewswire - Industry News on Nonequity Investment
+        Instruments
+  title: Nonequity Investment Instruments
+- extracted_at: '2025-07-12T13:37:37.112143'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/30205000-Open End and Miscellaneous
+        Investment Vehicles/feedTitle/GlobeNewswire - Industry News on Open End and
+        Miscellaneous Investment Vehicles
+  title: Open End and Miscellaneous Investment Vehicles
+- extracted_at: '2025-07-12T13:37:37.112193'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8536-Property 26 Casualty
+        Insurance/feedTitle/GlobeNewswire - Industry News on Property and Casualty
+        Insurance
+  title: Property & Casualty Insurance
+- extracted_at: '2025-07-12T13:37:37.112241'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8538-Reinsurance/feedTitle/GlobeNewswire
+        - Industry News on Reinsurance
+  title: Reinsurance
+- extracted_at: '2025-07-12T13:37:37.112289'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8775-Specialty Finance/feedTitle/GlobeNewswire
+        - Industry News on Specialty Finance
+  title: Specialty Finance
+- extracted_at: '2025-07-12T13:37:37.112338'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/4000-Health Care/feedTitle/GlobeNewswire
+        - Industry News on Health Care
+  title: Health Care
+- extracted_at: '2025-07-12T13:37:37.112386'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/4573-Biotechnology/feedTitle/GlobeNewswire
+        - Industry News on Biotechnology
+  title: Biotechnology
+- extracted_at: '2025-07-12T13:37:37.112435'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/20103020-Cannabis Producers/feedTitle/GlobeNewswire
+        - Industry News on Cannabis Producers
+  title: Cannabis Producers
+- extracted_at: '2025-07-12T13:37:37.112483'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/4533-Health Care Providers/feedTitle/GlobeNewswire
+        - Industry News on Health Care Providers
+  title: Health Care Providers
+- extracted_at: '2025-07-12T13:37:37.112534'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/4535-Medical Equipment/feedTitle/GlobeNewswire
+        - Industry News on Medical Equipment
+  title: Medical Equipment
+- extracted_at: '2025-07-12T13:37:37.112586'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/20102020-Medical Services/feedTitle/GlobeNewswire
+        - Industry News on Medical Services
+  title: Medical Services
+- extracted_at: '2025-07-12T13:37:37.112634'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/4537-Medical Supplies/feedTitle/GlobeNewswire
+        - Industry News on Medical Supplies
+  title: Medical Supplies
+- extracted_at: '2025-07-12T13:37:37.112685'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/4577-Pharmaceuticals/feedTitle/GlobeNewswire
+        - Industry News on Pharmaceuticals
+  title: Pharmaceuticals
+- extracted_at: '2025-07-12T13:37:37.112733'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2000-Industrials/feedTitle/GlobeNewswire
+        - Industry News on Industrials
+  title: Industrials
+- extracted_at: '2025-07-12T13:37:37.112788'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2713-Aerospace/feedTitle/GlobeNewswire
+        - Industry News on Aerospace
+  title: Aerospace
+- extracted_at: '2025-07-12T13:37:37.112838'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2353-Building Materials
+        26 Fixtures/feedTitle/GlobeNewswire - Industry News on Building Materials
+        and Fixtures
+  title: Building Materials & Fixtures
+- extracted_at: '2025-07-12T13:37:37.112887'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50101035-Building Materials
+        3a Other/feedTitle/GlobeNewswire - Industry News on Building Materials Other
+  title: 'Building Materials: Other'
+- extracted_at: '2025-07-12T13:37:37.112936'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50101020-Building 2c Roofing
+        2fWallboard and Plumbing/feedTitle/GlobeNewswire - Industry News on Building,
+        Roofing, Wallboard and Plumbing
+  title: Building, Roofing/Wallboard and Plumbing
+- extracted_at: '2025-07-12T13:37:37.112984'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50101025-Building 3a Climate
+        Control/feedTitle/GlobeNewswire - Industry News on Building Climate Control
+  title: 'Building: Climate Control'
+- extracted_at: '2025-07-12T13:37:37.113031'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2791-Business Support Services/feedTitle/GlobeNewswire
+        - Industry News on Business Support Services
+  title: Business Support Services
+- extracted_at: '2025-07-12T13:37:37.113079'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2793-Business Training 26
+        Employment Agencies/feedTitle/GlobeNewswire - Industry News on Business Training
+        and Employment Agencies
+  title: Business Training & Employment Agencies
+- extracted_at: '2025-07-12T13:37:37.113131'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50205025-Business Training
+        and Employment Agencies/feedTitle/GlobeNewswire - Industry News on Business
+        Training and Employment Agencies
+  title: Business Training and Employment Agencies
+- extracted_at: '2025-07-12T13:37:37.113234'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50101030-Cement/feedTitle/GlobeNewswire
+        - Industry News on Cement
+  title: Cement
+- extracted_at: '2025-07-12T13:37:37.113287'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50206050-Commercial Vehicle
+        Equipment Leasing/feedTitle/GlobeNewswire - Industry News on Commercial Vehicle
+        Equipment Leasing
+  title: Commercial Vehicle-Equipment Leasing
+- extracted_at: '2025-07-12T13:37:37.113336'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2753-Commercial Vehicles
+        26 Trucks/feedTitle/GlobeNewswire - Industry News on Commercial Vehicles and
+        Trucks
+  title: Commercial Vehicles & Trucks
+- extracted_at: '2025-07-12T13:37:37.113384'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50206015-Commercial Vehicles
+        and Parts/feedTitle/GlobeNewswire - Industry News on Commercial Vehicles and
+        Parts
+  title: Commercial Vehicles and Parts
+- extracted_at: '2025-07-12T13:37:37.113435'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50101010-Construction/feedTitle/GlobeNewswire
+        - Industry News on Construction
+  title: Construction
+- extracted_at: '2025-07-12T13:37:37.113488'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2723-Containers 26 Packaging/feedTitle/GlobeNewswire
+        - Industry News on Containers and Packaging
+  title: Containers & Packaging
+- extracted_at: '2025-07-12T13:37:37.113539'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2717-Defense/feedTitle/GlobeNewswire
+        - Industry News on Defense
+  title: Defense
+- extracted_at: '2025-07-12T13:37:37.113588'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2771-Delivery Services/feedTitle/GlobeNewswire
+        - Industry News on Delivery Services
+  title: Delivery Services
+- extracted_at: '2025-07-12T13:37:37.113636'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2727-Diversified Industrials/feedTitle/GlobeNewswire
+        - Industry News on Diversified Industrials
+  title: Diversified Industrials
+- extracted_at: '2025-07-12T13:37:37.113685'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50202010-Electrical Components/feedTitle/GlobeNewswire
+        - Industry News on Electrical Components
+  title: Electrical Components
+- extracted_at: '2025-07-12T13:37:37.113735'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2733-Electrical Components
+        26 Equipment/feedTitle/GlobeNewswire - Industry News on Electrical Components
+        and Equipment
+  title: Electrical Components & Equipment
+- extracted_at: '2025-07-12T13:37:37.113788'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2737-Electronic Equipment/feedTitle/GlobeNewswire
+        - Industry News on Electronic Equipment
+  title: Electronic Equipment
+- extracted_at: '2025-07-12T13:37:37.113837'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50202020-Electronic Equipment
+        3a Control and Filter/feedTitle/GlobeNewswire - Industry News on Electronic
+        Equipment Control and Filter
+  title: 'Electronic Equipment: Control and Filter'
+- extracted_at: '2025-07-12T13:37:37.113885'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50202025-Electronic Equipment
+        3a Gauges and Meters/feedTitle/GlobeNewswire - Industry News on Electronic
+        Equipment Gauges and Meters
+  title: 'Electronic Equipment: Gauges and Meters'
+- extracted_at: '2025-07-12T13:37:37.113937'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50202040-Electronic Equipment
+        3a Other/feedTitle/GlobeNewswire - Industry News on Electronic Equipment Other
+  title: 'Electronic Equipment: Other'
+- extracted_at: '2025-07-12T13:37:37.113987'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50202030-Electronic Equipment
+        3a Pollution Control/feedTitle/GlobeNewswire - Industry News on Electronic
+        Equipment Pollution Control
+  title: 'Electronic Equipment: Pollution Control'
+- extracted_at: '2025-07-12T13:37:37.114034'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50101015-Engineering and
+        Contracting Services/feedTitle/GlobeNewswire - Industry News on Engineering
+        and Contracting Services
+  title: Engineering and Contracting Services
+- extracted_at: '2025-07-12T13:37:37.114083'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2795-Financial Administration/feedTitle/GlobeNewswire
+        - Industry News on Financial Administration
+  title: Financial Administration
+- extracted_at: '2025-07-12T13:37:37.114131'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50205030-Forms and Bulk
+        Printing Services/feedTitle/GlobeNewswire - Industry News on Forms and Bulk
+        Printing Services
+  title: Forms and Bulk Printing Services
+- extracted_at: '2025-07-12T13:37:37.114178'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50203020-Glass/feedTitle/GlobeNewswire
+        - Industry News on Glass
+  title: Glass
+- extracted_at: '2025-07-12T13:37:37.114229'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2357-Heavy Construction/feedTitle/GlobeNewswire
+        - Industry News on Heavy Construction
+  title: Heavy Construction
+- extracted_at: '2025-07-12T13:37:37.114278'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2757-Industrial Machinery/feedTitle/GlobeNewswire
+        - Industry News on Industrial Machinery
+  title: Industrial Machinery
+- extracted_at: '2025-07-12T13:37:37.114325'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2797-Industrial Suppliers/feedTitle/GlobeNewswire
+        - Industry News on Industrial Suppliers
+  title: Industrial Suppliers
+- extracted_at: '2025-07-12T13:37:37.114373'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50204010-Machinery 3a Agricultural/feedTitle/GlobeNewswire
+        - Industry News on Machinery Agricultural
+  title: 'Machinery: Agricultural'
+- extracted_at: '2025-07-12T13:37:37.114425'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50204020-Machinery 3a Construction
+        and Handling/feedTitle/GlobeNewswire - Industry News on Machinery Construction
+        and Handling
+  title: 'Machinery: Construction and Handling'
+- extracted_at: '2025-07-12T13:37:37.114472'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50204030-Machinery 3a Engines/feedTitle/GlobeNewswire
+        - Industry News on Machinery Engines
+  title: 'Machinery: Engines'
+- extracted_at: '2025-07-12T13:37:37.114521'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50204000-Machinery 3a Industrial/feedTitle/GlobeNewswire
+        - Industry News on Machinery Industrial
+  title: 'Machinery: Industrial'
+- extracted_at: '2025-07-12T13:37:37.114569'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50204050-Machinery 3a Specialty/feedTitle/GlobeNewswire
+        - Industry News on Machinery Specialty
+  title: 'Machinery: Specialty'
+- extracted_at: '2025-07-12T13:37:37.114617'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50204040-Machinery 3a Tools/feedTitle/GlobeNewswire
+        - Industry News on Machinery Tools
+  title: 'Machinery: Tools'
+- extracted_at: '2025-07-12T13:37:37.114666'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2773-Marine Transportation/feedTitle/GlobeNewswire
+        - Industry News on Marine Transportation
+  title: Marine Transportation
+- extracted_at: '2025-07-12T13:37:37.114715'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50203010-Paints and Coatings/feedTitle/GlobeNewswire
+        - Industry News on Paints and Coatings
+  title: Paints and Coatings
+- extracted_at: '2025-07-12T13:37:37.114771'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50203015-Plastics/feedTitle/GlobeNewswire
+        - Industry News on Plastics
+  title: Plastics
+- extracted_at: '2025-07-12T13:37:37.114821'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50205020-Professional Business
+        Support Services/feedTitle/GlobeNewswire - Industry News on Professional Business
+        Support Services
+  title: Professional Business Support Services
+- extracted_at: '2025-07-12T13:37:37.114870'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50206025-Railroad Equipment/feedTitle/GlobeNewswire
+        - Industry News on Railroad Equipment
+  title: Railroad Equipment
+- extracted_at: '2025-07-12T13:37:37.114917'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2775-Railroads/feedTitle/GlobeNewswire
+        - Industry News on Railroads
+  title: Railroads
+- extracted_at: '2025-07-12T13:37:37.114965'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50205040-Security Services/feedTitle/GlobeNewswire
+        - Industry News on Security Services
+  title: Security Services
+- extracted_at: '2025-07-12T13:37:37.115012'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/50205015-Transaction Processing
+        Services/feedTitle/GlobeNewswire - Industry News on Transaction Processing
+        Services
+  title: Transaction Processing Services
+- extracted_at: '2025-07-12T13:37:37.115060'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2777-Transportation Services/feedTitle/GlobeNewswire
+        - Industry News on Transportation Services
+  title: Transportation Services
+- extracted_at: '2025-07-12T13:37:37.115109'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2779-Trucking/feedTitle/GlobeNewswire
+        - Industry News on Trucking
+  title: Trucking
+- extracted_at: '2025-07-12T13:37:37.115162'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/2799-Waste 26 Disposal Services/feedTitle/GlobeNewswire
+        - Industry News on Waste and Disposal Services
+  title: Waste & Disposal Services
+- extracted_at: '2025-07-12T13:37:37.115211'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35-Real Estate/feedTitle/GlobeNewswire
+        - Industry News on Real Estate
+  title: Real Estate
+- extracted_at: '2025-07-12T13:37:37.115264'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8674-Diversified REITs/feedTitle/GlobeNewswire
+        - Industry News on Diversified REITs
+  title: Diversified REITs
+- extracted_at: '2025-07-12T13:37:37.115314'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102010-Health Care REITs/feedTitle/GlobeNewswire
+        - Industry News on Health Care REITs
+  title: Health Care REITs
+- extracted_at: '2025-07-12T13:37:37.115362'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8677-Hotel 26 Lodging REITs/feedTitle/GlobeNewswire
+        - Industry News on Hotel and Lodging REITs
+  title: Hotel & Lodging REITs
+- extracted_at: '2025-07-12T13:37:37.115411'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8671-Industrial 26 Office
+        REITs/feedTitle/GlobeNewswire - Industry News on Industrial and Office REITs
+  title: Industrial & Office REITs
+- extracted_at: '2025-07-12T13:37:37.115460'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102020-Industrial REITs/feedTitle/GlobeNewswire
+        - Industry News on Industrial REITs
+  title: Industrial REITs
+- extracted_at: '2025-07-12T13:37:37.115510'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102025-Infrastructure
+        REITs/feedTitle/GlobeNewswire - Industry News on Infrastructure REITs
+  title: Infrastructure REITs
+- extracted_at: '2025-07-12T13:37:37.115558'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8676-Mortgage REITs/feedTitle/GlobeNewswire
+        - Industry News on Mortgage REITs
+  title: Mortgage REITs
+- extracted_at: '2025-07-12T13:37:37.115606'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102030-Office REITs/feedTitle/GlobeNewswire
+        - Industry News on Office REITs
+  title: Office REITs
+- extracted_at: '2025-07-12T13:37:37.115655'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102070-Other Specialty
+        REITs/feedTitle/GlobeNewswire - Industry News on Other Specialty REITs
+  title: Other Specialty REITs
+- extracted_at: '2025-07-12T13:37:37.115732'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8633-Real Estate Holding
+        26 Development/feedTitle/GlobeNewswire - Industry News on Real Estate Holding
+        and Development
+  title: Real Estate Holding & Development
+- extracted_at: '2025-07-12T13:37:37.115787'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35101010-Real Estate Holding
+        and Development/feedTitle/GlobeNewswire - Industry News on Real Estate Holding
+        and Development
+  title: Real Estate Holding and Development
+- extracted_at: '2025-07-12T13:37:37.115841'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8637-Real Estate Services/feedTitle/GlobeNewswire
+        - Industry News on Real Estate Services
+  title: Real Estate Services
+- extracted_at: '2025-07-12T13:37:37.115893'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8673-Residential REITs/feedTitle/GlobeNewswire
+        - Industry News on Residential REITs
+  title: Residential REITs
+- extracted_at: '2025-07-12T13:37:37.115941'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8672-Retail REITs/feedTitle/GlobeNewswire
+        - Industry News on Retail REITs
+  title: Retail REITs
+- extracted_at: '2025-07-12T13:37:37.115992'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/8675-Specialty REITs/feedTitle/GlobeNewswire
+        - Industry News on Specialty REITs
+  title: Specialty REITs
+- extracted_at: '2025-07-12T13:37:37.116040'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102050-Storage REITs/feedTitle/GlobeNewswire
+        - Industry News on Storage REITs
+  title: Storage REITs
+- extracted_at: '2025-07-12T13:37:37.116093'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/35102060-Timber REITs/feedTitle/GlobeNewswire
+        - Industry News on Timber REITs
+  title: Timber REITs
+- extracted_at: '2025-07-12T13:37:37.116144'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9000-Technology/feedTitle/GlobeNewswire
+        - Industry News on Technology
+  title: Technology
+- extracted_at: '2025-07-12T13:37:37.116194'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9572-Computer Hardware/feedTitle/GlobeNewswire
+        - Industry News on Computer Hardware
+  title: Computer Hardware
+- extracted_at: '2025-07-12T13:37:37.116244'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9533-Computer Services/feedTitle/GlobeNewswire
+        - Industry News on Computer Services
+  title: Computer Services
+- extracted_at: '2025-07-12T13:37:37.116294'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9574-Electronic Office Equipment/feedTitle/GlobeNewswire
+        - Industry News on Electronic Office Equipment
+  title: Electronic Office Equipment
+- extracted_at: '2025-07-12T13:37:37.116343'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9535-Internet/feedTitle/GlobeNewswire
+        - Industry News on Internet
+  title: Internet
+- extracted_at: '2025-07-12T13:37:37.116397'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/10102020-Production Technology
+        Equipment/feedTitle/GlobeNewswire - Industry News on Production Technology
+        Equipment
+  title: Production Technology Equipment
+- extracted_at: '2025-07-12T13:37:37.116447'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9576-Semiconductors/feedTitle/GlobeNewswire
+        - Industry News on Semiconductors
+  title: Semiconductors
+- extracted_at: '2025-07-12T13:37:37.116496'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9537-Software/feedTitle/GlobeNewswire
+        - Industry News on Software
+  title: Software
+- extracted_at: '2025-07-12T13:37:37.116548'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/9578-Telecommunications
+        Equipment/feedTitle/GlobeNewswire - Industry News on Telecommunications Equipment
+  title: Telecommunications Equipment
+- extracted_at: '2025-07-12T13:37:37.116598'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/6000-Telecommunications/feedTitle/GlobeNewswire
+        - Industry News on Telecommunications
+  title: Telecommunications
+- extracted_at: '2025-07-12T13:37:37.116647'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/6535-Fixed Line Telecommunications/feedTitle/GlobeNewswire
+        - Industry News on Fixed Line Telecommunications
+  title: Fixed Line Telecommunications
+- extracted_at: '2025-07-12T13:37:37.116695'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/6575-Mobile Telecommunications/feedTitle/GlobeNewswire
+        - Industry News on Mobile Telecommunications
+  title: Mobile Telecommunications
+- extracted_at: '2025-07-12T13:37:37.116747'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/7000-Utilities/feedTitle/GlobeNewswire
+        - Industry News on Utilities
+  title: Utilities
+- extracted_at: '2025-07-12T13:37:37.116802'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/7537-Alternative Electricity/feedTitle/GlobeNewswire
+        - Industry News on Alternative Electricity
+  title: Alternative Electricity
+- extracted_at: '2025-07-12T13:37:37.116852'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/7535-Conventional Electricity/feedTitle/GlobeNewswire
+        - Industry News on Conventional Electricity
+  title: Conventional Electricity
+- extracted_at: '2025-07-12T13:37:37.116904'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/7573-Gas Distribution/feedTitle/GlobeNewswire
+        - Industry News on Gas Distribution
+  title: Gas Distribution
+- extracted_at: '2025-07-12T13:37:37.116952'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/7575-Multiutilities/feedTitle/GlobeNewswire
+        - Industry News on Multiutilities
+  title: Multiutilities
+- extracted_at: '2025-07-12T13:37:37.117004'
+  feeds:
+    RSS:
+      title: RSS Feed
+      url: https://www.globenewswire.com/RssFeed/industry/7577-Water/feedTitle/GlobeNewswire
+        - Industry News on Water
+  title: Water
+source: GlobeNewswire RSS Feeds
+total_categories: 257

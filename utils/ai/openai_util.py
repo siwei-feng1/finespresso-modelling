@@ -10,7 +10,7 @@ load_dotenv()
 
 # Set up OpenAI client with explicit API key
 api_key = os.getenv('OPENAI_API_KEY')
-model_name = os.getenv('OPENAI_MODEL')
+model_name = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')  # Default to gpt-4o-mini if not set
 if not api_key:
     raise ValueError("OPENAI_API_KEY not found in environment variables")
 
