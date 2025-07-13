@@ -15,13 +15,11 @@ import argparse
 # Add the parent directory to the path to import utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-# Ensure reports and models directories exist at the top-level
+# Ensure reports directory exists at the top-level
 reports_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'reports')
 os.makedirs(reports_dir, exist_ok=True)
-models_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'models')
-os.makedirs(models_dir, exist_ok=True)
 
-from utils.db.model_db_util import save_regression_results
+from utils.db.model_db_util import save_regression_results, save_model_to_db, load_model_from_db
 from utils.logging.log_util import get_logger
 from utils.ai.language_util import spacy_model_mapping
 logger = get_logger(__name__)
@@ -110,12 +108,28 @@ def train_and_save_model_for_event(event, df):
         model = RandomForestRegressor()
         model.fit(X_train, y_train)
 
-        # Save model and vectorizer
-        model_filename = os.path.join(models_dir, f'{event.replace(" ", "_").lower()}_regression.joblib')
-        vectorizer_filename = os.path.join(models_dir, f'{event.replace(" ", "_").lower()}_tfidf_vectorizer_regression.joblib')
+        # Save model and vectorizer to database
+        event_name = event.replace(" ", "_").lower()
+        
+        # Save regression model
+        model_success, model_version = save_model_to_db(
+            model, 
+            f'{event_name}_regression', 
+            event, 
+            'regression'
+        )
+        
+        # Save vectorizer
+        vectorizer_success, vectorizer_version = save_model_to_db(
+            tfidf, 
+            f'{event_name}_tfidf_vectorizer_regression', 
+            event, 
+            'vectorizer'
+        )
 
-        joblib.dump(model, model_filename)
-        joblib.dump(tfidf, vectorizer_filename)
+        if not model_success or not vectorizer_success:
+            logger.error(f"Failed to save models to database for event {event}")
+            return None
 
         y_pred = model.predict(X_test)
 
@@ -125,6 +139,7 @@ def train_and_save_model_for_event(event, df):
         rmse = math.sqrt(mse)
 
         logger.info(f"Model trained successfully for event: {event}")
+        logger.info(f"Model version: {model_version}, Vectorizer version: {vectorizer_version}")
         logger.info(f"MSE: {mse}, R2: {r2}, MAE: {mae}, RMSE: {rmse}")
 
         return {
@@ -137,8 +152,8 @@ def train_and_save_model_for_event(event, df):
             'test_sample': len(y_test),
             'training_sample': len(y_train),
             'total_sample': len(event_df),
-            'model_filename': model_filename,
-            'vectorizer_filename': vectorizer_filename
+            'model_version': model_version,
+            'vectorizer_version': vectorizer_version
         }
 
     except Exception as e:
@@ -239,12 +254,26 @@ def train_and_save_all_events_model(df):
         model = RandomForestRegressor()
         model.fit(X_train, y_train)
 
-        # Save model and vectorizer
-        model_filename = os.path.join(models_dir, 'all_events_regression.joblib')
-        vectorizer_filename = os.path.join(models_dir, 'all_events_tfidf_vectorizer_regression.joblib')
+        # Save model and vectorizer to database
+        # Save regression model
+        model_success, model_version = save_model_to_db(
+            model, 
+            'all_events_regression', 
+            'all_events', 
+            'regression'
+        )
+        
+        # Save vectorizer
+        vectorizer_success, vectorizer_version = save_model_to_db(
+            tfidf, 
+            'all_events_tfidf_vectorizer_regression', 
+            'all_events', 
+            'vectorizer'
+        )
 
-        joblib.dump(model, model_filename)
-        joblib.dump(tfidf, vectorizer_filename)
+        if not model_success or not vectorizer_success:
+            logger.error("Failed to save all events models to database")
+            return None
 
         y_pred = model.predict(X_test)
 
@@ -254,6 +283,7 @@ def train_and_save_all_events_model(df):
         rmse = math.sqrt(mse)
 
         logger.info("All events model trained successfully")
+        logger.info(f"Model version: {model_version}, Vectorizer version: {vectorizer_version}")
         logger.info(f"MSE: {mse}, R2: {r2}, MAE: {mae}, RMSE: {rmse}")
 
         result = {
@@ -266,8 +296,8 @@ def train_and_save_all_events_model(df):
             'test_sample': len(y_test),
             'training_sample': len(y_train),
             'total_sample': len(df),
-            'model_filename': model_filename,
-            'vectorizer_filename': vectorizer_filename
+            'model_version': model_version,
+            'vectorizer_version': vectorizer_version
         }
         
         return result

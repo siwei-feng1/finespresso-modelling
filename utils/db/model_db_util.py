@@ -1,15 +1,29 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, func
+from sqlalchemy import Column, Integer, String, Float, DateTime, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, BYTEA
 import uuid
 import pandas as pd
-from typing import Dict
+from typing import Dict, Optional, Tuple
 import logging
+import pickle
+import io
 from utils.db_pool import DatabasePool
 
 # Get the database pool instance
 db_pool = DatabasePool()
 Base = declarative_base()
+
+class Model(Base):
+    __tablename__ = 'models'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(255), nullable=False)
+    version = Column(Integer, nullable=False)
+    model_type = Column(String(50), nullable=False)  # 'classifier_binary', 'regression', 'vectorizer'
+    event = Column(String(255), nullable=False)
+    model_binary = Column(BYTEA, nullable=False)
+    created_at = Column(DateTime, default=func.now(), nullable=False)
+    is_active = Column(Boolean, default=True)
 
 class ModelResultsBinary(Base):
     __tablename__ = 'eq_model_results_binary'
@@ -52,6 +66,121 @@ class ModelResultsRegression(Base):
 
 def create_tables():
     Base.metadata.create_all(db_pool.engine)
+
+def get_next_version(name: str) -> int:
+    """Get the next version number for a model name"""
+    session = db_pool.get_session()
+    try:
+        result = session.query(func.max(Model.version)).filter(Model.name == name).scalar()
+        return (result or 0) + 1
+    finally:
+        db_pool.return_session(session)
+
+def save_model_to_db(model_obj, name: str, event: str, model_type: str) -> Tuple[bool, Optional[int]]:
+    """Save a model to the database with automatic versioning"""
+    session = db_pool.get_session()
+    try:
+        # Get next version number
+        version = get_next_version(name)
+        
+        # Serialize the model
+        model_binary = pickle.dumps(model_obj)
+        
+        # Create model record
+        model_record = Model(
+            name=name,
+            version=version,
+            model_type=model_type,
+            event=event,
+            model_binary=model_binary,
+            is_active=True
+        )
+        
+        session.add(model_record)
+        session.commit()
+        
+        logging.info(f'Successfully saved model {name} version {version} to database')
+        return True, version
+    except Exception as e:
+        logging.error(f'An error occurred while saving model {name}: {str(e)}')
+        session.rollback()
+        return False, None
+    finally:
+        db_pool.return_session(session)
+
+def load_model_from_db(name: str, event: str, model_type: str, version: Optional[int] = None):
+    """Load a model from the database"""
+    session = db_pool.get_session()
+    try:
+        query = session.query(Model).filter(
+            Model.name == name,
+            Model.event == event,
+            Model.model_type == model_type,
+            Model.is_active == True
+        )
+        
+        if version is not None:
+            query = query.filter(Model.version == version)
+        else:
+            # Get the latest version
+            query = query.order_by(Model.version.desc())
+        
+        model_record = query.first()
+        
+        if model_record:
+            # Deserialize the model
+            model_obj = pickle.loads(model_record.model_binary)
+            logging.info(f'Successfully loaded model {name} version {model_record.version} from database')
+            return model_obj, model_record.version
+        else:
+            logging.warning(f'Model {name} for event {event} and type {model_type} not found in database')
+            return None, None
+    except Exception as e:
+        logging.error(f'An error occurred while loading model {name}: {str(e)}')
+        return None, None
+    finally:
+        db_pool.return_session(session)
+
+def get_latest_model_version(name: str, event: str, model_type: str) -> Optional[int]:
+    """Get the latest version number for a model"""
+    session = db_pool.get_session()
+    try:
+        result = session.query(Model.version).filter(
+            Model.name == name,
+            Model.event == event,
+            Model.model_type == model_type,
+            Model.is_active == True
+        ).order_by(Model.version.desc()).first()
+        
+        return result[0] if result else None
+    finally:
+        db_pool.return_session(session)
+
+def deactivate_model(name: str, event: str, model_type: str, version: int) -> bool:
+    """Deactivate a specific model version"""
+    session = db_pool.get_session()
+    try:
+        model_record = session.query(Model).filter(
+            Model.name == name,
+            Model.event == event,
+            Model.model_type == model_type,
+            Model.version == version
+        ).first()
+        
+        if model_record:
+            model_record.is_active = False
+            session.commit()
+            logging.info(f'Successfully deactivated model {name} version {version}')
+            return True
+        else:
+            logging.warning(f'Model {name} version {version} not found')
+            return False
+    except Exception as e:
+        logging.error(f'An error occurred while deactivating model {name}: {str(e)}')
+        session.rollback()
+        return False
+    finally:
+        db_pool.return_session(session)
 
 def save_results(results_df):
     session = db_pool.get_session()

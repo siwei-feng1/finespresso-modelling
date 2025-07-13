@@ -1,0 +1,178 @@
+{
+  "test_timestamp": "2025-07-14T01:28:31.629096",
+  "performance_metrics": {
+    "individual_predictions": {
+      "total_time": 68.84249639511108,
+      "average_time": 13.768499279022217,
+      "success_rate": 1.0,
+      "total_articles": 5,
+      "successful_predictions": 5
+    },
+    "batch_predictions": {
+      "batch_1_time": 0.028771400451660156,
+      "batch_1_articles": 2,
+      "batch_2_time": 0.9981305599212646,
+      "batch_2_articles": 5
+    },
+    "caching": {
+      "cached_models": 7,
+      "cache_keys": [
+        "clinical_study_classifier_binary_clinical_study_classifier_binary",
+        "clinical_study_tfidf_vectorizer_binary_clinical_study_vectorizer",
+        "clinical_study_regression_clinical_study_regression",
+        "clinical_study_tfidf_vectorizer_regression_clinical_study_vectorizer",
+        "all_events_classifier_binary_all_events_classifier_binary",
+        "all_events_tfidf_vectorizer_binary_all_events_vectorizer",
+        "all_events_tfidf_vectorizer_regression_all_events_vectorizer"
+      ]
+    }
+  },
+  "individual_results": [
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.3705,
+        0.6295000000000001
+      ],
+      "predicted_move": -1.7708067785743105,
+      "prediction_time": 20.54759979248047,
+      "article_id": "test_1",
+      "event": "clinical_study",
+      "title": "Company Announces Positive Results from Phase 3 Clinical Trial",
+      "total_time": 20.54768681526184
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.29333333333333333,
+        0.7066666666666666
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 46.40505504608154,
+      "article_id": "test_2",
+      "event": "fda_approval",
+      "title": "FDA Grants Approval for New Drug Treatment",
+      "total_time": 46.405153036117554
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.35166666666666674,
+        0.6483333333333334
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.9725847244262695,
+      "article_id": "test_3",
+      "event": "earnings_report",
+      "title": "Company Reports Strong Q4 Earnings",
+      "total_time": 0.9726729393005371
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.26291458216372443,
+        0.7370854178362756
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.8956441879272461,
+      "article_id": "test_4",
+      "event": "partnership",
+      "title": "Major Partnership Announced with Global Pharma",
+      "total_time": 0.8957922458648682
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.33333333333333326,
+        0.6666666666666665
+      ],
+      "predicted_move": 2.962684694008035,
+      "prediction_time": 0.021108627319335938,
+      "article_id": "test_5",
+      "event": "clinical_study",
+      "title": "Clinical Trial Fails to Meet Primary Endpoint",
+      "total_time": 0.02119135856628418
+    }
+  ],
+  "batch_results_1": [
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.3705,
+        0.6295000000000001
+      ],
+      "predicted_move": -1.7708067785743105,
+      "prediction_time": 0.014448404312133789,
+      "article_id": "test_1",
+      "article_time": 0.01453256607055664
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.33333333333333326,
+        0.6666666666666665
+      ],
+      "predicted_move": 2.962684694008035,
+      "prediction_time": 0.014068603515625,
+      "article_id": "test_5",
+      "article_time": 0.014148235321044922
+    }
+  ],
+  "batch_results_2": [
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.15,
+        0.85
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.21056270599365234,
+      "article_id": "test_1",
+      "article_time": 0.2106609344482422
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.29333333333333333,
+        0.7066666666666666
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.19704151153564453,
+      "article_id": "test_2",
+      "article_time": 0.19718217849731445
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.35166666666666674,
+        0.6483333333333334
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.20914316177368164,
+      "article_id": "test_3",
+      "article_time": 0.20925688743591309
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.26291458216372443,
+        0.7370854178362756
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.17837882041931152,
+      "article_id": "test_4",
+      "article_time": 0.17853116989135742
+    },
+    {
+      "predicted_side": 1,
+      "side_probability": [
+        0.33,
+        0.67
+      ],
+      "predicted_move": 0.0,
+      "prediction_time": 0.20219945907592773,
+      "article_id": "test_5",
+      "article_time": 0.20234036445617676
+    }
+  ]
+}

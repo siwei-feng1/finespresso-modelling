@@ -1,113 +1,157 @@
 import pandas as pd
 import joblib
 from utils.db import news_db_util
+from utils.db.model_db_util import load_model_from_db
 import os
 import logging
+import time
+from typing import Dict, Tuple, Optional
+from functools import lru_cache
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def load_models(event, model_type):
+# Global cache for loaded models
+_model_cache: Dict[str, Tuple] = {}
+
+def get_cache_key(name: str, event: str, model_type: str) -> str:
+    """Generate a cache key for model lookup"""
+    return f"{name}_{event}_{model_type}"
+
+def load_models_from_db(event, model_type):
+    """Load models from database with caching"""
     if model_type == 'classifier_binary':
-        model_filename = f'models/{event}_classifier_binary.joblib'
-        vectorizer_filename = f'models/{event}_tfidf_vectorizer_binary.joblib'
+        model_name = f'{event}_classifier_binary'
+        vectorizer_name = f'{event}_tfidf_vectorizer_binary'
     else:
-        model_filename = f'models/{event}_{model_type}.joblib'
-        vectorizer_filename = f'models/{event}_tfidf_vectorizer_{model_type}.joblib'
+        model_name = f'{event}_{model_type}'
+        vectorizer_name = f'{event}_tfidf_vectorizer_{model_type}'
     
-    logger.info(f"Looking for model file: {model_filename}")
-    logger.info(f"Looking for vectorizer file: {vectorizer_filename}")
+    # Check cache first
+    model_cache_key = get_cache_key(model_name, event, model_type)
+    vectorizer_cache_key = get_cache_key(vectorizer_name, event, 'vectorizer')
     
-    if os.path.exists(model_filename) and os.path.exists(vectorizer_filename):
-        logger.info(f"Loading model and vectorizer for event: {event}")
-        model = joblib.load(model_filename)
-        vectorizer = joblib.load(vectorizer_filename)
-        return model, vectorizer
+    # Load model from cache or database
+    if model_cache_key in _model_cache:
+        logger.info(f"Loading model from cache: {model_name}")
+        model = _model_cache[model_cache_key]
     else:
-        logger.warning(f"Model or vectorizer not found for event: {event}")
-        logger.warning(f"Model file exists: {os.path.exists(model_filename)}")
-        logger.warning(f"Vectorizer file exists: {os.path.exists(vectorizer_filename)}")
-        return None, None
-
-def predict(df):
-    move_models = {}
-    move_vectorizers = {}
-    side_models = {}
-    side_vectorizers = {}
-
-    # Load all_events models
-    all_events_move_model, all_events_move_vectorizer = load_models('all_events', 'regression')
-    all_events_side_model, all_events_side_vectorizer = load_models('all_events', 'classifier_binary')
-
-    for index, row in df.iterrows():
-        # Check if event is None or NaN
-        if pd.isna(row['event']):
-            logger.warning(f"Skipping prediction for row {index}: Event is None or NaN")
-            continue
-
-        event = row['event'].lower().replace(' ', '_')
+        logger.info(f"Loading model from database: {model_name}")
+        start_time = time.time()
+        model, version = load_model_from_db(model_name, event, model_type)
+        load_time = time.time() - start_time
+        logger.info(f"Model loaded in {load_time:.3f}s (version {version})")
         
-        # Update text selection logic
-        if pd.notna(row.get('content_en')) and row['content_en'] != '':
-            text_for_prediction = row['content_en']
-        elif pd.notna(row.get('title_en')) and row['title_en'] != '':
-            text_for_prediction = row['title_en']
-        elif pd.notna(row.get('content')) and row['content'] != '':
-            text_for_prediction = row['content']
-        elif pd.notna(row.get('title')) and row['title'] != '':
-            text_for_prediction = row['title']
-        else:
-            logger.warning(f"Skipping prediction for row {index}: No content or title available")
-            continue
-
-        # Predict move
-        if 'predicted_move' not in df.columns or pd.isnull(row['predicted_move']):
-            if event not in move_models:
-                move_models[event], move_vectorizers[event] = load_models(event, 'regression')
-            
-            model = move_models[event] if move_models[event] else all_events_move_model
-            vectorizer = move_vectorizers[event] if move_vectorizers[event] else all_events_move_vectorizer
-            
-            if model and vectorizer:
-                try:
-                    logger.info(f"Predicting move for row {index}, event: {event}")
-                    transformed_content = vectorizer.transform([text_for_prediction])
-                    prediction = model.predict(transformed_content)
-                    df.at[index, 'predicted_move'] = prediction[0]
-                    logger.info(f"Move prediction for row {index}: {prediction[0]}")
-                except Exception as e:
-                    logger.error(f"Error predicting move for row {index}: {e}", exc_info=True)
-                    df.at[index, 'predicted_move'] = None
-            else:
-                logger.error(f"No move model available for event: {event} or all_events")
-                df.at[index, 'predicted_move'] = None
-        
-        # Predict side
-        if 'predicted_side' not in df.columns or pd.isnull(row['predicted_side']):
-            if event not in side_models:
-                side_models[event], side_vectorizers[event] = load_models(event, 'classifier_binary')
-            
-            model = side_models[event] if side_models[event] else all_events_side_model
-            vectorizer = side_vectorizers[event] if side_vectorizers[event] else all_events_side_vectorizer
-            
-            if model and vectorizer:
-                try:
-                    logger.info(f"Predicting side for row {index}, event: {event}")
-                    transformed_content = vectorizer.transform([text_for_prediction])
-                    prediction = model.predict(transformed_content)
-                    df.at[index, 'predicted_side'] = 'UP' if prediction[0] == 1 else 'DOWN'
-                    logger.info(f"Side prediction for row {index}: {df.at[index, 'predicted_side']}")
-                except Exception as e:
-                    logger.error(f"Error predicting side for row {index}: {e}", exc_info=True)
-                    df.at[index, 'predicted_side'] = None
-            else:
-                logger.error(f"No side model available for event: {event} or all_events")
-                df.at[index, 'predicted_side'] = None
-        else:
-            logger.info(f"Skipping side prediction for row {index}: predicted_side is not null")
+        if model is not None:
+            _model_cache[model_cache_key] = model
     
-    return df
+    # Load vectorizer from cache or database
+    if vectorizer_cache_key in _model_cache:
+        logger.info(f"Loading vectorizer from cache: {vectorizer_name}")
+        vectorizer = _model_cache[vectorizer_cache_key]
+    else:
+        logger.info(f"Loading vectorizer from database: {vectorizer_name}")
+        start_time = time.time()
+        vectorizer, version = load_model_from_db(vectorizer_name, event, 'vectorizer')
+        load_time = time.time() - start_time
+        logger.info(f"Vectorizer loaded in {load_time:.3f}s (version {version})")
+        
+        if vectorizer is not None:
+            _model_cache[vectorizer_cache_key] = vectorizer
+    
+    return model, vectorizer
+
+def clear_model_cache():
+    """Clear the model cache"""
+    global _model_cache
+    _model_cache.clear()
+    logger.info("Model cache cleared")
+
+def get_cache_stats():
+    """Get cache statistics"""
+    return {
+        'cached_models': len(_model_cache),
+        'cache_keys': list(_model_cache.keys())
+    }
+
+def predict(article, event):
+    """Predict price movement for a single article"""
+    start_time = time.time()
+    
+    # Prepare text for prediction
+    text = f"{article['title']} {article['content']}"
+    
+    # Try to load models for the specific event
+    model, vectorizer = load_models_from_db(event, 'classifier_binary')
+    regression_model, regression_vectorizer = load_models_from_db(event, 'regression')
+    
+    # If specific event models not found, try fallback to 'all_events'
+    if model is None or vectorizer is None:
+        logger.warning(f"Models not found for event '{event}', trying 'all_events' fallback")
+        model, vectorizer = load_models_from_db('all_events', 'classifier_binary')
+        regression_model, regression_vectorizer = load_models_from_db('all_events', 'regression')
+    
+    # If still no models, return None
+    if model is None or vectorizer is None:
+        logger.error(f"No models available for event '{event}' or 'all_events'")
+        return None
+    
+    # Make predictions
+    try:
+        # Vectorize text
+        text_vectorized = vectorizer.transform([text])
+        
+        # Predict side (up/down)
+        predicted_side = model.predict(text_vectorized)[0]
+        side_probability = model.predict_proba(text_vectorized)[0]
+        
+        # Predict move percentage
+        if regression_model is not None and regression_vectorizer is not None:
+            text_regression_vectorized = regression_vectorizer.transform([text])
+            predicted_move = regression_model.predict(text_regression_vectorized)[0]
+        else:
+            predicted_move = 0.0
+        
+        prediction_time = time.time() - start_time
+        logger.info(f"Prediction completed in {prediction_time:.3f}s")
+        
+        return {
+            'predicted_side': predicted_side,
+            'side_probability': side_probability.tolist(),
+            'predicted_move': predicted_move,
+            'prediction_time': prediction_time
+        }
+        
+    except Exception as e:
+        logger.error(f"Error making prediction: {str(e)}")
+        return None
+
+def predict_batch(articles, event):
+    """Predict price movements for multiple articles"""
+    start_time = time.time()
+    results = []
+    
+    logger.info(f"Starting batch prediction for {len(articles)} articles")
+    
+    for i, article in enumerate(articles):
+        article_start_time = time.time()
+        result = predict(article, event)
+        
+        if result:
+            result['article_id'] = article.get('id', f'article_{i}')
+            result['article_time'] = time.time() - article_start_time
+            results.append(result)
+        else:
+            logger.warning(f"Failed to predict for article {i}")
+    
+    total_time = time.time() - start_time
+    avg_time = total_time / len(articles) if articles else 0
+    
+    logger.info(f"Batch prediction completed: {len(results)}/{len(articles)} successful")
+    logger.info(f"Total time: {total_time:.3f}s, Average per article: {avg_time:.3f}s")
+    
+    return results
 
 def main():
     # Get all news

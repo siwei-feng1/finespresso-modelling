@@ -55,7 +55,15 @@ CREATE TABLE eq_model_results_binary (
     auc_roc FLOAT,
     test_sample INTEGER NOT NULL,
     training_sample INTEGER NOT NULL,
-    total_sample INTEGER NOT NULL
+    total_sample INTEGER NOT NULL,
+    up_accuracy FLOAT,
+    down_accuracy FLOAT,
+    total_up INTEGER,
+    total_down INTEGER,
+    correct_up INTEGER,
+    correct_down INTEGER,
+    up_predictions_pct FLOAT,
+    down_predictions_pct FLOAT
 );
 
 -- Create eq_model_results_regression table
@@ -71,4 +79,17 @@ CREATE TABLE eq_model_results_regression (
     test_sample INTEGER NOT NULL,
     training_sample INTEGER NOT NULL,
     total_sample INTEGER NOT NULL
+);
+
+-- Create models table to store model binaries
+CREATE TABLE models (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    version INTEGER NOT NULL,
+    model_type VARCHAR(50) NOT NULL, -- 'classifier_binary', 'regression', 'vectorizer'
+    event VARCHAR(255) NOT NULL,
+    model_binary BYTEA NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    UNIQUE(name, version)
 );

@@ -14,7 +14,7 @@ import argparse
 # Add the parent directory to the path to import utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from utils.db.model_db_util import save_results
+from utils.db.model_db_util import save_results, save_model_to_db, load_model_from_db
 from utils.logging.log_util import get_logger
 from utils.ai.language_util import spacy_model_mapping
 logger = get_logger(__name__)
@@ -22,11 +22,9 @@ logger = get_logger(__name__)
 # Keep only the English model
 nlp = spacy.load("en_core_web_sm")
 
-# Ensure reports and models directories exist at the top-level
+# Ensure reports directory exists at the top-level
 reports_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'reports')
 os.makedirs(reports_dir, exist_ok=True)
-models_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'models')
-os.makedirs(models_dir, exist_ok=True)
 
 def preprocess(text):
     doc = nlp(text)
@@ -161,12 +159,28 @@ def train_and_save_model_for_event(event, df):
         model = RandomForestClassifier()
         model.fit(X_train, y_train)
 
-        # Save model and vectorizer
-        model_filename = os.path.join(models_dir, f'{event.replace(" ", "_").lower()}_classifier_binary.joblib')
-        vectorizer_filename = os.path.join(models_dir, f'{event.replace(" ", "_").lower()}_tfidf_vectorizer_binary.joblib')
+        # Save model and vectorizer to database
+        event_name = event.replace(" ", "_").lower()
+        
+        # Save classifier model
+        model_success, model_version = save_model_to_db(
+            model, 
+            f'{event_name}_classifier_binary', 
+            event, 
+            'classifier_binary'
+        )
+        
+        # Save vectorizer
+        vectorizer_success, vectorizer_version = save_model_to_db(
+            tfidf, 
+            f'{event_name}_tfidf_vectorizer_binary', 
+            event, 
+            'vectorizer'
+        )
 
-        joblib.dump(model, model_filename)
-        joblib.dump(tfidf, vectorizer_filename)
+        if not model_success or not vectorizer_success:
+            logger.error(f"Failed to save models to database for event {event}")
+            return None
 
         y_pred = model.predict(X_test)
         y_pred_proba = model.predict_proba(X_test)[:, 1]
@@ -182,6 +196,7 @@ def train_and_save_model_for_event(event, df):
         directional_metrics = calculate_directional_metrics(y_test, y_pred)
         
         logger.info(f"Model trained successfully for event: {event}")
+        logger.info(f"Model version: {model_version}, Vectorizer version: {vectorizer_version}")
         logger.info(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}, AUC-ROC: {auc_roc}")
         logger.info(f"UP accuracy: {directional_metrics['up_accuracy']:.2f}%, "
                    f"DOWN accuracy: {directional_metrics['down_accuracy']:.2f}%")
@@ -199,8 +214,8 @@ def train_and_save_model_for_event(event, df):
             'test_sample': len(y_test),
             'training_sample': len(y_train),
             'total_sample': len(event_df),
-            'model_filename': model_filename,
-            'vectorizer_filename': vectorizer_filename,
+            'model_version': model_version,
+            'vectorizer_version': vectorizer_version,
             'up_accuracy': directional_metrics['up_accuracy'],
             'down_accuracy': directional_metrics['down_accuracy'],
             'total_up': directional_metrics['total_up'],
@@ -252,12 +267,26 @@ def train_and_save_all_events_model(df):
         model = RandomForestClassifier()
         model.fit(X_train, y_train)
 
-        # Save model and vectorizer
-        model_filename = os.path.join(models_dir, 'all_events_classifier_binary.joblib')
-        vectorizer_filename = os.path.join(models_dir, 'all_events_tfidf_vectorizer_binary.joblib')
+        # Save model and vectorizer to database
+        # Save classifier model
+        model_success, model_version = save_model_to_db(
+            model, 
+            'all_events_classifier_binary', 
+            'all_events', 
+            'classifier_binary'
+        )
+        
+        # Save vectorizer
+        vectorizer_success, vectorizer_version = save_model_to_db(
+            tfidf, 
+            'all_events_tfidf_vectorizer_binary', 
+            'all_events', 
+            'vectorizer'
+        )
 
-        joblib.dump(model, model_filename)
-        joblib.dump(tfidf, vectorizer_filename)
+        if not model_success or not vectorizer_success:
+            logger.error("Failed to save all events models to database")
+            return None
 
         y_pred = model.predict(X_test)
         y_pred_proba = model.predict_proba(X_test)[:, 1]
@@ -273,6 +302,7 @@ def train_and_save_all_events_model(df):
         directional_metrics = calculate_directional_metrics(y_test, y_pred)
 
         logger.info("All events model trained successfully")
+        logger.info(f"Model version: {model_version}, Vectorizer version: {vectorizer_version}")
         logger.info(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}, AUC-ROC: {auc_roc}")
         logger.info(f"UP accuracy: {directional_metrics['up_accuracy']:.2f}%, "
                    f"DOWN accuracy: {directional_metrics['down_accuracy']:.2f}%")
@@ -290,8 +320,8 @@ def train_and_save_all_events_model(df):
             'test_sample': len(y_test),
             'training_sample': len(y_train),
             'total_sample': len(df),
-            'model_filename': model_filename,
-            'vectorizer_filename': vectorizer_filename,
+            'model_version': model_version,
+            'vectorizer_version': vectorizer_version,
             'up_accuracy': directional_metrics['up_accuracy'],
             'down_accuracy': directional_metrics['down_accuracy'],
             'total_up': directional_metrics['total_up'],
