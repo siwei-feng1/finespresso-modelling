@@ -82,6 +82,25 @@ This creates the necessary CSV files in the `data/` directory.
 1. `train_classifier.py`: Trains binary classification models
 2. `train_regression.py`: Trains regression models for price movement prediction
 
+Both training scripts now support a `--source` argument to select the data source:
+- `--source db` (default): Loads data from the database (recommended for up-to-date data)
+- `--source csv`: Loads data from the CSV file (`data/all_price_moves.csv`)
+
+Example usage:
+```bash
+# Train classification models using the database
+python tasks/ai/train_classifier.py --source db
+
+# Train regression models using the database
+python tasks/ai/train_regression.py --source db
+
+# Train classification models using CSV
+python tasks/ai/train_classifier.py --source csv
+
+# Train regression models using CSV
+python tasks/ai/train_regression.py --source csv
+```
+
 Both training scripts:
 1. Load news and price data from CSV files (`data/all_price_moves.csv`)
 2. Preprocess text using spaCy

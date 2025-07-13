@@ -154,19 +154,8 @@ class GlobeNewswireNewsDownloader:
             logger.warning(f"Failed to extract company from text: {e}")
             return None
     
-    def download_news_from_feeds(self, max_feeds: Optional[int] = None, start_position: int = 0) -> List[Dict[str, Any]]:
-        """Download news from all RSS feeds."""
-        feeds = self.load_rss_feeds()
-        
-        # Apply start position
-        if start_position > 0:
-            feeds = feeds[start_position:]
-            logger.info(f"Starting from position {start_position}")
-        
-        if max_feeds:
-            feeds = feeds[:max_feeds]
-            logger.info(f"Limiting to {max_feeds} feeds for testing")
-        
+    def download_news_from_feeds_batch(self, feeds: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Download news from a batch of RSS feeds."""
         all_news_items = []
         successful_feeds = 0
         failed_feeds = 0
@@ -182,22 +171,28 @@ class GlobeNewswireNewsDownloader:
             
             logger.info(f"Processing feed {i}/{len(feeds)}: {feed_title}")
             
-            # Fetch RSS content
-            rss_content = self.fetch_rss_feed(rss_url)
-            if not rss_content:
+            try:
+                # Fetch RSS content
+                rss_content = self.fetch_rss_feed(rss_url)
+                if not rss_content:
+                    failed_feeds += 1
+                    continue
+                
+                # Parse RSS content
+                news_items = self.parse_rss_feed(rss_content, feed_title)
+                all_news_items.extend(news_items)
+                successful_feeds += 1
+                
+            except Exception as e:
+                logger.error(f"Error processing feed {feed_title}: {e}")
                 failed_feeds += 1
                 continue
-            
-            # Parse RSS content
-            news_items = self.parse_rss_feed(rss_content, feed_title)
-            all_news_items.extend(news_items)
-            successful_feeds += 1
             
             # Add a small delay to be respectful to the server
             import time
             time.sleep(0.5)
         
-        logger.info(f"Downloaded {len(all_news_items)} news items from {successful_feeds} feeds ({failed_feeds} failed)")
+        logger.info(f"Batch: Downloaded {len(all_news_items)} news items from {successful_feeds} feeds ({failed_feeds} failed)")
         return all_news_items
     
     def save_to_database(self, news_items: List[Dict[str, Any]]) -> int:
@@ -223,26 +218,63 @@ class GlobeNewswireNewsDownloader:
             logger.error(f"Failed to save news items to database: {e}")
             raise
     
-    def run_download(self, max_feeds: Optional[int] = None, start_position: int = 0) -> int:
-        """Main method to run the news download process."""
+    def run_download(self, max_feeds: Optional[int] = None, start_position: int = 0, batch_size: int = 100) -> int:
+        """Main method to run the news download process in batches."""
         try:
             logger.info("Starting GlobeNewswire news download process")
             
-            # Download news from feeds
-            news_items = self.download_news_from_feeds(max_feeds, start_position)
+            # Load all feeds
+            feeds = self.load_rss_feeds()
             
-            if not news_items:
-                logger.warning("No news items downloaded")
-                return 0
+            # Apply start position
+            if start_position > 0:
+                feeds = feeds[start_position:]
+                logger.info(f"Starting from position {start_position}")
             
-            # Save to database
-            saved_count = self.save_to_database(news_items)
+            # Apply max feeds limit
+            if max_feeds:
+                feeds = feeds[:max_feeds]
+                logger.info(f"Limiting to {max_feeds} feeds")
             
-            logger.info(f"News download process completed. Saved {saved_count} items to database")
-            return saved_count
+            total_feeds = len(feeds)
+            logger.info(f"Processing {total_feeds} feeds in batches of {batch_size}")
+            
+            total_saved = 0
+            
+            # Process feeds in batches
+            for batch_start in range(0, total_feeds, batch_size):
+                batch_end = min(batch_start + batch_size, total_feeds)
+                batch_feeds = feeds[batch_start:batch_end]
+                
+                logger.info(f"Processing batch {batch_start//batch_size + 1}/{(total_feeds + batch_size - 1)//batch_size}: feeds {batch_start+1}-{batch_end}")
+                
+                try:
+                    # Download news from this batch
+                    news_items = self.download_news_from_feeds_batch(batch_feeds)
+                    
+                    if news_items:
+                        # Save batch to database
+                        logger.info(f"Saving batch of {len(news_items)} news items to database")
+                        saved_count = self.save_to_database(news_items)
+                        total_saved += saved_count
+                        logger.info(f"Batch saved: {saved_count} items (Total: {total_saved})")
+                    else:
+                        logger.info("No news items found in this batch")
+                        
+                except Exception as e:
+                    logger.error(f"Error processing batch {batch_start//batch_size + 1}: {e}")
+                    logger.info("Continuing with next batch...")
+                    continue
+                
+                # Small delay between batches to be respectful
+                import time
+                time.sleep(1)
+            
+            logger.info(f"Download process completed. Total saved: {total_saved} news items")
+            return total_saved
             
         except Exception as e:
-            logger.error(f"News download process failed: {e}")
+            logger.error(f"Download process failed: {e}")
             raise
 
 

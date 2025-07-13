@@ -10,6 +10,7 @@ import numpy as np
 import os
 import math
 import sys
+import argparse
 
 # Add the parent directory to the path to import utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -32,8 +33,33 @@ def preprocess(text):
     doc = nlp(text)
     return " ".join([token.lemma_ for token in doc if not token.is_stop and not token.is_punct])
 
+def load_data_from_database():
+    """Load data from database using news and price moves tables"""
+    logger.info("Loading data from database...")
+    
+    try:
+        from utils.db.price_move_db_util import get_price_moves
+        
+        # Get price moves data (which already includes joined news data)
+        logger.info("Loading price moves data from database...")
+        df = get_price_moves()
+        logger.info(f"Loaded {len(df)} records from database")
+        
+        if not df.empty:
+            logger.info(f"Data columns: {df.columns.tolist()}")
+            logger.info(f"Sample data shape: {df.shape}")
+            return df
+        else:
+            logger.warning("No data returned from database")
+            return pd.DataFrame()
+            
+    except Exception as e:
+        logger.error(f"Error loading data from database: {str(e)}")
+        logger.exception("Detailed traceback:")
+        return pd.DataFrame()
+
 def load_data_from_csv():
-    """Load data from CSV files instead of database"""
+    """Load data from CSV files"""
     logger.info("Loading data from CSV files...")
     
     try:
@@ -252,11 +278,22 @@ def train_and_save_all_events_model(df):
         return None
 
 def main():
-    logger.info("Starting main function")
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Train regression models')
+    parser.add_argument('--source', choices=['db', 'csv'], default='db',
+                       help='Data source: "db" for database or "csv" for CSV files (default: db)')
+    args = parser.parse_args()
     
-    # Load data from CSV files instead of database
-    logger.info("Loading data from CSV files")
-    merged_df = load_data_from_csv()
+    logger.info("Starting main function")
+    logger.info(f"Using data source: {args.source}")
+    
+    # Load data based on source choice
+    if args.source == 'db':
+        logger.info("Loading data from database")
+        merged_df = load_data_from_database()
+    else:
+        logger.info("Loading data from CSV files")
+        merged_df = load_data_from_csv()
     
     logger.info(f"Shape of merged_df: {merged_df.shape}")
     logger.info(f"Columns in merged_df: {merged_df.columns.tolist()}")
