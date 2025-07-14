@@ -15,6 +15,19 @@ A machine learning platform that predicts the impact of financial news / press r
 - **Event-specific optimization** for maximum prediction accuracy
 - **Explainable AI** with natural language reasoning for predictions
 
+### Model Comparison
+
+| Aspect | Traditional ML | LLM-based |
+|--------|----------------|-----------|
+| **Accuracy** | 62% average across events | 81.5% of events achieve 100% accuracy |
+| **Training** | TF-IDF + Random Forest | Few-shot learning with GPT-4o-mini |
+| **Data Requirements** | Large labeled datasets | Small number of examples per event |
+| **Interpretability** | Feature importance | Natural language reasoning |
+| **Flexibility** | Fixed feature set | Adapts to new event types |
+| **Cost** | One-time training | Per-prediction API cost |
+| **Speed** | Fast inference | Slower due to API calls |
+| **Use Case** | Broad cross-event predictions | Event-specific explainable predictions |
+
 ## 🏦 Background - Event Driven Hedge Fund Trading Strategies
 
 Event-driven hedge fund strategies that focus on press releases or news as events typically fall under the broader category of special situations or soft catalyst strategies. These strategies exploit pricing inefficiencies triggered by public announcements or news that signal potential corporate changes or market-moving developments.
