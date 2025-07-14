@@ -190,7 +190,7 @@ def create_main_prompt_template() -> ChatPromptTemplate:
     Returns:
         ChatPromptTemplate
     """
-    system_template = """You are a financial analyst specializing in predicting stock price movements based on news events.\n\nYour task is to analyze news content and predict whether a stock's price will move UP or DOWN.\n\nConsider these factors:\n- The type of event (clinical trial results, FDA approval, earnings, etc.)\n- The sentiment and content of the news\n- The company's industry and market context\n- Historical patterns for similar events\n\nReturn your prediction in the following JSON format:\n{{\n    \"prediction\": \"UP\" or \"DOWN\",\n    \"confidence\": 0.0 to 1.0,\n    \"reasoning\": \"Brief explanation of your reasoning\"\n}}\n\nRespond with only the JSON object and nothing else. Begin your response with '{{' and end with '}}'. Do not include anything before or after the JSON object, not even code fences, explanations, or extra whitespace."""
+    system_template = """You are a financial analyst specializing in predicting stock price movements based on news events.\n\nYour task is to analyze news content and predict whether a stock's price will move UP or DOWN.\n\nConsider these factors:\n- The type of event (clinical trial results, FDA approval, earnings, etc.)\n- The sentiment and content of the news\n- The company's industry and market context\n- Historical patterns for similar events\n\nFor the confidence score:\n- 0.9-1.0: Very high confidence (clear, strong signals)\n- 0.7-0.8: High confidence (good signals with some uncertainty)\n- 0.5-0.6: Moderate confidence (mixed signals)\n- 0.3-0.4: Low confidence (weak or conflicting signals)\n- 0.1-0.2: Very low confidence (unclear or insufficient information)\n\nReturn your prediction in the following JSON format:\n{{\n    \"prediction\": \"UP\" or \"DOWN\",\n    \"confidence\": 0.0 to 1.0,\n    \"reasoning\": \"Brief explanation of your reasoning\"\n}}\n\nRespond with only the JSON object and nothing else. Begin your response with '{{' and end with '}}'. Do not include anything before or after the JSON object, not even code fences, explanations, or extra whitespace."""
 
     human_template = """Analyze this news and predict the stock price movement:\n\nNews: {news_text}\nEvent Type: {event_type}\n\n{format_instructions}"""
 
@@ -324,9 +324,9 @@ def train_and_evaluate_llm_model(event: str, sample_data: pd.DataFrame,
                 )
                 
                 if prediction:
-                    predictions.append(prediction.prediction)
+                    predictions.append(prediction)  # Store full prediction object
                     actuals.append(row['actual_side'])
-                    log_timing(f"Sample {idx+1}/{len(test_data)}: Predicted {prediction.prediction} (actual: {row['actual_side']}) in {time.time() - sample_start:.2f}s")
+                    log_timing(f"Sample {idx+1}/{len(test_data)}: Predicted {prediction.prediction} (confidence: {prediction.confidence:.2f}, actual: {row['actual_side']}) in {time.time() - sample_start:.2f}s")
                 else:
                     log_timing(f"Sample {idx+1}/{len(test_data)}: No prediction returned")
                     
@@ -343,7 +343,7 @@ def train_and_evaluate_llm_model(event: str, sample_data: pd.DataFrame,
         
         # Calculate metrics
         metrics_start = time.time()
-        correct = sum(1 for p, a in zip(predictions, actuals) if p == a)
+        correct = sum(1 for p, a in zip(predictions, actuals) if p.prediction == a)
         accuracy = (correct / len(predictions)) * 100
         
         # Calculate UP/DOWN specific accuracies
@@ -355,20 +355,26 @@ def train_and_evaluate_llm_model(event: str, sample_data: pd.DataFrame,
         
         if any(up_mask):
             up_correct = sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                           if up_mask[i] and p == a)
+                           if up_mask[i] and p.prediction == a)
             up_accuracy = (up_correct / sum(up_mask)) * 100
         
         if any(down_mask):
             down_correct = sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                             if down_mask[i] and p == a)
+                             if down_mask[i] and p.prediction == a)
             down_accuracy = (down_correct / sum(down_mask)) * 100
         
         # Calculate prediction distribution
-        up_predictions = sum(1 for p in predictions if p == 'UP')
-        down_predictions = sum(1 for p in predictions if p == 'DOWN')
+        up_predictions = sum(1 for p in predictions if p.prediction == 'UP')
+        down_predictions = sum(1 for p in predictions if p.prediction == 'DOWN')
         
         up_pred_pct = (up_predictions / len(predictions)) * 100 if predictions else 0
         down_pred_pct = (down_predictions / len(predictions)) * 100 if predictions else 0
+        
+        # Calculate confidence metrics
+        confidences = [p.confidence for p in predictions]
+        avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+        high_confidence_predictions = sum(1 for c in confidences if c >= 0.7)
+        high_confidence_rate = (high_confidence_predictions / len(confidences)) * 100 if confidences else 0.0
         
         log_timing(f"Calculated metrics in {time.time() - metrics_start:.2f}s")
         
@@ -390,17 +396,19 @@ def train_and_evaluate_llm_model(event: str, sample_data: pd.DataFrame,
             'total_up': sum(up_mask),
             'total_down': sum(down_mask),
             'correct_up': sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                            if up_mask[i] and p == a),
+                            if up_mask[i] and p.prediction == a),
             'correct_down': sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                              if down_mask[i] and p == a),
+                              if down_mask[i] and p.prediction == a),
             'up_predictions_pct': up_pred_pct,
             'down_predictions_pct': down_pred_pct,
+            'avg_confidence': avg_confidence,
+            'high_confidence_rate': high_confidence_rate,
             'model_type': 'llm_fewshot'
         }
         
         total_event_time = time.time() - event_start_time
         log_timing(f"Event '{event}' completed in {total_event_time:.2f}s", event_start_time)
-        log_timing(f"Event '{event}' results - Accuracy: {accuracy:.3f}, UP: {up_accuracy:.2f}%, DOWN: {down_accuracy:.2f}%")
+        log_timing(f"Event '{event}' results - Accuracy: {accuracy:.3f}, UP: {up_accuracy:.2f}%, DOWN: {down_accuracy:.2f}%, Avg Confidence: {avg_confidence:.3f}, High Confidence Rate: {high_confidence_rate:.1f}%")
         
         return result
         
@@ -484,7 +492,7 @@ def train_all_events_llm_model(sample_data: pd.DataFrame, n_samples: int = 5) ->
             )
             
             if prediction:
-                predictions.append(prediction.prediction)
+                predictions.append(prediction)  # Store full prediction object
                 actuals.append(row['actual_side'])
             else:
                 log_timing(f"Failed to get prediction for test item in all_events model")
@@ -494,7 +502,7 @@ def train_all_events_llm_model(sample_data: pd.DataFrame, n_samples: int = 5) ->
             return None
         
         # Calculate metrics
-        correct = sum(1 for p, a in zip(predictions, actuals) if p == a)
+        correct = sum(1 for p, a in zip(predictions, actuals) if p.prediction == a)
         accuracy = correct / len(predictions) if predictions else 0
         
         # Calculate directional metrics
@@ -505,20 +513,26 @@ def train_all_events_llm_model(sample_data: pd.DataFrame, n_samples: int = 5) ->
         down_accuracy = 0
         if any(up_mask):
             up_correct = sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                           if up_mask[i] and p == a)
+                           if up_mask[i] and p.prediction == a)
             up_accuracy = (up_correct / sum(up_mask)) * 100
         
         if any(down_mask):
             down_correct = sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                             if down_mask[i] and p == a)
+                             if down_mask[i] and p.prediction == a)
             down_accuracy = (down_correct / sum(down_mask)) * 100
         
         # Calculate prediction distribution
-        up_predictions = sum(1 for p in predictions if p == 'UP')
-        down_predictions = sum(1 for p in predictions if p == 'DOWN')
+        up_predictions = sum(1 for p in predictions if p.prediction == 'UP')
+        down_predictions = sum(1 for p in predictions if p.prediction == 'DOWN')
         
         up_pred_pct = (up_predictions / len(predictions)) * 100 if predictions else 0
         down_pred_pct = (down_predictions / len(predictions)) * 100 if predictions else 0
+        
+        # Calculate confidence metrics
+        confidences = [p.confidence for p in predictions]
+        avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+        high_confidence_predictions = sum(1 for c in confidences if c >= 0.7)
+        high_confidence_rate = (high_confidence_predictions / len(confidences)) * 100 if confidences else 0.0
         
         result = {
             'event': 'all_events',
@@ -538,11 +552,13 @@ def train_all_events_llm_model(sample_data: pd.DataFrame, n_samples: int = 5) ->
             'total_up': sum(up_mask),
             'total_down': sum(down_mask),
             'correct_up': sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                            if up_mask[i] and p == a),
+                            if up_mask[i] and p.prediction == a),
             'correct_down': sum(1 for i, (p, a) in enumerate(zip(predictions, actuals)) 
-                              if down_mask[i] and p == a),
+                              if down_mask[i] and p.prediction == a),
             'up_predictions_pct': up_pred_pct,
             'down_predictions_pct': down_pred_pct,
+            'avg_confidence': avg_confidence,
+            'high_confidence_rate': high_confidence_rate,
             'model_type': 'llm_fewshot'
         }
         
@@ -550,6 +566,7 @@ def train_all_events_llm_model(sample_data: pd.DataFrame, n_samples: int = 5) ->
         log_timing(f"  Accuracy: {accuracy:.3f}")
         log_timing(f"  UP accuracy: {up_accuracy:.2f}%, DOWN accuracy: {down_accuracy:.2f}%")
         log_timing(f"  Predictions - UP: {up_pred_pct:.2f}%, DOWN: {down_pred_pct:.2f}%")
+        log_timing(f"  Average confidence: {avg_confidence:.3f}, High confidence rate: {high_confidence_rate:.1f}%")
         
         return result
         

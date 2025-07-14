@@ -167,6 +167,13 @@ Consider these factors:
 - The company's industry and market context
 - Historical patterns for similar events
 
+For the confidence score:
+- 0.9-1.0: Very high confidence (clear, strong signals)
+- 0.7-0.8: High confidence (good signals with some uncertainty)
+- 0.5-0.6: Moderate confidence (mixed signals)
+- 0.3-0.4: Low confidence (weak or conflicting signals)
+- 0.1-0.2: Very low confidence (unclear or insufficient information)
+
 Return your prediction in the following JSON format:
 {
     "prediction": "UP" or "DOWN",
