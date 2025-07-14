@@ -10,7 +10,7 @@ from features_selection import select_features
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs', 'features_engineering')
+    logs_dir = os.path.join(base_dir,'tasks', 'features_engineering', 'logs', )
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -104,5 +104,5 @@ def run_feature_engineering_pipeline(input_path: str, output_path: str) -> pd.Da
 if __name__ == '__main__':
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     input_path = os.path.join(project_root, 'data', 'clean', 'clean_price_moves.csv')
-    output_path = os.path.join(project_root, 'data', 'feature_engineering', 'final_enriched_data.csv')
+    output_path = os.path.join(project_root, 'data', 'feature_engineering', 'selected_features_data.csv')
     run_feature_engineering_pipeline(input_path, output_path)

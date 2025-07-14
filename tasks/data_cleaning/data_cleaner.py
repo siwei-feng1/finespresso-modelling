@@ -11,7 +11,7 @@ from datetime import datetime
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs')
+    logs_dir = os.path.join(base_dir, 'tasks', 'data_cleaning', 'logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -223,14 +223,16 @@ class DataCleaner:
         self.clean_text_data()
         self.save_cleaned_data()
         logger.info("Data cleaning pipeline completed")
+        logger.info(f"Final cleaned DataFrame has {len(self.df)} rows before saving")
         return self.df
 
 if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(base_dir, 'data')
     cleaner = DataCleaner(
-        input_path=os.path.join(data_dir, 'all_price_moves.csv'),
+        input_path=os.path.join(data_dir, 'modeling_data.csv'),
         output_path=os.path.join(data_dir, 'clean', f'cleaned_price_moves_{datetime.now().strftime("%Y%m%d")}.csv'),
         metrics_path=os.path.join(data_dir, 'quality_metrics', 'cleaning_metrics.csv')
     )
     cleaned_df = cleaner.clean()
+    
