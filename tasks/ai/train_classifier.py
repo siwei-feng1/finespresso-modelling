@@ -403,6 +403,8 @@ def main():
     parser = argparse.ArgumentParser(description='Train classifier models')
     parser.add_argument('--source', choices=['db', 'csv'], default='db',
                        help='Data source: "db" for database or "csv" for CSV files (default: db)')
+    parser.add_argument('--n_samples', type=int, default=5,
+                       help='Number of samples per event type for few-shot learning (default: 5)')
     args = parser.parse_args()
     
     logger.info("Starting main function")
