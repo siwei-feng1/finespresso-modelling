@@ -9,7 +9,7 @@ import hashlib
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs')
+    logs_dir = os.path.join(base_dir, 'tasks', 'data_cleaning','logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)

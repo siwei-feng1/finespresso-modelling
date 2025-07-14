@@ -12,7 +12,7 @@ from sklearn.pipeline import Pipeline
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs', 'features_engineering')
+    logs_dir = os.path.join(base_dir, 'tasks', 'features_engineering', 'logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -138,7 +138,7 @@ def select_features(df: pd.DataFrame, params: Dict) -> Tuple[pd.DataFrame, List[
             # Save feature importance
             base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             importance_df = pd.DataFrame({'feature': importances.index, 'importance': importances.values})
-            importance_path = os.path.join(base_dir, 'reports', f'feature_importance_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+            importance_path = os.path.join(base_dir, 'reports','reports_features_engineering', f'feature_importance_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
             importance_df.to_csv(importance_path, index=False)
             logger.info(f"Saved feature importance to {importance_path}")
         except Exception as e:
@@ -159,7 +159,7 @@ def select_features(df: pd.DataFrame, params: Dict) -> Tuple[pd.DataFrame, List[
 
 if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    df = pd.read_csv(os.path.join(base_dir, 'data', 'feature_engineering', 'company_features_data.csv'))
+    df = pd.read_csv(os.path.join(base_dir, 'data', 'feature_engineering', 'time_features_data.csv'))
     params = {
         'method': 'correlation_and_rf',
         'correlation_threshold': 0.8,

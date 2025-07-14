@@ -15,7 +15,7 @@ from tasks.data_cleaning.data_versioning import DataVersioning
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs')
+    logs_dir = os.path.join(base_dir, 'tasks', 'data_cleaning','logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -32,7 +32,7 @@ def setup_logger(name: str) -> logging.Logger:
 logger = setup_logger(__name__)
 
 def run_data_quality_pipeline(
-    input_path: str = 'data/all_price_moves.csv',
+    input_path: str = 'data/modeling_data.csv',
     output_path: str = 'data/clean/clean_price_moves.csv',
     metrics_dir: str = 'data/quality_metrics',
     versions_dir: str = 'data/versions',
@@ -105,7 +105,7 @@ if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(base_dir, 'data')
     result = run_data_quality_pipeline(
-        input_path=os.path.join(data_dir, 'all_price_moves.csv'),
+        input_path=os.path.join(data_dir, 'modeling_data.csv'),
         output_path=os.path.join(data_dir, 'clean', 'clean_price_moves.csv'),
         metrics_dir=os.path.join(data_dir, 'quality_metrics'),
         versions_dir=os.path.join(data_dir, 'versions'),

@@ -7,7 +7,7 @@ import numpy as np
 def setup_logger():
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'data', 'logs')
+    logs_dir = os.path.join(base_dir, 'tasks', 'data_cleaning', 'logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
@@ -278,14 +278,16 @@ class DataValidator:
         self.save_cleaned_data()
         self.save_metrics()
         logger.info("Data validation pipeline completed")
+        logger.info(f"Final validate DataFrame has {len(self.df)} rows before saving")
         return self.df
 
 if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     data_dir = os.path.join(base_dir, 'data')
     validator = DataValidator(
-        input_path=os.path.join(data_dir, 'all_price_moves.csv'),
+        input_path=os.path.join(data_dir, 'clean', 'cleaned_price_moves_20250713.csv'),
         output_path=os.path.join(data_dir, 'clean', 'clean_price_moves.csv'),
         metrics_path=os.path.join(data_dir, 'quality_metrics', 'validation_metrics.csv')
     )
     validated_df = validator.validate()
+    
