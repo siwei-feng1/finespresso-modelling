@@ -1,0 +1,20 @@
+id,event_name,actual,predicted,text
+68,trading_information,UP,,media release
+22,trading_information,DOWN,,media release
+72,trading_information,DOWN,,attachment attachments kalmar_15 11_trades xlsx
+73,trading_information,UP,,media release
+0,trading_information,DOWN,UP,media release
+26,trading_information,UP,,liitteet 10100699 pdf relais 10 10 trades xlsx
+40,trading_information,UP,,attachment attachments kalmar_12 11_trades xlsx
+42,trading_information,UP,,attachment attachments kalmar_19 11_trades xlsx
+10,trading_information,UP,DOWN,media release
+45,trading_information,UP,,attachments 11084874 pdf alma media 8 11 trades xlsx
+84,trading_information,DOWN,,liitteet 10111329 pdf alma media 11 10 trades xlsx
+55,trading_information,UP,,attachments 11074338 pdf alma media 7 11 trades xlsx
+81,trading_information,UP,,media release
+47,trading_information,DOWN,,attachments 11158544 pdf alma media 15 11 trades xlsx
+12,trading_information,UP,UP,liitteet ovaro_7 10_trades xlsx
+4,trading_information,UP,UP,attachments 11137287 pdf alma media 13 11 trades xlsx
+18,trading_information,DOWN,UP,liitteet 10100772 pdf alma media 10 10 trades xlsx
+28,trading_information,UP,,from october 8th 2024 10 00 eest bigbank as bonds isin code ee3300004977 public offer subscription process is launched the last trading day of the subscription period is october 18th 2024 15 30 eest up to 3 000 bonds are being publicly offered to investors in estonia latvia and lithuania the offer price is 1 000 eur per bond which is equal to the nominal value of a bond the interest rate is 6 per annum payed quarterly and the maturity is 10 years the bonds will be registered in the nasdaq csd under the isin code ee3300004977 in case of over subscription bigbank has the right to increase the volume of the offering to a total of 8 000 bonds and the offering may also be decreased by the amount unsubscribed the subscription offer will be carried out using the stock exchange trading system and nasdaq csd offering via stock exchange trading system for investors in latvia and lithuania market tse equity auctions genium inet trading system order book bigbbo
+39,trading_information,UP,,liitteet 10078869 pdf alma media 7 10 trades xlsx

@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs', 'features_engineering')
+    logs_dir = os.path.join(base_dir, 'tasks', 'features_engineering', 'logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -38,7 +38,27 @@ def add_time_features(df: pd.DataFrame) -> pd.DataFrame:
         raise ValueError("'published_date' column not found")
 
     df = df.copy()
-    df['published_date'] = pd.to_datetime(df['published_date'], utc=True)
+    logger.info(f"Processing {len(df)} rows for time feature engineering")
+    
+    # Log sample of published_date values for debugging
+    logger.info(f"Sample published_date values: {df['published_date'].head(5).tolist()}")
+    
+    # Convert published_date to datetime with ISO8601 format and error handling
+    try:
+        df['published_date'] = pd.to_datetime(df['published_date'], format='ISO8601', utc=True, errors='coerce')
+        invalid_dates = df['published_date'].isna()
+        if invalid_dates.any():
+            logger.warning(f"Found {invalid_dates.sum()} invalid datetime values in published_date")
+            # Impute invalid dates with median date or a default
+            median_date = df['published_date'].median()
+            if pd.isna(median_date):
+                median_date = pd.Timestamp('2000-01-01', tz='UTC')
+                logger.warning("Median date is NaT, using default date 2000-01-01")
+            df.loc[invalid_dates, 'published_date'] = median_date
+            logger.info(f"Imputed {invalid_dates.sum()} invalid dates with {median_date}")
+    except Exception as e:
+        logger.error(f"Failed to parse published_date: {str(e)}")
+        raise ValueError(f"Failed to parse published_date: {str(e)}")
     
     # Initialize features
     features = [
@@ -73,15 +93,26 @@ def add_time_features(df: pd.DataFrame) -> pd.DataFrame:
     # Log feature statistics
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     stats = df[features + ['days_since_event']].describe().to_dict()
-    stats_path = os.path.join(base_dir, 'reports', f'time_feature_stats_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+    stats_path = os.path.join(base_dir, 'reports', 'reports_features_engineering', 
+                             f'time_feature_stats_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
     os.makedirs(os.path.dirname(stats_path), exist_ok=True)
     pd.DataFrame(stats).to_csv(stats_path, index=True)
     logger.info(f"Saved time feature statistics to {stats_path}")
     
+    logger.info(f"Completed time feature engineering, output rows: {len(df)}")
     return df
 
 if __name__ == '__main__':
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    df = pd.read_csv(os.path.join(base_dir, 'data', 'feature_engineering', 'yfinance_enriched_data.csv'))
-    df_with_time_features = add_time_features(df)
-    df_with_time_features.to_csv(os.path.join(base_dir, 'data', 'feature_engineering', 'time_features_data.csv'), index=False)
+    input_path = os.path.join(base_dir, 'data', 'feature_engineering', 'yfinance_enriched_data.csv')
+    output_path = os.path.join(base_dir, 'data', 'feature_engineering', 'time_features_data.csv')
+    
+    try:
+        df = pd.read_csv(input_path)
+        logger.info(f"Loaded input data with {len(df)} rows from {input_path}")
+        df_with_time_features = add_time_features(df)
+        df_with_time_features.to_csv(output_path, index=False)
+        logger.info(f"Saved output data with {len(df_with_time_features)} rows to {output_path}")
+    except Exception as e:
+        logger.error(f"Error in main execution: {str(e)}")
+        raise

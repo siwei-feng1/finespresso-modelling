@@ -11,7 +11,7 @@ from textblob import TextBlob
 def setup_logger(name: str) -> logging.Logger:
     """Configure logging for the module."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    logs_dir = os.path.join(base_dir, 'logs', 'features_engineering')
+    logs_dir = os.path.join(base_dir, 'tasks', 'features_engineering', 'logs')
     os.makedirs(logs_dir, exist_ok=True)
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
@@ -23,8 +23,6 @@ def setup_logger(name: str) -> logging.Logger:
     stream_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
     logger.addHandler(stream_handler)
     return logger
-
-
 
 logger = setup_logger(__name__)
 
@@ -90,7 +88,13 @@ def add_company_features(df: pd.DataFrame) -> pd.DataFrame:
     }
     for idx, row in df.iterrows():
         ticker = row['ticker']
-        date = pd.to_datetime(row['published_date']).tz_localize(None)
+        try:
+            # Parse published_date with mixed format to handle microseconds and timezone
+            date = pd.to_datetime(row['published_date'], format='mixed', utc=True).tz_convert(None)
+        except Exception as e:
+            logger.warning(f"Failed to parse date for {ticker} at index {idx}: {str(e)}")
+            continue
+
         if not validate_ticker(ticker, ticker_cache):
             logger.warning(f"Skipping invalid ticker {ticker}")
             continue
@@ -115,10 +119,18 @@ def add_company_features(df: pd.DataFrame) -> pd.DataFrame:
     # Previous news sentiment
     for ticker in df['ticker'].unique():
         ticker_mask = df['ticker'] == ticker
-        dates = pd.to_datetime(df[ticker_mask]['published_date']).dt.tz_localize(None)
+        try:
+            dates = pd.to_datetime(df[ticker_mask]['published_date'], format='mixed', utc=True).dt.tz_convert(None)
+        except Exception as e:
+            logger.warning(f"Failed to parse dates for ticker {ticker}: {str(e)}")
+            continue
         sentiments = df[ticker_mask]['combined_sentiment']
         for idx in df[ticker_mask].index:
-            current_date = pd.to_datetime(df.at[idx, 'published_date']).tz_localize(None)
+            try:
+                current_date = pd.to_datetime(df.at[idx, 'published_date'], format='mixed', utc=True).tz_convert(None)
+            except Exception as e:
+                logger.warning(f"Failed to parse date for {ticker} at index {idx}: {str(e)}")
+                continue
             past_mask = dates < current_date
             if past_mask.any():
                 df.at[idx, 'prev_news_sentiment'] = sentiments[past_mask].mean()
@@ -127,7 +139,7 @@ def add_company_features(df: pd.DataFrame) -> pd.DataFrame:
 
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     stats = df[features].describe(include='all').to_dict()
-    stats_path = os.path.join(base_dir, 'reports', f'company_features_stats_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+    stats_path = os.path.join(base_dir, 'reports', 'reports_features_engineering', f'company_features_stats_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
     os.makedirs(os.path.dirname(stats_path), exist_ok=True)
     pd.DataFrame(stats).to_csv(stats_path, index=True)
     logger.info(f"Saved company feature statistics to {stats_path}")

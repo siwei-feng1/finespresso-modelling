@@ -6,7 +6,7 @@ from datetime import datetime
 import os
 
 class DataQualityAnalyzer:
-    def __init__(self, filepath='data/all_price_moves.csv', output_dir='data/quality_reports'):
+    def __init__(self, filepath='data/modeling_data.csv', output_dir='data/quality_reports'):
         self.filepath = filepath
         self.output_dir = output_dir
         os.makedirs(self.output_dir, exist_ok=True)
