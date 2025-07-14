@@ -302,3 +302,50 @@ DATABASE_URL=your_database_connection_string
 - Monitor database connection pool usage
 - Track API rate limits for OpenAI calls
 - Verify CSV file generation in `data/` directory 
+
+# Playground
+
+This directory contains experimental scripts and utilities for data processing and analysis.
+
+## Scripts
+
+### `get_data_modelling.py`
+
+**Purpose**: Merges news and price movement data from the database to create the modeling dataset.
+
+**What it does**:
+- Connects to the database using environment variables
+- Executes a SQL query that joins `news` and `price_moves` tables
+- Filters for records with non-null `actual_side` and `daily_alpha` values
+- Saves the merged dataset to `data/modeling_data.csv`
+
+**Requirements**:
+- `.env` file with `DATABASE_URL` configured
+- Database with `news` and `price_moves` tables
+
+**Usage**:
+```bash
+python playground/get_data_modelling.py
+```
+
+**Output**:
+- Creates `data/modeling_data.csv` with merged news and price movement data
+- Contains 18 columns including news content, events, predictions, and actual price changes
+
+**SQL Query Details**:
+```sql
+SELECT 
+    n.id, n.content, n.title, n.content_en, n.title_en, 
+    n.event, n.predicted_side, n.predicted_move, n.publisher, 
+    n.published_date, n.ticker, n.company, n.reason, n.link, 
+    n.ticker_url, p.actual_side, p.price_change_percentage, p.daily_alpha
+FROM news n
+INNER JOIN price_moves p ON n.id = p.id
+WHERE p.actual_side IS NOT NULL AND p.daily_alpha IS NOT NULL
+```
+
+**Data Schema**:
+- **News fields**: id, content, title, content_en, title_en, event, predicted_side, predicted_move, publisher, published_date, ticker, company, reason, link, ticker_url
+- **Price fields**: actual_side, price_change_percentage, daily_alpha
+
+This script is essential for preparing the training dataset used in the machine learning pipeline.
