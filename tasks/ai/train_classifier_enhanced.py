@@ -453,7 +453,7 @@ def process_results(results: list[dict], df: pd.DataFrame):
         #success = save_results(results_df)
         #if success:
         #    logger.info('Successfully wrote results to database')
-        e#lse:
+        #else:
         #    logger.error('Failed to write results to database')
         
         #logger.info(f'Average accuracy score: {results_df["accuracy"].mean():.4f}')
